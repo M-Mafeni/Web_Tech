@@ -22,6 +22,7 @@ nav li a:hover{
 }
 body{
     background: #000000;
+    color: white;
 }
 .booking_bar{
     background: #007cbf;
@@ -44,4 +45,13 @@ body{
     margin: auto;
     top: 35%;
     text-align: center;
+}
+.about_us{
+    color: green;
+    width: 100%;
+    height: 20%;
+    background: red;
+    position: relative;
+    margin-top: 5%;
+    margin-bottom: 5%;
 }
