@@ -3,7 +3,15 @@ nav{
     position: fixed;
     background: rgba(0,0, 0, 0.2);
     padding: 0px 20px;
-    z-index:100
+    z-index: 100;
+}
+
+nav li a:hover{
+    background: #007cbf;
+}
+
+.bar_colour{
+    background: #091D4F;
 }
 
 body{
@@ -16,49 +24,28 @@ body{
     background-size: cover;
     width: 100%;
     height: 700px;
-}
-
-nav li a:hover{
-    background: #007cbf;
-}
-
-.bar_colour{
-    background: #091D4F;
-}
-
-
-
-.booking_bar{
-    background: #007cbf;
-    height: 10%;
-    width: 50%;
-    /* position: relative; */
+    padding-top: 10%;
+    text-align: center;
     margin: 0 auto;
-    /* top: 40%; */
-    /* padding-left: 2%; */
-}
-
-.form_item{
-    /* margin-right: 2%;
-    margin-top: 2%; */
-    display: inline-block;
-}
-
-.booking_form {
-    /* margin: 0 auto; */
-    left: 50%;
-    display: flex;
-    align-items: center;
 }
 
 .advert_text{
-    color: white;
     font-size: 300%;
-    /* position: relative; */
-    /* margin: auto; */
-    margin-top: 5%;
-    /* top: 35%; */
-    text-align: center;
+}
+
+.booking_bar{
+    background: #007cbf;
+    height: 100px;
+    width: 60%;
+    margin: 5% auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.form_item{
+    display: inline-block;
+    margin: 0 2%;
 }
 
 .about_us{
