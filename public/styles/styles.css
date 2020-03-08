@@ -1,5 +1,6 @@
 html {
   scroll-behavior: smooth;
+  font-family: 'Rubik', sans-serif;
 }
 
 nav{
@@ -22,6 +23,10 @@ nav{
     transition: background 0.5s;
 }
 
+.nav_links {
+    padding: 15px 0;
+}
+
 ul li a {
     /* position: absolute;
     right: 5%; */
@@ -37,7 +42,7 @@ ul li a {
     padding-right:25px;
     padding-left:25px;
     text-align: center;
-    font-size: 150%;
+    font-size: 100%;
     color: white;
     transition: background 0.3s;
 }
