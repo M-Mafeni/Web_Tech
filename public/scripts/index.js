@@ -12,6 +12,7 @@ function start(){
       }
     }
 }
+
 function change_bar() {
     if($(window).scrollTop()>630){
         $('#topnav').addClass('bar_colour');
