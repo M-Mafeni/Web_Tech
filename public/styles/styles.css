@@ -208,7 +208,34 @@ body{
     margin: 0 2%;
 }
 
-p {
-    margin-top: 7%;
-    margin-bottom: 7%
+footer {
+    background: #00304a;
+    padding: 8px 30px;
+    color: white;
+    font-size: 15px;
+    height: 100px;
+}
+
+footer img {
+    height: 40px;
+    width: auto;
+}
+
+footer a {
+    color: #007cbf;
+}
+
+footer a:hover {
+    color: #2cbcad;
+}
+
+.footer_text {
+    float: left;
+    margin-left: 5%;
+}
+
+.footer_icons {
+    margin-top: 2%;
+    float: right;
+    margin-right: 5%;
 }
