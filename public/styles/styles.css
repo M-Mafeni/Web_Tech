@@ -37,6 +37,7 @@ ul li a {
 }
 .nav-items a:hover{
     background: #007cbf;
+    /* background: red; */
 }
 .nav-items a.brand-logo{
     /* position: absolute;
@@ -60,6 +61,7 @@ ul li a{
 } */
 .bar_colour{
     background: #091D4F;
+    /* background: #007fa2; */
 }
 
 .login-form{
@@ -87,6 +89,7 @@ ul li a{
 body{
     background: #000000;
     color: white;
+    font-size: 150%;
 }
 
 .star_bg{

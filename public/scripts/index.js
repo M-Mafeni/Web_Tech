@@ -14,9 +14,9 @@ function start(){
 }
 function change_bar() {
     if($(window).scrollTop()>630){
-        $('nav').addClass('bar_colour');
+        $('#topnav').addClass('bar_colour');
     }else{
-        $('nav').removeClass('bar_colour');
+        $('#topnav').removeClass('bar_colour');
     }
 }
 
@@ -27,15 +27,6 @@ function openForm() {
 function closeForm() {
   document.getElementById("loginForm").style.display = "none";
 }
-
-// function makeBarResponsive() {
-//   console.log($('nav').hasClass('responsive'));
-//   if(!($('nav').hasClass('responsive'))){
-//       $('nav').addClass('responsive');
-//   }else{
-//       $('nav').removeClass('responsive');
-//   }
-// }
 
 function makeBarResponsive() {
   console.log($('#topnav').hasClass('responsive'));
