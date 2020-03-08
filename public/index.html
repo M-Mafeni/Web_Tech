@@ -2,10 +2,11 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en-GB" xml:lang="en-GB">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js">
 </script>
-<script src="/scripts/scroll.js">
+<script src="/scripts/index.js">
+
 </script>
-<script src="/scripts/form.js">
-</script>
+<meta name="viewport" content="width=device-width" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"></link>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"></link>
 <link rel="stylesheet" href="/styles/styles.css"></link>
 
@@ -16,10 +17,18 @@
     <nav>
         <div class="nav-wrapper">
             <a href="#" class="brand-logo">Astra</a>
-            <ul class="right hide-on-med-and-down">
+            <div class="nav-items">
+                <a href="#about_us">About Us</a>
+                <a href="#" onclick="openForm()">Login/Register</a>
+                <a href="#" class="icon" onclick="makeBarResponsive()"><i class="fa fa-bars"></i></a>
+            </div>
+
+            <!-- <ul>
                 <li><a href="#about_us">About Us</a></li>
                 <li><a href="#" onclick="openForm()">Login/Register</a></li>
-            </ul>
+                <li><a href="#" class="icon" onclick="makeBarResponsive()"><i class="fa fa-bars"></i>
+                </a></li>
+            </ul> -->
         </div>
     </nav>
 

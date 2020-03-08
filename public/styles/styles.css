@@ -3,29 +3,29 @@ nav{
     background: rgba(0,0, 0, 0.2);
     padding: 0px 20px;
     z-index: 100;
+    overflow: hidden;
+}
+.nav-items{
+    float: right;
+    display: block;
+}
+.nav-items a{
+    float: right;
+    display: block;
+    padding-right:25px;
+    padding-left:25px;
+    text-align: center;
 }
 
-nav li a:hover{
+.nav-items a:hover{
     background: #007cbf;
 }
-
+nav .icon{
+    display: none;
+}
 .bar_colour{
     background: #091D4F;
 }
-/* .login-form{
-    display: none;
-    position: fixed;
-    background:#007cbf;
-    top: 10%;
-    right: 2%;
-    height: 10%;
-    width: 15%;
-    z-index: 85;
-}
-.login-form-container{
-    background:#007cbf;
-    padding-bottom: 10%;
-} */
 
 .login-form{
     display: none;
@@ -37,7 +37,7 @@ nav li a:hover{
     height: 100%;
     left: 0;
     top: 0;
-    overflow: auto;
+    /* overflow: auto; */
     padding-top: 20%;
     z-index: 1;
 }
@@ -47,7 +47,6 @@ nav li a:hover{
     height: 55%;
     width: 15%;
     background: #007cbf;
-    /* padding-bottom: 10%; */
 }
 
 body{
@@ -97,4 +96,31 @@ h1 {
     font-size: 60px;
     text-align: center;
     padding-top: 5%
+}
+
+@media only screen and (max-width: 600px) {
+    .nav-items a{display: none;}
+    nav .icon{
+        /* position: relative; */
+        float: right;
+        display: block;
+    }
+}
+
+/* The "responsive" class is added to the topnav with JavaScript when the user clicks on the icon. This class makes the topnav look good on small screens (display the links vertically instead of horizontally) */
+@media only screen and (max-width: 600px) {
+  nav.responsive .nav-items{position: relative;}
+  nav.responsive .icon {
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+  nav.responsive .nav-items a{
+    display: block;
+    float: none;
+    /* position: relative;
+    top: 80%;
+    text-align: left; */
+  }
+
 }
