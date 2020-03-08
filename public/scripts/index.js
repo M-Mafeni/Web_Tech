@@ -28,11 +28,20 @@ function closeForm() {
   document.getElementById("loginForm").style.display = "none";
 }
 
+// function makeBarResponsive() {
+//   console.log($('nav').hasClass('responsive'));
+//   if(!($('nav').hasClass('responsive'))){
+//       $('nav').addClass('responsive');
+//   }else{
+//       $('nav').removeClass('responsive');
+//   }
+// }
+
 function makeBarResponsive() {
-  console.log($('nav').hasClass('responsive'));
-  if(!($('nav').hasClass('responsive'))){
-      $('nav').addClass('responsive');
+  console.log($('#topnav').hasClass('responsive'));
+  if(!($('#topnav').hasClass('responsive'))){
+      $('#topnav').addClass('responsive');
   }else{
-      $('nav').removeClass('responsive');
+      $('#topnav').removeClass('responsive');
   }
 }

@@ -5,24 +5,59 @@ nav{
     z-index: 100;
     overflow: hidden;
 }
+
 .nav-items{
-    float: right;
+    width: 100%;
+    position: fixed;
+    background: rgba(0,0, 0, 0.2);
+    right: 0%;
+    /* float: right; */
     display: block;
+    z-index: 150;
+    overflow: hidden;
+
 }
-.nav-items a{
+ul li a {
+    /* position: absolute;
+    right: 5%; */
     float: right;
-    display: block;
+    display: inline-block;
+}
+
+.nav-items a{
+    /* position: absolute; */
+    /* right: 1%; */
+    float: right;
+    display: inline-block;
     padding-right:25px;
     padding-left:25px;
     text-align: center;
+    font-size: 180%;
+    color: white;
 }
-
 .nav-items a:hover{
     background: #007cbf;
 }
-nav .icon{
+.nav-items a.brand-logo{
+    /* position: absolute;
+    left: 2%; */
+    float: left;
+}
+.nav-items .icon{
     display: none;
 }
+ul{
+    float: right;
+}
+
+ul li a{
+    display: inline-block;
+}
+
+
+/* nav .icon{
+    display: none;
+} */
 .bar_colour{
     background: #091D4F;
 }
@@ -99,8 +134,8 @@ h1 {
 }
 
 @media only screen and (max-width: 600px) {
-    .nav-items a{display: none;}
-    nav .icon{
+    .nav-items a:not(:first-child){display: none;}
+    .nav-items a.icon{
         /* position: relative; */
         float: right;
         display: block;
@@ -108,7 +143,7 @@ h1 {
 }
 
 /* The "responsive" class is added to the topnav with JavaScript when the user clicks on the icon. This class makes the topnav look good on small screens (display the links vertically instead of horizontally) */
-@media only screen and (max-width: 600px) {
+/* @media only screen and (max-width: 600px) {
   nav.responsive .nav-items{position: relative;}
   nav.responsive .icon {
     position: absolute;
@@ -118,9 +153,31 @@ h1 {
   nav.responsive .nav-items a{
     display: block;
     float: none;
-    /* position: relative;
+    position: relative;
     top: 80%;
-    text-align: left; */
+    text-align: left;
   }
+} */
+@media only screen and (max-width: 600px) {
+    .nav-items.responsive{
+        position: fixed;
+    }
+    div#topnav.nav-items.responsive a.icon{
+        position: absolute;
+        right: 0;
+        top: 0;
+    }
+
+    div#topnav.nav-items.responsive a.brand-logo{
+        float: left;
+    }
+    div#topnav.nav-items.responsive a{
+        display: block;
+        float: none;
+    }
+
+    /* div#topnav.nav-items.responsive a.brand-logo{
+         float: left;
+    } */
 
 }
