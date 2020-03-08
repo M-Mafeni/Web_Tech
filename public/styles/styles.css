@@ -15,6 +15,7 @@ nav{
     display: block;
     z-index: 150;
     overflow: hidden;
+    transition: background 0.5s;
 }
 
 ul li a {
@@ -34,11 +35,12 @@ ul li a {
     text-align: center;
     font-size: 150%;
     color: white;
+    transition: background 0.3s;
 }
 
 .nav-items a:hover{
     background: #007cbf;
-    /* background: red; */
+
 }
 .nav-items a.brand-logo{
     /* position: absolute;
@@ -124,7 +126,8 @@ body{
 }
 
 .nav_logo {
-    height: 80px;
+    margin: 5px 0;
+    height: 40px;
 }
 
 @media only screen and (max-width: 600px) {
@@ -171,7 +174,7 @@ body{
     margin:auto;
     margin-top: 10%;
     margin-bottom: 5%;
-    width: 85%;
+    width: 83%;
 }
 
 .header {
@@ -185,15 +188,17 @@ body{
 }
 
 .about_logo {
-    display: block;
-    margin: auto;
+    float:left;
+    height: 130px;
+    width: auto;
+    margin: 5% 2%;
 }
 
 .left_col {
     float: left;
     height: 250px;
     width: auto;
-    margin: 0 2%;
+    margin-right: 5%
 }
 
 .about_images {
@@ -205,7 +210,11 @@ body{
     float:right;
     height: 250px;
     width: auto;
-    margin: 0 2%;
+    margin-left: 2%;
+}
+
+.about_us p {
+    margin-top: 7%;
 }
 
 footer {
@@ -213,16 +222,17 @@ footer {
     padding: 8px 30px;
     color: white;
     font-size: 15px;
-    height: 100px;
+    height: 110px;
 }
 
-footer img {
+footer svg {
     height: 40px;
     width: auto;
 }
 
 footer a {
     color: #007cbf;
+    transition: color 0.3s;
 }
 
 footer a:hover {
@@ -238,4 +248,8 @@ footer a:hover {
     margin-top: 2%;
     float: right;
     margin-right: 5%;
+}
+
+footer svg:hover path {
+    fill: #2cbcad !important;
 }
