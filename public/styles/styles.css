@@ -139,28 +139,15 @@ h1 {
 @media only screen and (max-width: 600px) {
     .nav-items a:not(:first-child){display: none;}
     .nav-items a.icon{
-        /* position: relative; */
         float: right;
         display: block;
     }
 }
 
-/* The "responsive" class is added to the topnav with JavaScript when the user clicks on the icon. This class makes the topnav look good on small screens (display the links vertically instead of horizontally) */
-/* @media only screen and (max-width: 600px) {
-  nav.responsive .nav-items{position: relative;}
-  nav.responsive .icon {
-    position: absolute;
-    right: 0;
-    top: 0;
-  }
-  nav.responsive .nav-items a{
-    display: block;
-    float: none;
-    position: relative;
-    top: 80%;
-    text-align: left;
-  }
-} */
+.btn{
+    background: #00304A;
+}
+
 @media only screen and (max-width: 600px) {
     .nav-items.responsive{
         position: fixed;
