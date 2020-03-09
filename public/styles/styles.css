@@ -1,3 +1,7 @@
+:root{
+    --main-bg-colour: #007cbf;
+    --dark-blue-banner: #00304A;
+}
 html {
   scroll-behavior: smooth;
   font-family: 'Rubik', sans-serif;
@@ -48,8 +52,7 @@ ul li a {
 }
 
 .nav-items a:hover{
-    background: #007cbf;
-
+    background: var(--main-bg-colour);
 }
 .nav-items a.brand-logo{
     /* position: absolute;
@@ -75,6 +78,10 @@ ul li a{
     background: #00304a;
 }
 
+.login-title{
+    font-size: 3em;
+    text-align: center;
+}
 .login-form{
     display: none;
     position: fixed;
@@ -92,8 +99,8 @@ ul li a{
 
 .login-form-container{
     margin: auto;
-    height: 55%;
-    width: 15%;
+    height: 310px;
+    width: 250px;
     background: #007cbf;
 }
 
@@ -119,13 +126,19 @@ body{
 }
 
 .booking_bar{
-    background: #007cbf;
     height: 100px;
     width: 60%;
     margin: 5% auto;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    border-radius: 15px;
+}
+
+.booking_form{
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background: var(--main-bg-colour);
     border-radius: 15px;
 }
 
@@ -140,7 +153,7 @@ body{
 }
 
 @media only screen and (max-width: 600px) {
-    .nav-items a:not(:first-child){display: none;}
+    .nav-wrapper a{display: none;}
     .nav-items a.icon{
         float: right;
         display: block;
@@ -161,21 +174,39 @@ body{
         top: 0;
     }
 
-    div#topnav.nav-items.responsive a.brand-logo{
-        float: left;
-    }
-    div#topnav.nav-items.responsive a{
+
+    div#topnav.nav-items.responsive a.nav_links{
         padding-right: 20px;
         display: block;
         float: none;
-        font-size: 125%;
-
+        margin-top: 2%;
     }
 
-    /* div#topnav.nav-items.responsive a.brand-logo{
-         float: left;
-    } */
-
+    .advert_text{
+        position: relative;
+        top: 25%;
+        font-size: 50px;
+    }
+    .booking_bar{
+        position: relative;
+        top: 30%;
+    }
+    .form_item{
+        width:80%;
+    }
+    div.header {
+        font-size: 40px;
+        width: 65%;
+    }
+    img.about_logo{
+        height: 65px;
+    }
+    img.right_col{
+        height: 160px;
+    }
+    img.left_col{
+        height:160px;
+    }
 }
 
 .about_us{
@@ -232,6 +263,13 @@ footer {
     color: white;
     font-size: 15px;
     height: 83px;
+}
+
+@media only screen and (max-width: 600px) {
+    footer{
+        padding: 0px 0px;
+        font-size: 10px;
+    }
 }
 
 footer svg {
