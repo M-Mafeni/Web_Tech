@@ -14,29 +14,16 @@
 
     <head>
         <link rel="icon" media="(prefers-color-scheme:light)" type="image/png" href="/assets/favicon_black.png"></link>
-        <link rel="icon" media="(prefers-color-scheme:dark)" type="image/png" href="/assets/favicon_white.png"></link>
         <meta charset="UTF-8"/>
         <title>Astra</title>
     </head>
-    <!-- <nav>
-        <div class="nav-wrapper">
-            <a href="#"><img src="/assets/logo_white.svg" class="nav_logo"></img></a>
-            <ul class="right hide-on-med-and-down">
-                <li><a href="#about_us">About Us</a></li>
-                <li><a href="#" onclick="openForm()">Login/Register</a></li>
-                <li><a href="#" class="icon" onclick="makeBarResponsive()"><i class="fa fa-bars"></i>
-                </a></li>
-            </ul>
-        </div>
-    </nav> -->
     <div class="nav-items" id= "topnav">
         <a href="#" class="brand-logo"><img class="nav_logo" src="/assets/logo_white_embedded.svg"></img></a>
        <div class="nav-wrapper">
            <a class="nav_links" href="#" onclick="openForm()">Login/Register</a>
             <a class="nav_links" href="#about_us">About Us</a>
-            <a href="#" class="icon" onclick="makeBarResponsive()"><i class="fa fa-bars"></i></a>
+            <a class="icon" onclick="makeBarResponsive()"><i class="fa fa-bars"></i></a>
        </div>
-
     </div>
 
 
@@ -65,7 +52,7 @@
             </div>
 
             <div class="booking_bar">
-                <form class="booking_form" action="/" method="post">
+                <form class="booking_form" action="/bookings.html" method="post">
                     <div class="form_item">
                         <input type="text" name="origin" placeholder="Enter Origin Base"></input>
                     </div>
