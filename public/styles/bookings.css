@@ -74,3 +74,12 @@ body {
     background-color:var(--dark-blue-banner);
     /* background: transparent !important; */
 }
+
+h1 {
+    font-size: 150%;
+    margin-top: 2%;
+}
+
+.summary_details {
+    margin-bottom: 10%;
+}
