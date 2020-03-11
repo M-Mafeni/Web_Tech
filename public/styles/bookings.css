@@ -83,3 +83,8 @@ h1 {
 .summary_details {
     margin-bottom: 10%;
 }
+
+.summary_price {
+    font-size: 180%;
+    margin-bottom: 10%;
+}

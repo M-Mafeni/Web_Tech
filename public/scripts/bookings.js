@@ -10,10 +10,12 @@ function ticket_selected() {
     $(this).addClass("ticket-selected");
 
     var source = $(this).find(".source");
+    var departureDate = source.find(".date").text();
     var departureTime = source.find(".time").text();
     var departureLoc = source.find(".location").text();
 
     var destination = $(this).find(".destination");
+    var arrivalDate = destination.find(".date").text();
     var arrivalTime = destination.find(".time").text();
     var arrivalLoc = destination.find(".location").text();
 
@@ -25,5 +27,6 @@ function ticket_selected() {
     // console.log(arrivalLoc);
     // console.log(price);
 
-    $("#summary_details").html(departureTime + " " + departureLoc + "<br/>" + arrivalTime + " " + arrivalLoc + "<br/>" + price);
+    $("#summary_details").html(departureDate + "<br/>" + departureTime + " " + departureLoc + "<br/><br/>" + arrivalDate + "<br/>" + arrivalTime + " " + arrivalLoc);
+    $("#summary_price").text(price);
 }
