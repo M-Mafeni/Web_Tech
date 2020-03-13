@@ -25,6 +25,9 @@
             <a href="#" class="icon" onclick="makeBarResponsive()"><i class="fa fa-bars"></i></a>
        </div>
     </div>
+    <div class = "summary-icon" onclick="showSummary()">
+        Summary
+    </div>
     <div class="login-form" id = "loginForm">
         <form class="login-form-container" id = "loginFormContent" action="/" method="post">
             <h1 class="login-title">Login</h1>
@@ -78,9 +81,45 @@
                         <br/>
                         <span class="time">01:00</span>
                         <br/>
-                        <span class="location">UK</span>
+                        <span class="location">United Kingdom</span>
                     </div>
                     <span class="ticket-content price">£250</span>
+                </div>
+                
+                <div class="ticket-card">
+                    <div class="ticket-content source left" >
+                        <span class="date">23 Mar 2020</span>
+                        <br/>
+                        <span class="time">12:30</span>
+                        <br/>
+                        <span class="location">UK</span>
+                    </div>
+                    <div class="ticket-content destination">
+                        <span class="date">24 Mar 2020</span>
+                        <br/>
+                        <span class="time">18:00</span>
+                        <br/>
+                        <span class="location">Int'l Space Station</span>
+                    </div>
+                    <span class="ticket-content price">£200</span>
+                </div>
+                
+                <div class="ticket-card">
+                    <div class="ticket-content source left" >
+                        <span class="date">22 Mar 2020</span>
+                        <br/>
+                        <span class="time">19:30</span>
+                        <br/>
+                        <span class="location">Mars Colony One</span>
+                    </div>
+                    <div class="ticket-content destination">
+                        <span class="date">23 Mar 2020</span>
+                        <br/>
+                        <span class="time">08:00</span>
+                        <br/>
+                        <span class="location">Moon base</span>
+                    </div>
+                    <span class="ticket-content price">£350</span>
                 </div>
 
             </div>
@@ -91,14 +130,18 @@
                 <button type="button" name="next" class = "btn">Next</button>
             </div>
         </div>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        
+        <div class = "summary-mobile" id="mobile_summary">
+                <h1>Summary</h1>
+                <div id = "summary_price_mobile" class = "summary_price"></div>
+                <div id = "summary_details_mobile" class = "summary_details">No ticket selected</div>
+            <button class="btn close" onclick="closeSummary()">
+                Close
+            </button>
+        </div>
+
     </body>
+    <button class="btn next-mobile">Next</button>
     <footer>
         <div class="footer_text">
             <p>

@@ -26,7 +26,25 @@ function ticket_selected() {
     // console.log(arrivalTime);
     // console.log(arrivalLoc);
     // console.log(price);
+    
+    if ($(window).width() < 1500) {
+        $("#summary_details_mobile").html(departureDate + "<br/>" + departureTime + " " + departureLoc + "<br/><br/>" + arrivalDate + "<br/>" + arrivalTime + " " + arrivalLoc);
+        $("#summary_price_mobile").text(price);
+        
+    } else {
+        // code for large viewports
+        $("#summary_details").html(departureDate + "<br/>" + departureTime + " " + departureLoc + "<br/><br/>" + arrivalDate + "<br/>" + arrivalTime + " " + arrivalLoc);
+        $("#summary_price").text(price);
+    }
 
-    $("#summary_details").html(departureDate + "<br/>" + departureTime + " " + departureLoc + "<br/><br/>" + arrivalDate + "<br/>" + arrivalTime + " " + arrivalLoc);
-    $("#summary_price").text(price);
+
+}
+
+function showSummary(){
+    console.log("clicked");
+    $("#mobile_summary").show();
+}
+
+function closeSummary(){
+    $("#mobile_summary").hide();
 }
