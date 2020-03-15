@@ -111,28 +111,34 @@ h1 {
     height: auto;
     width: auto;
     position: fixed;
-    top: 9%;
+    top: 60px;
 /*    left: 65%;*/
     right: 0%;
     font-size: 165%;
     color: white;
     background: #1f877d;
     display: none;
+    padding: 2%;
+    border-radius: 15px;
 }
+
 .summary-mobile{
-    width: 100%;
-    height: 100%;
+    width: 50%;
+    right:0;
     z-index: 50;
     background: var(--summary-colour);
     position: fixed;
     top:9%;
     display: none;
+    padding: 5%;
+    border-radius: 15px;
 }
 
-.next-mobile {
+.continue-mobile {
     position: relative;
     left:45%;
     margin-bottom: 2%;
+    margin-top: 2%;
     display: none;
 }
 .close{
@@ -172,7 +178,7 @@ h1 {
     div.ticket-content{
         /* font-size: 60%; */
     }
-    .next-mobile{
+    .continue-mobile{
         display: block;
     }
 }
@@ -191,4 +197,8 @@ h1 {
     .source, .destination {
         width: 33%;
     }
+}
+
+@media only screen and (max-width: 450px) {
+
 }
