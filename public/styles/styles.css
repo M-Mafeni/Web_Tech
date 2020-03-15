@@ -2,6 +2,7 @@
     --main-bg-colour: #007cbf;
     --dark-blue-banner: #00304A;
 }
+
 html {
   scroll-behavior: smooth;
   font-family: 'Rubik', sans-serif;
@@ -43,8 +44,8 @@ ul li a {
     /* right: 1%; */
     float: right;
     display: inline-block;
-    padding-right:25px;
-    padding-left:25px;
+    padding-right: 4%;
+    padding-left: 4%;
     text-align: center;
     font-size: 100%;
     color: white;
@@ -54,11 +55,24 @@ ul li a {
 .nav-items a:hover{
     background: var(--main-bg-colour);
 }
-.nav-items a.brand-logo{
+
+.nav_favicon {
+    width: 15%;
+    height: auto;
+    margin-top: 3%;
+}
+
+.nav-items a.brand-logo {
     /* position: absolute;
     left: 2%; */
     float: left;
 }
+
+.nav-items a.brand-favicon {
+    float: left;
+    padding: 0;
+}
+
 .nav-items .icon{
     display: none;
 }

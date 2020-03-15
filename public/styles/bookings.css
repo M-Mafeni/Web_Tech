@@ -32,6 +32,7 @@ body {
 .ticket-card{
     background: var(--main-bg-colour);
     padding: 1% 10%;
+    padding-bottom: 3%;
     margin: 2%;
     border-radius: 15px;
     -webkit-user-select: initial;
@@ -140,11 +141,11 @@ h1 {
 /*    bottom: 0%;*/
     left:40%
 }
-@media only screen and (max-width: 1500px) {
+@media only screen and (max-width: 1000px) {
     .price{
-        float: none;
+        /* float: none;
         font-size: 100%;
-        position: relative;
+        position: relative; */
 /*        left:4%;*/
 /*        right:40%;*/
 /*        bottom: 0%;*/
@@ -155,7 +156,7 @@ h1 {
     }
 
     body{
-        margin-top: 20%
+        /* margin-top: 5% */
     }
 
     .summary{
@@ -169,9 +170,25 @@ h1 {
         width: 100%
     }
     div.ticket-content{
-        font-size: 60%;
+        /* font-size: 60%; */
     }
     .next-mobile{
         display: block;
+    }
+}
+
+@media only screen and (max-width: 780px) {
+    .sideways_rocket {
+        width: 30%;
+    }
+
+    .price {
+        float: none;
+        display: block;
+        margin-bottom: 2%;
+    }
+
+    .source, .destination {
+        width: 33%;
     }
 }
