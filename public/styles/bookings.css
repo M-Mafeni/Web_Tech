@@ -48,11 +48,30 @@ body {
 
 .ticket-content{
     display: inline-block;
-    /* padding-right: %; */
 }
 
-.time-place{
-    /* display: inline-block; */
+.source {
+    width: 25%;
+    /* margin-right: 2%; */
+}
+
+.sideways_rocket {
+    width: 25%;
+    /* margin: 0 2%; */
+    /* margin-right: 2%; */
+}
+
+.sideways_rocket img {
+    width: 50%;
+    height: auto;
+    margin-left: 15%;
+    /* margin-right: auto; */
+    /* display: block; */
+}
+
+.destination {
+    /* margin-right: 2%; */
+    width: 25%;
 }
 
 .price{
@@ -60,12 +79,6 @@ body {
     top: 50%; */
     float:right;
     font-size: 200%;
-}
-
-
-.left{
-    margin-right: 25%;
-    /* margin-left: 10%; */
 }
 
 .summary{
@@ -139,7 +152,7 @@ h1 {
     .summary-icon{
         display: block;
     }
-    
+
     body{
         margin-top: 20%
     }
@@ -161,5 +174,3 @@ h1 {
         display: block;
     }
 }
-
-
