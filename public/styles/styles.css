@@ -57,7 +57,7 @@ ul li a {
 }
 
 .nav_favicon {
-    width: 15%;
+    width: 10%;
     height: auto;
     margin-top: 3%;
 }
@@ -71,6 +71,8 @@ ul li a {
 .nav-items a.brand-favicon {
     float: left;
     padding: 0;
+    margin-left: -90px;
+    display: none;
 }
 
 .nav-items .icon{
@@ -220,6 +222,14 @@ body{
     }
     img.left_col{
         height:160px;
+    }
+
+    .nav-items a.brand-logo {
+        display: none;
+    }
+
+    .nav-items a.brand-favicon {
+        display: block;
     }
 }
 
