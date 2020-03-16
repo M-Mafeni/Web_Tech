@@ -151,7 +151,7 @@ h1 {
 .summary-mobile {
     margin: 2% 5%;
     display: none;
-    padding-bottom: 8%;
+    padding-bottom: 20%;
 }
 
 .summary_price_mobile {
@@ -162,15 +162,15 @@ h1 {
 
 .summary_details_mobile_source {
     font-size: 60%;
-    width: 50%;
+    width: 40%;
     display: inline-block;
     float: left;
+    margin-right: 15%;
 }
 
 .summary_details_mobile_destination {
     font-size: 60%;
-    width: 50%;
-    left:50%;
+    width: 40%;
     display: inline-block;
     float: right;
 }
@@ -202,7 +202,9 @@ h1 {
 
 @media only screen and (max-width: 780px) {
     .sideways_rocket {
-        width: 30%;
+        width: 35%;
+        margin-left: -5%;
+        margin-right: -5%;
     }
 
     .price {
@@ -217,5 +219,23 @@ h1 {
 }
 
 @media only screen and (max-width: 450px) {
+    body {
+        margin-top: 15%;
+        font-size: 110%;
+    }
 
+    .ticket-card {
+        padding-left: 5%;
+        padding-right: 5%;
+    }
+
+    .sideways_rocket {
+        width: 30%;
+        margin-left: -5%;
+        margin-right: -5%;
+    }
+
+    .source, .destination {
+        width: 38%;
+    }
 }

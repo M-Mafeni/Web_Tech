@@ -289,13 +289,6 @@ footer {
     height: 83px;
 }
 
-@media only screen and (max-width: 600px) {
-    footer{
-        padding: 0px 0px;
-        font-size: 10px;
-    }
-}
-
 footer svg {
     height: 40px;
     width: auto;
@@ -327,4 +320,17 @@ footer a:hover {
 
 footer svg:hover path {
     fill: #2cbcad !important;
+}
+
+@media only screen and (max-width: 600px) {
+    footer{
+        padding: 0px 0px;
+        font-size: 10px;
+        height: 50px;
+    }
+
+    footer svg {
+        width: 20px;
+        height: auto;
+    }
 }
