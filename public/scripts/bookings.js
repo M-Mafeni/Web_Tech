@@ -21,30 +21,31 @@ function ticket_selected() {
 
     var price = $(this).find(".price").text();
 
-    // console.log(departureTime);
-    // console.log(departureLoc);
-    // console.log(arrivalTime);
-    // console.log(arrivalLoc);
-    // console.log(price);
-    
-    if ($(window).width() < 1500) {
-        $("#summary_details_mobile").html(departureDate + "<br/>" + departureTime + " " + departureLoc + "<br/><br/>" + arrivalDate + "<br/>" + arrivalTime + " " + arrivalLoc);
-        $("#summary_price_mobile").text(price);
-        
-    } else {
-        // code for large viewports
-        $("#summary_details").html(departureDate + "<br/>" + departureTime + " " + departureLoc + "<br/><br/>" + arrivalDate + "<br/>" + arrivalTime + " " + arrivalLoc);
-        $("#summary_price").text(price);
-    }
+    $("#summary-title-mobile").text("Summary");
+    $(".summary_details_mobile_source").html(departureDate + "<br/>" + departureTime + " " + departureLoc);
+    $(".summary_details_mobile_destination").html(arrivalDate + "<br/>" + arrivalTime + " " + arrivalLoc);
+    $("#summary_price_mobile").text(price);
 
+    // code for large viewports
+    $("#summary_details").html(departureDate + "<br/>" + departureTime + " " + departureLoc + "<br/><br/>" + arrivalDate + "<br/>" + arrivalTime + " " + arrivalLoc);
+    $("#summary_price").text(price);
 
+    // display continue buttons
+    $(".no-continue").removeClass("no-continue");
+
+    // display arrows
+    if ($(".fa-angle-double-up").hasClass("disable-fa")) $(".fa-angle-double-down").removeClass("disable-fa");
 }
 
 function showSummary(){
     console.log("clicked");
     $("#mobile_summary").show();
+    $(".fa-angle-double-down").addClass("disable-fa");
+    $(".fa-angle-double-up").removeClass("disable-fa");
 }
 
 function closeSummary(){
     $("#mobile_summary").hide();
+    $(".fa-angle-double-up").addClass("disable-fa");
+    $(".fa-angle-double-down").removeClass("disable-fa");
 }
