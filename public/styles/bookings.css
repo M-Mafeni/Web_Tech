@@ -25,16 +25,15 @@ body {
 
 .tickets{
     width:75%;
-    /* background: var(--main-bg-colour); */
-
 }
 
 .ticket-card{
     background: var(--main-bg-colour);
-    padding: 0 10%;
+    padding-left: 10%;
+    padding-right: 7%;
     padding-bottom: 3%;
-    margin: 2%;
     padding-top: 2%;
+    margin: 2%;
     border-radius: 15px;
     -webkit-user-select: initial;
 }
@@ -45,7 +44,6 @@ body {
 
 .ticket-card:hover{
     cursor: pointer;
-    /* background: green; */
 }
 
 .ticket-content{
@@ -54,46 +52,40 @@ body {
 }
 
 .source {
-    width: 25%;
-    /* margin-right: 2%; */
+    width: 28%;
 }
 
 .sideways_rocket {
     width: 25%;
-    /* margin: 0 2%; */
-    /* margin-right: 2%; */
+    margin-left: -3%;
+    margin-right: -3%;
 }
 
 .sideways_rocket img {
     width: 50%;
     height: auto;
     margin-left: 15%;
-    /* margin-right: auto; */
-    /* display: block; */
 }
 
 .destination {
-    /* margin-right: 2%; */
-    width: 25%;
+    width: 28%;
 }
 
 .price{
-    /* position: relative;
-    top: 50%; */
     float:right;
     font-size: 200%;
 }
 
 .summary{
-    width: 20%;
+    width: 22%;
     background: var(--summary-colour);
     border-radius: 15px;
     padding: 2%;
+    margin: 0;
 }
 
 .btn:focus{
     background-color:var(--dark-blue-banner);
-    /* background: transparent !important; */
 }
 
 h1 {
@@ -113,10 +105,7 @@ h1 {
 .summary-icon {
     height: auto;
     width: auto;
-    /* position: fixed; */
     top: 60px;
-/*    left: 65%;*/
-    /* right: 0%; */
     font-size: 165%;
     color: white;
     background: #1f877d;
@@ -127,9 +116,6 @@ h1 {
 }
 
 .continue-mobile {
-    /* position: relative; */
-    /* left:45%; */
-    /* margin-bottom: 2%; */
     margin-top: 2%;
     display: none;
     width: 100%;
@@ -151,7 +137,6 @@ h1 {
 .summary-mobile {
     margin: 2% 5%;
     display: none;
-    padding-bottom: 20%;
 }
 
 .summary_price_mobile {
@@ -166,6 +151,7 @@ h1 {
     display: inline-block;
     float: left;
     margin-right: 15%;
+    margin-top: 1%;
 }
 
 .summary_details_mobile_destination {
@@ -173,12 +159,12 @@ h1 {
     width: 40%;
     display: inline-block;
     float: right;
+    margin-top: 1%;
 }
 
 .close{
     position: relative;
     top:75%;
-/*    bottom: 0%;*/
     left:40%
 }
 
@@ -218,9 +204,15 @@ h1 {
     }
 }
 
+@media only screen and (max-width: 520px) {
+    body {
+        font-size: 130%;
+    }
+}
+
 @media only screen and (max-width: 450px) {
     body {
-        margin-top: 15%;
+        margin-top: 10%;
         font-size: 110%;
     }
 
@@ -237,5 +229,11 @@ h1 {
 
     .source, .destination {
         width: 38%;
+    }
+}
+
+@media only screen and (max-width: 350px) {
+    body {
+        margin-top: 15%;
     }
 }
