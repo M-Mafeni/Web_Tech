@@ -1,8 +1,11 @@
 "use strict";
 
 $(document).ready(start);
+
+
 function start(){
     $(".ticket-card").click(ticket_selected);
+    $(window).scroll(fixSummary);
 }
 
 function ticket_selected() {
@@ -48,4 +51,17 @@ function closeSummary(){
     $("#mobile_summary").hide();
     $(".fa-angle-double-up").addClass("disable-fa");
     $(".fa-angle-double-down").removeClass("disable-fa");
+}
+
+function fixSummary() {
+    var fromTop = $(window).scrollTop();
+    var summaryOffset = $("#summaryTop").position().top - 20;
+
+    if (fromTop > summaryOffset) {
+        console.log("hi")
+        $("#summary").addClass("summary_fixed");
+
+    } else {
+        $("#summary").removeClass("summary_fixed");
+    }
 }

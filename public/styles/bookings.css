@@ -71,20 +71,27 @@ body {
     width: 28%;
 }
 
-.price{
+.price {
     float:right;
     font-size: 200%;
 }
 
-.summary{
-    width: 22%;
+.summary {
+    width: 23%;
+    margin: 0;
+    position: absolute;
+    right: 2.2%;
     background: var(--summary-colour);
     border-radius: 15px;
     padding: 2%;
-    margin: 0;
 }
 
-.btn:focus{
+.summary_fixed {
+    position: fixed;
+    top: 20px;
+}
+
+.btn:focus {
     background-color:var(--dark-blue-banner);
 }
 
