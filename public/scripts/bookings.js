@@ -2,7 +2,6 @@
 
 $(document).ready(start);
 
-
 function start(){
     $(".ticket-card").click(ticket_selected);
     $(window).scroll(fixSummary);
@@ -37,20 +36,20 @@ function ticket_selected() {
     $(".no-continue").removeClass("no-continue");
 
     // display arrows
-    if ($(".fa-angle-double-up").hasClass("disable-fa")) $(".fa-angle-double-down").removeClass("disable-fa");
+    if ($(".fa-angle-double-down").hasClass("disable-fa")) $(".fa-angle-double-up").removeClass("disable-fa");
 }
 
 function showSummary(){
     console.log("clicked");
     $("#mobile_summary").show();
-    $(".fa-angle-double-down").addClass("disable-fa");
-    $(".fa-angle-double-up").removeClass("disable-fa");
+    $(".fa-angle-double-up").addClass("disable-fa");
+    $(".fa-angle-double-down").removeClass("disable-fa");
 }
 
 function closeSummary(){
     $("#mobile_summary").hide();
-    $(".fa-angle-double-up").addClass("disable-fa");
-    $(".fa-angle-double-down").removeClass("disable-fa");
+    $(".fa-angle-double-down").addClass("disable-fa");
+    $(".fa-angle-double-up").removeClass("disable-fa");
 }
 
 function fixSummary() {
@@ -58,7 +57,6 @@ function fixSummary() {
     var summaryOffset = $("#summaryTop").position().top - 20;
 
     if (fromTop > summaryOffset) {
-        console.log("hi")
         $("#summary").addClass("summary_fixed");
 
     } else {

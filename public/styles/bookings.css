@@ -1,4 +1,5 @@
 :root{
+    --ticket-highlight: #1e875b;
     --summary-colour: #1f877d;
 }
 .nav-items{
@@ -39,7 +40,7 @@ body {
 }
 
 .ticket-selected {
-    background: var(--summary-colour);
+    background: var(--ticket-highlight);;
 }
 
 .ticket-card:hover{
@@ -110,16 +111,16 @@ h1 {
 }
 
 .summary-icon {
-    height: auto;
-    width: auto;
-    top: 60px;
     font-size: 165%;
-    color: white;
-    background: #1f877d;
+    background: var(--summary-colour);
     display: none;
     padding: 2% 4%;
+    position: fixed;
+    width: 100%;
+    left: 0;
+    bottom: 0;
     border-radius: 15px;
-    margin-bottom: 6%;
+    box-shadow: 10px 10px 30px black;
 }
 
 .continue-mobile {
