@@ -61,7 +61,33 @@
         <div class="row">
             <div class="column tickets">
                 <h1>Outbound Journeys</h1>
-
+                {{#each tickets}}
+                <div class="ticket-card">
+                    <div class="ticket-content price">£{{price}}</div>
+                    <div class="ticket-content source" >
+                        <span class="date">{{origin_date}}</span>
+                        <br/>
+<!--
+                        <span class="time">19:30</span>
+                        <br/>
+-->
+                        <span class="location">{{origin_place}}</span>
+                    </div>
+                    <div class="ticket-content sideways_rocket">
+                        <img src="assets/sideways_rocket.svg"></img>
+                    </div>
+                    <div class="ticket-content destination">
+                        <span class="date">{{destination_date}}</span>
+                        <br/>
+<!--
+                        <span class="time">08:00</span>
+                        <br/>
+-->
+                        <span class="location">{{destination_place}}</span>
+                    </div>
+                </div>
+                {{/each}}
+<!--
                 <div class="ticket-card">
                     <div class="ticket-content price">£400</div>
                     <div class="ticket-content source" >
@@ -145,6 +171,7 @@
                         <span class="location">Moon Base</span>
                     </div>
                 </div>
+-->
 
             </div>
             <span id = "summaryTop"></span>
