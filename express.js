@@ -4,6 +4,8 @@ const exphbs  = require('express-handlebars');
 const api = require('./api');
 const app = express();
 const port = 8080;
+const sqlite = require('sqlite3').verbose();
+let db = new sqlite.Database('./astra.db');
 let OK = 200, NotFound = 404, BadType = 415, Error = 500;
 
 app.set('views', './views');
@@ -22,14 +24,17 @@ app.get('/',function (req,res) {
 });
 
 app.get('/bookings.html',function (req,res) {
-    let sql = "SELECT * FROM Ticket";
-    api.db.all(sql,[],(err,tickets) => {
+    let origin = req.query.origin;
+    let destination = req.query.destination;
+    let date = req.query.date;
+    console.log(date);
+    let sql = "SELECT * FROM Ticket WHERE origin_place = ? AND destination_place = ? AND date(origin_date) = ? ";
+    db.all(sql,[origin,destination,date],(err,tickets) => {
         if(err){
             throw err;
         }
         res.render('main',{layout:'bookings',
                    tickets: tickets  });
     });
-;
 });
 app.listen(port, () => console.log(`listening on port ${port}!`));

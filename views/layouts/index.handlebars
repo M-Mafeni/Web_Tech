@@ -34,7 +34,7 @@
 
         <section class="star_bg">
             <div class="login-form" id = "loginForm">
-                <form class="login-form-container" id = "loginFormContent" action="/" method="GET">
+                <form class="login-form-container" id = "loginFormContent" action="/" method="post">
                     <h1 class="login-title">Login</h1>
                     <label for="email">Email</label>
                     <div class="form_item">
@@ -54,15 +54,15 @@
             </div>
 
             <div class="booking_bar">
-                <form class="booking_form" method="GET" action="/bookings.html" method="post">
+                <form class="booking_form" method="GET" action="/bookings.html">
                     <div class="form_item">
-                        <input type="text" name="origin" placeholder="Enter Origin Base"></input>
+                        <input type="text" name="origin" placeholder="Enter Origin Base" required></input>
                     </div>
                     <div class="form_item">
-                        <input type="text" name="destination" placeholder="Enter Destination Base"></input>
+                        <input type="text" name="destination" placeholder="Enter Destination Base" required></input>
                     </div>
                     <div class="form_item">
-                        <input type="date" name="date" value=""></input>
+                        <input type="date" name="date" value="" required></input>
                     </div>
                     <div class="form_item">
                         <input class="btn" type="submit" value ="Submit"></input>

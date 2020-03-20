@@ -59,128 +59,46 @@
         </div>
 
         <div class="row">
-            <div class="column tickets">
+            {{#if tickets}}
+                    <div class="column tickets">
                 <h1>Outbound Journeys</h1>
-                {{#each tickets}}
-                <div class="ticket-card">
-                    <div class="ticket-content price">£{{price}}</div>
-                    <div class="ticket-content source" >
-                        <span class="date">{{origin_date}}</span>
-                        <br/>
-<!--
-                        <span class="time">19:30</span>
-                        <br/>
--->
-                        <span class="location">{{origin_place}}</span>
+                    {{#each tickets}}
+                    <div class="ticket-card">
+                        <div class="ticket-content price">£{{price}}</div>
+                        <div class="ticket-content source" >
+                            <span class="date">{{origin_date}}</span>
+                            <br/>
+                            <span class="location">{{origin_place}}</span>
+                        </div>
+                        <div class="ticket-content sideways_rocket">
+                            <img src="assets/sideways_rocket.svg"></img>
+                        </div>
+                        <div class="ticket-content destination">
+                            <span class="date">{{destination_date}}</span>
+                            <br/>
+                            <span class="location">{{destination_place}}</span>
+                        </div>
                     </div>
-                    <div class="ticket-content sideways_rocket">
-                        <img src="assets/sideways_rocket.svg"></img>
-                    </div>
-                    <div class="ticket-content destination">
-                        <span class="date">{{destination_date}}</span>
-                        <br/>
-<!--
-                        <span class="time">08:00</span>
-                        <br/>
--->
-                        <span class="location">{{destination_place}}</span>
-                    </div>
-                </div>
-                {{/each}}
-<!--
-                <div class="ticket-card">
-                    <div class="ticket-content price">£400</div>
-                    <div class="ticket-content source" >
-                        <span class="date">22 Mar 2020</span>
-                        <br/>
-                        <span class="time">19:30</span>
-                        <br/>
-                        <span class="location">USA</span>
-                    </div>
-                    <div class="ticket-content sideways_rocket">
-                        <img src="assets/sideways_rocket.svg"></img>
-                    </div>
-                    <div class="ticket-content destination">
-                        <span class="date">23 Mar 2020</span>
-                        <br/>
-                        <span class="time">08:00</span>
-                        <br/>
-                        <span class="location">Mars Colony One</span>
-                    </div>
-                </div>
-
-                <div class="ticket-card">
-                    <span class="ticket-content price">£250</span>
-                    <div class="ticket-content source" >
-                        <span class="date">11 Apr 2020</span>
-                        <br/>
-                        <span class="time">10:00</span>
-                        <br/>
-                        <span class="location">Moon Base</span>
-                    </div>
-                    <div class="ticket-content sideways_rocket">
-                        <img src="assets/sideways_rocket.svg"></img>
-                    </div>
-                    <div class="ticket-content destination">
-                        <span class="date">24 Apr 2020</span>
-                        <br/>
-                        <span class="time">01:00</span>
-                        <br/>
-                        <span class="location">UK</span>
-                    </div>
-                </div>
-
-                <div class="ticket-card">
-                    <span class="ticket-content price">£200</span>
-                    <div class="ticket-content source" >
-                        <span class="date">23 Mar 2020</span>
-                        <br/>
-                        <span class="time">12:30</span>
-                        <br/>
-                        <span class="location">UK</span>
-                    </div>
-                    <div class="ticket-content sideways_rocket">
-                        <img src="assets/sideways_rocket.svg"></img>
-                    </div>
-                    <div class="ticket-content destination">
-                        <span class="date">24 Mar 2020</span>
-                        <br/>
-                        <span class="time">18:00</span>
-                        <br/>
-                        <span class="location">International Space Station</span>
-                    </div>
-                </div>
-
-                <div class="ticket-card">
-                    <span class="ticket-content price">£350</span>
-                    <div class="ticket-content source" >
-                        <span class="date">22 Mar 2020</span>
-                        <br/>
-                        <span class="time">19:30</span>
-                        <br/>
-                        <span class="location">Mars Colony One</span>
-                    </div>
-                    <div class="ticket-content sideways_rocket">
-                        <img src="assets/sideways_rocket.svg"></img>
-                    </div>
-                    <div class="ticket-content destination">
-                        <span class="date">23 Mar 2020</span>
-                        <br/>
-                        <span class="time">08:00</span>
-                        <br/>
-                        <span class="location">Moon Base</span>
-                    </div>
-                </div>
--->
-
+                    {{/each}}
             </div>
             <span id = "summaryTop"></span>
             <div class="column summary" id = "summary">
+
                 <h1>Summary</h1>
                 <div id = "summary_price" class = "summary_price"></div>
                 <p id = "summary_details" class = "summary_details">No ticket selected</p>
                 <button type="button" name="continue" class = "btn no-continue">Continue</button>
             </div>
+            {{else}}
+                <no-tickets>
+            No tickets available for this journey
+        </no-tickets>
+            {{/if}}
+
+
+
+
+
         </div>
 
     </body>
