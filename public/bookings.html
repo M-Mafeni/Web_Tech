@@ -54,8 +54,16 @@
             <div id = "summary_price_mobile" class = "summary_price_mobile"></div>
 
             <div class = "summary-mobile" id="mobile_summary">
-                <p class = "summary_details_mobile_source"></p>
-                <p class = "summary_details_mobile_destination"></p>
+                <p class = "summary_details_mobile_source">
+                    <div class = "date departureDate"></div>
+                    <span class = "time departureTime"></span>
+                    <span class = "location departureLocation"></span>
+                </p>
+                <p class = "summary_details_mobile_destination">
+                    <div class = "date arrivalDate"></div>
+                    <span class = "time arrivalTime"></span>
+                    <span class = "location arrivalLocation"></span>
+                </p>
             </div>
             <button class="btn continue-mobile no-continue">Continue</button>
         </div>
@@ -69,6 +77,7 @@
                     <div class="ticket-content source" >
                         <span class="date">22 Mar 2020</span>
                         <br/>
+                        <i class="fa fa-clock-o"></i>
                         <span class="time">19:30</span>
                         <br/>
                         <i class="fa fa-map-marker"></i>
@@ -80,6 +89,7 @@
                     <div class="ticket-content destination">
                         <span class="date">23 Mar 2020</span>
                         <br/>
+                        <i class="fa fa-clock-o"></i>
                         <span class="time">08:00</span>
                         <br/>
                         <i class="fa fa-map-marker"></i>
@@ -92,6 +102,7 @@
                     <div class="ticket-content source" >
                         <span class="date">11 Apr 2020</span>
                         <br/>
+                        <i class="fa fa-clock-o"></i>
                         <span class="time">10:00</span>
                         <br/>
                         <i class="fa fa-map-marker"></i>
@@ -103,6 +114,7 @@
                     <div class="ticket-content destination">
                         <span class="date">24 Apr 2020</span>
                         <br/>
+                        <i class="fa fa-clock-o"></i>
                         <span class="time">01:00</span>
                         <br/>
                         <i class="fa fa-map-marker"></i>
@@ -115,6 +127,7 @@
                     <div class="ticket-content source" >
                         <span class="date">23 Mar 2020</span>
                         <br/>
+                        <i class="fa fa-clock-o"></i>
                         <span class="time">12:30</span>
                         <br/>
                         <i class="fa fa-map-marker"></i>
@@ -126,6 +139,7 @@
                     <div class="ticket-content destination">
                         <span class="date">24 Mar 2020</span>
                         <br/>
+                        <i class="fa fa-clock-o"></i>
                         <span class="time">18:00</span>
                         <br/>
                         <i class="fa fa-map-marker"></i>
@@ -138,6 +152,7 @@
                     <div class="ticket-content source" >
                         <span class="date">22 Mar 2020</span>
                         <br/>
+                        <i class="fa fa-clock-o"></i>
                         <span class="time">19:30</span>
                         <br/>
                         <i class="fa fa-map-marker"></i>
@@ -149,6 +164,7 @@
                     <div class="ticket-content destination">
                         <span class="date">23 Mar 2020</span>
                         <br/>
+                        <i class="fa fa-clock-o"></i>
                         <span class="time">08:00</span>
                         <br/>
                         <i class="fa fa-map-marker"></i>
@@ -160,8 +176,17 @@
             <span id = "summaryTop"></span>
             <div class="column summary" id = "summary">
                 <h1>Summary</h1>
+                <p id = "unselected">No ticket selected</p>
                 <div id = "summary_price" class = "summary_price"></div>
-                <p id = "summary_details" class = "summary_details">No ticket selected</p>
+                <div id = "summary_details" class = "summary_details">
+                    <div class = "date departureDate"></div>
+                    <span class = "time departureTime"></span>
+                    <span class = "location departureLocation"></span>
+                    <div id = "arrivalDate" class = "date arrivalDate"></div>
+                    <span class = "time arrivalTime"></span>
+                    <span class = "location arrivalLocation"></span>
+                </div>
+
                 <button type="button" name="continue" class = "btn no-continue">Continue</button>
             </div>
         </div>

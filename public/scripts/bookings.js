@@ -24,12 +24,17 @@ function ticket_selected() {
     var price = $(this).find(".price").text();
 
     $("#summary-title-mobile").text("Summary");
-    $(".summary_details_mobile_source").html(departureDate + "<br/>" + departureTime + " " + departureLoc);
-    $(".summary_details_mobile_destination").html(arrivalDate + "<br/>" + arrivalTime + " " + arrivalLoc);
     $("#summary_price_mobile").text(price);
 
     // code for large viewports
-    $("#summary_details").html(departureDate + "<br/>" + departureTime + " " + departureLoc + "<br/><br/>" + arrivalDate + "<br/>" + arrivalTime + " " + arrivalLoc);
+    $("#unselected").remove();
+    $("#summary_details").show();
+    $(".departureDate").text(departureDate);
+    $(".departureTime").text(departureTime);
+    $(".departureLocation").text(departureLoc);
+    $(".arrivalDate").text(arrivalDate);
+    $(".arrivalTime").text(arrivalTime);
+    $(".arrivalLocation").text(arrivalLoc);
     $("#summary_price").text(price);
 
     // display continue buttons
