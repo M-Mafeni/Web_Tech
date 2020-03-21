@@ -33,20 +33,28 @@ app.get('/',function (req,res) {
 });
 
 app.get('/bookings.html',function (req,res) {
-    let origin = req.query.origin;
-    let destination = req.query.destination;
-    let date = req.query.date;
-    console.log(date);
-    let sql = "SELECT * FROM Ticket WHERE origin_place = ? AND destination_place = ? AND date(origin_date) = ? ";
-    db.all(sql,[origin,destination,date],(err,tickets) => {
-        if(err){
-            throw err;
-        }
-        res.render('main',{layout:'bookings',
-                   tickets: tickets  });
-    });
-});
+    if(req.session.loggedIn|| !isEmpty(req.query)){
+        let origin = req.query.origin;
+        let destination = req.query.destination;
+        let date = req.query.date;
+        let sql = "SELECT * FROM Ticket WHERE origin_place = ? AND destination_place = ? AND date(origin_date) = ? ";
+        db.all(sql,[origin,destination,date],(err,tickets) => {
+            if(err){
+                throw err;
+            }
+            res.render('main',{layout:'bookings',
+                       tickets: tickets  });
+        });
+    }else{
+        res.redirect("/");
+    }
 
+});
+function isEmpty(obj){
+    console.log(Object.keys(obj).length === 0);
+
+    return Object.keys(obj).length === 0;
+}
 app.post('/login',function(req,res){
     let sql = "SELECT * FROM User WHERE email = ?";
     let email =req.body.email;
