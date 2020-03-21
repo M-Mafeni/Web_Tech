@@ -4,8 +4,11 @@ const exphbs  = require('express-handlebars');
 const api = require('./api');
 const app = express();
 const bodyParser = require('body-parser');
+const session = require('express-session');
 const port = 8080;
 const sqlite = require('sqlite3').verbose();
+const bcrypt = require('bcrypt');
+
 let db = new sqlite.Database('./astra.db');
 let OK = 200, NotFound = 404, BadType = 415, Error = 500;
 
@@ -17,6 +20,11 @@ app.engine('handlebars', exphbs({
 }));
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(session({
+	secret: 'secret',
+	resave: true,
+	saveUninitialized: true
+}));
 
 app.listen(port, () => console.log(`listening on port ${port}!`));
 
@@ -40,19 +48,24 @@ app.get('/bookings.html',function (req,res) {
 });
 
 app.post('/login',function(req,res){
-    let sql = "SELECT * FROM User WHERE email = ? AND password = ?";
+    let sql = "SELECT * FROM User WHERE email = ?";
     let email =req.body.email;
     let password = req.body.psw;
-    db.get(sql,[email,password],(err,user) => {
-    if(user != undefined){
-        res.redirect('/');
-    }else{
-        res.redirect('/login?error');
-    }
+    db.get(sql,[email],(err,user) => {
+        if(user == undefined){
+            res.send("Incorrect Email");
+        }else{
+            bcrypt.compare(password,user.password,function(err,valid){
+                if(valid){
+                    req.session.loggedin = true;
+                    req.session.username = email;
+                    res.redirect('/');
+                }else{
+                    res.send("Invalid Password");
+                }
+            });
+        }
     });
 });
 
-app.get('/login',function(req,res){
-    res.redirect('/');
-})
 

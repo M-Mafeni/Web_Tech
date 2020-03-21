@@ -11,9 +11,9 @@ CREATE TABLE User(
 --passwords stored unencrypted as a test
 --will change later
 INSERT INTO User(email,password) VALUES
-    ("JohnS@hotmail.co.uk","H3LL0W0RLD"),
-    ("AshleyA@gmail.com","Duck15"),
-    ("JamesKirk@space.co.uk","StarFleet");
+    ("JohnS@hotmail.co.uk","$2b$10$bk/1afHVab43.J941yYsjeovFhGQBcf6O5.dhaCxGVTO1jD1ELFua"),
+    ("AshleyA@gmail.com","$2b$10$JqGO/7vannEgyeMQL3eJXucXHrWtow8EusU8KP4rUnYjKonbCG1FO"),
+    ("JamesKirk@space.co.uk","$2b$10$n39S2WJWJDObx0.efj6Mlur3xnPv/jmUxQ3zLyzv1OOAcUVETnf7.");
 
 DROP TABLE IF EXISTS Ticket;
 CREATE TABLE Ticket(
