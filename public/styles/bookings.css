@@ -2,12 +2,17 @@
     --ticket-highlight: #1e875b;
     --summary-colour: #1f877d;
 }
+
 .nav-items{
     width: 100%;
     position: absolute;
     top: 0%;
     left: 0%;
     background: var(--dark-blue-banner);
+    -webkit-transition: background 0s;
+    -moz-transition: background 0s;
+    -ms-transition: background 0s;
+    -o-transition: background 0s;
     transition: background 0s;
 }
 
@@ -37,6 +42,11 @@ body {
     margin: 2%;
     border-radius: 15px;
     -webkit-user-select: initial;
+
+    -webkit-transition: background 0.3s;
+    -moz-transition: background 0.3s;
+    -ms-transition: background 0.3s;
+    -o-transition: background 0.3s;
     transition: background 0.3s;
 }
 
@@ -131,9 +141,19 @@ h1 {
 }
 
 .summary_details {
-    margin-bottom: 10%;
-    display: none;
     font-size: 115%;
+    -webkit-transition: max-height 0.3s;
+    -moz-transition: max-height 0.3s;
+    -ms-transition: max-height 0.3s;
+    -o-transition: max-height 0.3s;
+    transition: max-height 0.3s;
+    overflow: hidden;
+    max-height: 0;
+}
+
+.change_height {
+    max-height: 20em;
+    margin-bottom: 10%;
 }
 
 .summary_price {
@@ -175,8 +195,19 @@ h1 {
 
 .summary-mobile {
     margin: 2% 5%;
-    display: none;
     font-size: 130%;
+    display: none;
+    overflow: hidden;
+    max-height: 0;
+    -webkit-transition: max-height 0.3s;
+    -moz-transition: max-height 0.3s;
+    -ms-transition: max-height 0.3s;
+    -o-transition: max-height 0.3s;
+    transition: max-height 0.3s;
+}
+
+.change_height_mobile {
+    max-height: 15em;
 }
 
 .summary_price_mobile {
