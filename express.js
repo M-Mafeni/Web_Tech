@@ -37,7 +37,9 @@ app.get('/bookings.html',function (req,res) {
         let origin = req.query.origin;
         let destination = req.query.destination;
         let date = req.query.date;
-        let sql = "SELECT * FROM Ticket WHERE origin_place = ? AND destination_place = ? AND date(origin_date) = ? ";
+        let sql = "SELECT date(origin_date) AS o_date,time(origin_date) as o_time,origin_place,"
+         + "date(destination_date) AS d_date,time(destination_date) as d_time,destination_place,price "
+          + "FROM Ticket WHERE origin_place = ? AND destination_place = ? AND o_date = ? ";
         db.all(sql,[origin,destination,date],(err,tickets) => {
             if(err){
                 throw err;
