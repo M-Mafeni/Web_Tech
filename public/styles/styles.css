@@ -243,7 +243,6 @@ footer svg:hover path {
     }
 
     .nav-wrapper {
-        display: none;
         clear: both;
 		-webkit-transition: all 0.3s ease-out;
 		-moz-transition: all 0.3s ease-out;
@@ -252,13 +251,17 @@ footer svg:hover path {
 		transition: all 0.3s ease-out;
         margin: 0;
 		padding: 0;
-		/* border-top: 1px solid #808080; */
-        max-height: 15em;
+        overflow: hidden;
+		max-height: 0;
 	}
+
+    .nav-wrapper.active {
+        max-height: 15em;
+    }
 
 	.nav_links {
 		padding: 0.8em;
-		/* border-bottom: 1px solid #808080; */
+		border-bottom: 1px solid #808080;
 	}
 
     .advert_text {

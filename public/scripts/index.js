@@ -31,9 +31,5 @@ function closeForm() {
 }
 
 function makeBarResponsive() {
-  if(($('#mobile-nav').css('display') == 'none')){
-      $('#mobile-nav').show();
-  }else{
-      $('#mobile-nav').hide();
-  }
+    $("#mobile-nav").toggleClass("active");
 }
