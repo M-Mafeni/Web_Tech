@@ -1,6 +1,7 @@
 "use strict";
 
 $(document).ready(start);
+
 function start(){
     $(window).scroll(change_bar);
 
@@ -30,10 +31,9 @@ function closeForm() {
 }
 
 function makeBarResponsive() {
-  console.log($('#topnav').hasClass('responsive'));
-  if(!($('#topnav').hasClass('responsive'))){
-      $('#topnav').addClass('responsive');
+  if(($('#mobile-nav').css('display') == 'none')){
+      $('#mobile-nav').show();
   }else{
-      $('#topnav').removeClass('responsive');
+      $('#mobile-nav').hide();
   }
 }

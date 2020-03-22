@@ -19,34 +19,33 @@
         <title>Astra | Bookings</title>
     </head>
 
-    <div class="nav-items" id= "topnav">
-        <a href="/" class="brand-logo"><img class="nav_logo" src="/assets/logo_white_embedded.svg"></img></a>
-        <a href="/" class="brand-favicon"><img class="nav_favicon" src="/assets/favicon_white.png"></img></a>
-       <div class="nav-wrapper">
-           <a class="nav_links" href="#" onclick="openForm()">Login/Register</a>
-            <a href="#" class="icon" onclick="makeBarResponsive()"><i class="fa fa-bars"></i></a>
-       </div>
-    </div>
-
-    <div class="login-form" id = "loginForm">
-        <form class="login-form-container" id = "loginFormContent" action="/" method="post">
-            <h1 class="login-title">Login</h1>
-            <label for="email">Email</label>
-            <div class="form_item">
-                <input type="text" name="email" placeholder="Enter Email"></input>
-            </div>
-
-            <label for="psw">Password</label>
-            <div class="form_item">
-                <input type="password" name="psw" placeholder="Enter Password" class="form_item"></input>
-            </div>
-            <button type="submit" class="btn">Login</button>
-            <button type="submit" class="btn cancel" onclick="closeForm()">Close</button>
-        </form>
-    </div>
-
-
     <body>
+        <div class="nav-items" id= "topnav">
+            <a href="/" class="brand-logo"><img class="nav_logo" src="/assets/logo_white_embedded.svg"></img></a>
+            <a href="/" class="brand-favicon"><img class="nav_favicon" src="/assets/favicon_white.png"></img></a>
+           <div class="nav-wrapper">
+               <a class="nav_links" href="#" onclick="openForm()">Login/Register</a>
+                <a href="#" class="icon" onclick="makeBarResponsive()"><i class="fa fa-bars"></i></a>
+           </div>
+        </div>
+
+        <div class="login-form" id = "loginForm">
+            <form class="login-form-container" id = "loginFormContent" action="/" method="post">
+                <h1 class="login-title">Login</h1>
+                <label for="email">Email</label>
+                <div class="form_item">
+                    <input type="text" name="email" placeholder="Enter Email"></input>
+                </div>
+
+                <label for="psw">Password</label>
+                <div class="form_item">
+                    <input type="password" name="psw" placeholder="Enter Password" class="form_item"></input>
+                </div>
+                <button type="submit" class="btn">Login</button>
+                <button type="submit" class="btn cancel" onclick="closeForm()">Close</button>
+            </form>
+        </div>
+        
         <div class = "summary-icon">
             <span id="summary-title-mobile">No ticket selected</span>
             <i class="fa fa-angle-double-down disable-fa" onclick="closeSummary()"></i>

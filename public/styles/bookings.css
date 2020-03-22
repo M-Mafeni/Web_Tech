@@ -37,6 +37,7 @@ body {
     margin: 2%;
     border-radius: 15px;
     -webkit-user-select: initial;
+    transition: background 0.3s;
 }
 
 .ticket-selected {
