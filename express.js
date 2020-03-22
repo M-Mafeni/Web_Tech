@@ -36,6 +36,7 @@ app.listen(port, () => console.log(`listening on port ${port}!`));
 
 //for the main page return main.handlebars with its layout being the index page
 app.get('/',function (req,res) {
+    res.type('application/xhtml+xml');
     res.render('main',{layout:'index'});
 });
 
@@ -44,7 +45,8 @@ app.get('/bookings.html',function (req,res) {
     /*only go to the bookings page if the user is logged in and they have
      entered a query i.e localhost:8080/bookings.html wouldn't work on its own
     */
-    if(req.session.loggedin && !isEmpty(req.query)){
+    res.type('application/xhtml+xml');
+    if(req.session.loggedIn|| !isEmpty(req.query)){
         let origin = req.query.origin;
         let destination = req.query.destination;
         let date = req.query.date;
