@@ -14,31 +14,32 @@ function getDay(day){
 function getMonth(month){
     switch (month) {
         case "01":
-            return "January";
+            return "Jan";
         case "02":
-            return "February";
+            return "Feb";
         case "03":
-            return "March";
+            return "Mar";
         case "04":
-            return "April";
+            return "Apr";
         case "05":
             return "May";
         case "06":
-            return "June";
+            return "Jun";
         case "07":
-            return "July";
+            return "Jul";
         case "08":
-            return "August";
+            return "Aug";
         case "09":
-            return "September";
+            return "Sep";
         case "10":
-            return "October";
+            return "Oct";
         case "11":
-            return "November";
+            return "Nov";
         case "12":
-            return "December";
+            return "Dec";
     }
 }
+
 function formatDate(date){
     let result = date.split("-");
     let year = result[0];
@@ -48,5 +49,12 @@ function formatDate(date){
     month = getMonth(month);
     return day + " " + month + " " + year;
 }
+
+function formatTime(time){
+    // remove the seconds - might be better to round?
+    return time.substring(0, time.length-3);
+}
+
 module.exports.formatDate = formatDate;
+module.exports.formatTime = formatTime;
 // formatDate("2020-03-20");

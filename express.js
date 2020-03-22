@@ -60,19 +60,24 @@ app.get('/bookings.html',function (req,res) {
             tickets.forEach((ticket, i) => {
                 ticket.o_date = df.formatDate(ticket.o_date);
                 ticket.d_date = df.formatDate(ticket.d_date);
+                ticket.o_time = df.formatTime(ticket.o_time);
+                ticket.d_time = df.formatTime(ticket.d_time);
             });
             //add tickets attribute to main (used for templating in bookings page)
             res.render('main',{layout:'bookings',
                        tickets: tickets  });
         });
-    }else{
+    }
+    else{
         res.redirect("/");
     }
 
 });
+
 function isEmpty(obj){
     return Object.keys(obj).length === 0;
 }
+
 app.post('/login',function(req,res){
     let sql = "SELECT * FROM User WHERE email = ?";
     let email =req.body.email;

@@ -68,61 +68,56 @@
 
         <div class="row">
             {{#if tickets}}
-                    <div class="column tickets">
+                <div class="column tickets">
                 <h1>Outbound Journeys</h1>
                     {{#each tickets}}
-                    <div class="ticket-card">
-                        <div class="ticket-content price">£{{price}}</div>
-                        <div class="ticket-content source" >
-                            <span class="date">{{o_date}}</span>
-                            <br/>
-                             <i class="fa fa-clock-o"></i>
-                             <span class="time">{{o_time}}</span>
-                             <br/>
-                             <i class="fa fa-map-marker"></i>
-                            <span class="location">{{origin_place}}</span>
+                        <div class="ticket-card">
+                            <div class="ticket-content price">£{{price}}</div>
+                            <div class="ticket-content source" >
+                                <span class="date">{{o_date}}</span>
+                                <br/>
+                                 <i class="fa fa-clock-o"></i>
+                                 <span class="time">{{o_time}}</span>
+                                 <br/>
+                                 <i class="fa fa-map-marker"></i>
+                                <span class="location">{{origin_place}}</span>
+                            </div>
+                            <div class="ticket-content sideways_rocket">
+                                <img src="assets/sideways_rocket.svg"></img>
+                            </div>
+                            <div class="ticket-content destination">
+                                <span class="date">{{d_date}}</span>
+                                <br/>
+                                 <i class="fa fa-clock-o"></i>
+                                 <span class="time">{{d_time}}</span>
+                                 <br/>
+                                 <i class="fa fa-map-marker"></i>
+                                <span class="location">{{destination_place}}</span>
+                            </div>
                         </div>
-                        <div class="ticket-content sideways_rocket">
-                            <img src="assets/sideways_rocket.svg"></img>
-                        </div>
-                        <div class="ticket-content destination">
-                            <span class="date">{{d_date}}</span>
-                            <br/>
-                             <i class="fa fa-clock-o"></i>
-                             <span class="time">{{d_time}}</span>
-                             <br/>
-                             <i class="fa fa-map-marker"></i>
-                            <span class="location">{{destination_place}}</span>
-                        </div>
-                    </div>
                     {{/each}}
-            </div>
-            <span id = "summaryTop"></span>
-            <div class="column summary" id = "summary">
-                <h1>Summary</h1>
-                <p id = "unselected">No ticket selected</p>
-                <div id = "summary_price" class = "summary_price"></div>
-                <div id = "summary_details" class = "summary_details">
-                    <div class = "date departureDate"></div>
-                    <span class = "time departureTime"></span>
-                    <span class = "location departureLocation"></span>
-                    <div id = "arrivalDate" class = "date arrivalDate"></div>
-                    <span class = "time arrivalTime"></span>
-                    <span class = "location arrivalLocation"></span>
                 </div>
+                <span id = "summaryTop"></span>
+                <div class="column summary" id = "summary">
+                    <h1>Summary</h1>
+                    <p id = "unselected">No ticket selected</p>
+                    <div id = "summary_price" class = "summary_price"></div>
+                    <div id = "summary_details" class = "summary_details">
+                        <div class = "date departureDate"></div>
+                        <span class = "time departureTime"></span>
+                        <span class = "location departureLocation"></span>
+                        <div id = "arrivalDate" class = "date arrivalDate"></div>
+                        <span class = "time arrivalTime"></span>
+                        <span class = "location arrivalLocation"></span>
+                    </div>
 
-                <button type="button" name="continue" class = "btn no-continue">Continue</button>
-        </div>
+                    <button type="button" name="continue" class = "btn no-continue">Continue</button>
+                </div>
             {{else}}
                 <no-tickets>
-            No tickets available for this journey
-        </no-tickets>
+                    No tickets available for this journey
+                </no-tickets>
             {{/if}}
-
-
-
-
-
         </div>
 
     </body>
