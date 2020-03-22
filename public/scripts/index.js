@@ -17,7 +17,8 @@ function start(){
 function change_bar() {
     if($(window).scrollTop()>630){
         $('#topnav').addClass('bar_colour');
-    }else{
+    }
+    else if (!$("#mobile-nav").hasClass("responsive")) {
         $('#topnav').removeClass('bar_colour');
     }
 }
@@ -31,5 +32,12 @@ function closeForm() {
 }
 
 function makeBarResponsive() {
-    $("#mobile-nav").toggleClass("active");
+    if(!$("#mobile-nav").hasClass("responsive")) {
+        $("#mobile-nav").addClass("responsive");
+        $("#topnav").addClass("bar_colour");
+    }
+    else {
+        $("#mobile-nav").removeClass("responsive");
+        change_bar();
+    }
 }

@@ -19,7 +19,6 @@ body{
     position: fixed;
     background: rgba(0,0, 0, 0.2);
     right: 0%;
-    /* float: right; */
     display: block;
     z-index: 150;
     overflow: hidden;
@@ -65,6 +64,8 @@ body{
 
 .nav-items .icon {
     display: none;
+    padding-top: 1%;
+    padding-bottom: 1%;
 }
 
 .bar_colour {
@@ -99,6 +100,7 @@ body{
     background-image: url(/assets/space.jpg);
     background-size: cover;
     width: 100%;
+    min-width: 355px;
     height: 630px;
     padding-top: 10%;
     text-align: center;
@@ -107,7 +109,8 @@ body{
 }
 
 .advert_text {
-    font-size: 75px;
+    text-align: center;
+    font-size: 330%;
 }
 
 .booking_bar {
@@ -230,7 +233,14 @@ footer svg:hover path {
     fill: #2cbcad !important;
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 700px) {
+    .advert_text {
+        margin: 10% 0;
+        font-size: 250%;
+    }
+}
+
+@media only screen and (max-width: 550px) {
     .nav-items a.icon {
         float: right;
         display: block;
@@ -240,6 +250,7 @@ footer svg:hover path {
         float: none;
 		display: block;
         clear: both;
+        /* border-top: 1px solid #808080; */
     }
 
     .nav-wrapper {
@@ -255,24 +266,23 @@ footer svg:hover path {
 		max-height: 0;
 	}
 
-    .nav-wrapper.active {
+    .nav-wrapper.responsive {
         max-height: 15em;
     }
 
 	.nav_links {
 		padding: 0.8em;
-		border-bottom: 1px solid #808080;
+		/* border-bottom: 1px solid #808080; */
 	}
 
     .advert_text {
-        position: relative;
-        top: 25%;
-        font-size: 50px;
+        /* font-size: 50px; */
+        margin-bottom: 25%;
     }
 
     .booking_bar {
-        position: relative;
-        top: 30%;
+        /* position: relative;
+        top: 30%; */
     }
 
     .form_item {
@@ -313,5 +323,17 @@ footer svg:hover path {
     footer svg {
         width: 20px;
         height: auto;
+    }
+}
+
+@media only screen and (max-width: 500px) {
+    .advert_text {
+        font-size: 200%;
+    }
+}
+
+@media only screen and (max-width: 400px) {
+    .advert_text {
+        font-size: 150%;
     }
 }
