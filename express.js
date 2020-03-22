@@ -51,8 +51,6 @@ app.get('/bookings.html',function (req,res) {
 
 });
 function isEmpty(obj){
-    console.log(Object.keys(obj).length === 0);
-
     return Object.keys(obj).length === 0;
 }
 app.post('/login',function(req,res){
@@ -75,5 +73,3 @@ app.post('/login',function(req,res){
         }
     });
 });
-
-

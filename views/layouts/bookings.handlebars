@@ -12,49 +12,39 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Righteous"></link>
 <link href="https://fonts.googleapis.com/css2?family=Rubik" rel="stylesheet"></link>
 <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300" rel="stylesheet"></link>
-
     <head>
         <link rel="icon" media="(prefers-color-scheme:light)" type="image/png" href="/assets/favicon_black.png"></link>
         <meta charset="utf-8"/>
         <title>Astra | Bookings</title>
     </head>
 
-    <div class="nav-items" id= "topnav">
-        <a href="/" class="brand-logo"><img class="nav_logo" src="/assets/logo_white_embedded.svg"></img></a>
-        <a href="/" class="brand-favicon"><img class="nav_favicon" src="/assets/favicon_white.png"></img></a>
-       <div class="nav-wrapper">
-           <a class="nav_links" href="#" onclick="openForm()">Login/Register</a>
-            <a href="#" class="icon" onclick="makeBarResponsive()"><i class="fa fa-bars"></i></a>
-       </div>
-    </div>
 
-    <div class="login-form" id = "loginForm">
-        <form class="login-form-container" id = "loginFormContent" action="/login" method="post">
-            <h1 class="login-title">Login</h1>
-            <label for="email">Email</label>
-            <div class="form_item">
-                <input type="text" name="email" placeholder="Enter Email"></input>
-            </div>
+    <body>
+        <div class="nav-items" id= "topnav">
+            <a href="/" class="brand-logo"><img class="nav_logo" src="/assets/logo_white_embedded.svg"></img></a>
+            <a href="/" class="brand-favicon"><img class="nav_favicon" src="/assets/favicon_white.png"></img></a>
+            <a href="#" class="icon" onclick="makeBarResponsive()"><i class="fa fa-bars"></i></a>
+           <div class="nav-wrapper" id="mobile-nav">
+               <a class="nav_links" href="#" onclick="openForm()">Login/Register</a>
+           </div>
         </div>
 
-            <label for="psw">Password</label>
-            <div class="form_item">
-                <input type="password" name="psw" placeholder="Enter Password" class="form_item"></input>
-            </div>
-            <button type="submit" class="btn">Login</button>
-            <button type="reset" class="btn cancel" onclick="closeForm()">Close</button>
-        </form>
-    </div>
+        <div class="login-form" id = "loginForm">
+            <form class="login-form-container" id = "loginFormContent" action="/login" method="post">
+                <h1 class="login-title">Login</h1>
+                <label for="email">Email</label>
+                <div class="form_item">
+                    <input type="text" name="email" placeholder="Enter Email"></input>
+                </div>
 
                 <label for="psw">Password</label>
                 <div class="form_item">
                     <input type="password" name="psw" placeholder="Enter Password" class="form_item"></input>
                 </div>
                 <button type="submit" class="btn">Login</button>
-                <button type="submit" class="btn cancel" onclick="closeForm()">Close</button>
+                <button type="reset" class="btn cancel" onclick="closeForm()">Close</button>
             </form>
         </div>
-
         <div class = "summary-icon">
             <span id="summary-title-mobile">No ticket selected</span>
             <i class="fa fa-angle-double-down disable-fa" onclick="closeSummary()"></i>
@@ -86,6 +76,8 @@
                         <div class="ticket-content source" >
                             <span class="date">{{origin_date}}</span>
                             <br/>
+                            <i class="fa fa-map-marker"></i>
+                             <i class="fa fa-clock-o"></i>
                             <span class="location">{{origin_place}}</span>
                         </div>
                         <div class="ticket-content sideways_rocket">
@@ -94,6 +86,8 @@
                         <div class="ticket-content destination">
                             <span class="date">{{destination_date}}</span>
                             <br/>
+                            <i class="fa fa-map-marker"></i>
+                             <i class="fa fa-clock-o"></i>
                             <span class="location">{{destination_place}}</span>
                         </div>
                     </div>
@@ -101,7 +95,6 @@
             </div>
             <span id = "summaryTop"></span>
             <div class="column summary" id = "summary">
-
                 <h1>Summary</h1>
                 <p id = "unselected">No ticket selected</p>
                 <div id = "summary_price" class = "summary_price"></div>
@@ -115,7 +108,7 @@
                 </div>
 
                 <button type="button" name="continue" class = "btn no-continue">Continue</button>
-            </div>
+        </div>
             {{else}}
                 <no-tickets>
             No tickets available for this journey

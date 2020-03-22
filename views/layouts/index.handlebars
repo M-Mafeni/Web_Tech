@@ -5,7 +5,6 @@
 <script src="/scripts/index.js">
 
 </script>
-<script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
 <meta name="viewport" content="width=device-width" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"></link>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"></link>
@@ -31,7 +30,7 @@
         </div>
 
         <div class="login-form" id = "loginForm">
-            <form class="login-form-container" id = "loginFormContent" action="/" method="post">
+            <form class="login-form-container" id = "loginFormContent" action="/login" method="post">
                 <h1 class="login-title">Login</h1>
                 <label for="email">Email</label>
                 <div class="form_item">
@@ -48,36 +47,21 @@
         </div>
 
         <section class="star_bg">
-            <div class="login-form" id = "loginForm">
-                <form class="login-form-container" id = "loginFormContent" action="/login" method="post">
-                    <h1 class="login-title">Login</h1>
-                    <label for="email">Email</label>
-                    <div class="form_item">
-                        <input type="text" name="email" placeholder="Enter Email"></input>
-                    </div>
 
-                    <label for="psw">Password</label>
-                    <div class="form_item">
-                        <input type="password" name="psw" placeholder="Enter Password" class="form_item"></input>
-                    </div>
-                    <button type="submit" class="btn">Login</button>
-                    <button type = "reset" class= "btn cancel" onclick="closeForm()">Close</button>
-                </form>
-            </div>
             <div class="advert_text">
                 In T-minus 9,8,7,....
             </div>
 
             <div class="booking_bar">
-                <form class="booking_form" method="GET" action="/bookings.html">
+                <form class="booking_form" action="/bookings.html" method="GET">
                     <div class="form_item">
-                        <input type="text" name="origin" placeholder="Enter Origin Base" required></input>
+                        <input type="text" name="origin" placeholder="Enter Origin Base"></input>
                     </div>
                     <div class="form_item">
-                        <input type="text" name="destination" placeholder="Enter Destination Base" required></input>
+                        <input type="text" name="destination" placeholder="Enter Destination Base"></input>
                     </div>
                     <div class="form_item">
-                        <input type="date" name="date" value="" required></input>
+                        <input type="date" name="date" value=""></input>
                     </div>
                     <div class="form_item">
                         <input class="btn" type="submit" value ="Submit"></input>
