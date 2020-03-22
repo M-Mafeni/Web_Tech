@@ -23,6 +23,7 @@ function ticket_selected() {
 
     var price = $(this).find(".price").text();
 
+    $("#mobile_summary").show();
     $("#summary-title-mobile").text("Summary");
     $("#summary_price_mobile").text(price);
 
@@ -46,15 +47,12 @@ function ticket_selected() {
 }
 
 function showSummary(){
-    console.log("clicked");
-    $("#mobile_summary").show();
     $("#mobile_summary").addClass("change_height_mobile");
     $(".fa-angle-double-up").addClass("disable-fa");
     $(".fa-angle-double-down").removeClass("disable-fa");
 }
 
 function closeSummary(){
-    $("#mobile_summary").hide();
     $("#mobile_summary").removeClass("change_height_mobile");
     $(".fa-angle-double-down").addClass("disable-fa");
     $(".fa-angle-double-up").removeClass("disable-fa");

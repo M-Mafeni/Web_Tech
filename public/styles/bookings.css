@@ -42,7 +42,6 @@ body {
     margin: 2%;
     border-radius: 15px;
     -webkit-user-select: initial;
-
     -webkit-transition: background 0.3s;
     -moz-transition: background 0.3s;
     -ms-transition: background 0.3s;
@@ -175,7 +174,6 @@ h1 {
 }
 
 .continue-mobile {
-    margin-top: 2%;
     display: none;
     width: 100%;
 }
@@ -195,8 +193,8 @@ h1 {
 
 .summary-mobile {
     margin: 2% 5%;
+    margin-bottom: 0;
     font-size: 130%;
-    display: none;
     overflow: hidden;
     max-height: 0;
     -webkit-transition: max-height 0.3s;
