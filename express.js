@@ -1,13 +1,13 @@
 "use strict";
 const express = require('express');
 const exphbs  = require('express-handlebars');
-const api = require('./api');
 const app = express();
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const port = 8080;
 const sqlite = require('sqlite3').verbose();
 const bcrypt = require('bcrypt');
+const df = require('./format')
 
 let db = new sqlite.Database('./astra.db');
 let OK = 200, NotFound = 404, BadType = 415, Error = 500;
@@ -44,6 +44,11 @@ app.get('/bookings.html',function (req,res) {
             if(err){
                 throw err;
             }
+            tickets.forEach((ticket, i) => {
+                ticket.o_date = df.formatDate(ticket.o_date);
+                ticket.d_date = df.formatDate(ticket.d_date);
+            });
+
             res.render('main',{layout:'bookings',
                        tickets: tickets  });
         });
