@@ -11,6 +11,8 @@
 <link rel="stylesheet" href="/styles/bookings.css"></link>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Righteous"></link>
 <link href="https://fonts.googleapis.com/css2?family=Rubik" rel="stylesheet"></link>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300" rel="stylesheet"></link>
+
     <head>
         <link rel="icon" media="(prefers-color-scheme:light)" type="image/png" href="/assets/favicon_black.png"></link>
         <meta charset="utf-8"/>
@@ -33,6 +35,7 @@
             <div class="form_item">
                 <input type="text" name="email" placeholder="Enter Email"></input>
             </div>
+        </div>
 
             <label for="psw">Password</label>
             <div class="form_item">
@@ -43,8 +46,15 @@
         </form>
     </div>
 
+                <label for="psw">Password</label>
+                <div class="form_item">
+                    <input type="password" name="psw" placeholder="Enter Password" class="form_item"></input>
+                </div>
+                <button type="submit" class="btn">Login</button>
+                <button type="submit" class="btn cancel" onclick="closeForm()">Close</button>
+            </form>
+        </div>
 
-    <body>
         <div class = "summary-icon">
             <span id="summary-title-mobile">No ticket selected</span>
             <i class="fa fa-angle-double-down disable-fa" onclick="closeSummary()"></i>
@@ -52,8 +62,16 @@
             <div id = "summary_price_mobile" class = "summary_price_mobile"></div>
 
             <div class = "summary-mobile" id="mobile_summary">
-                <p class = "summary_details_mobile_source"></p>
-                <p class = "summary_details_mobile_destination"></p>
+                <p class = "summary_details_mobile_source">
+                    <div class = "date departureDate"></div>
+                    <span class = "time departureTime"></span>
+                    <span class = "location departureLocation"></span>
+                </p>
+                <p class = "summary_details_mobile_destination">
+                    <div class = "date arrivalDate"></div>
+                    <span class = "time arrivalTime"></span>
+                    <span class = "location arrivalLocation"></span>
+                </p>
             </div>
             <button class="btn continue-mobile no-continue">Continue</button>
         </div>
@@ -85,8 +103,17 @@
             <div class="column summary" id = "summary">
 
                 <h1>Summary</h1>
+                <p id = "unselected">No ticket selected</p>
                 <div id = "summary_price" class = "summary_price"></div>
-                <p id = "summary_details" class = "summary_details">No ticket selected</p>
+                <div id = "summary_details" class = "summary_details">
+                    <div class = "date departureDate"></div>
+                    <span class = "time departureTime"></span>
+                    <span class = "location departureLocation"></span>
+                    <div id = "arrivalDate" class = "date arrivalDate"></div>
+                    <span class = "time arrivalTime"></span>
+                    <span class = "location arrivalLocation"></span>
+                </div>
+
                 <button type="button" name="continue" class = "btn no-continue">Continue</button>
             </div>
             {{else}}
