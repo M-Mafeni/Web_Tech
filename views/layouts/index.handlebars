@@ -29,17 +29,20 @@
         <div class="login-form" id = "loginForm">
             <form class="login-form-container" id = "loginFormContent" action="/login" method="post">
                 <h1 class="login-title">Login</h1>
-                <label for="email">Email</label>
+                <label class= "email-label" for="email">Email</label>
                 <div class="form_item">
                     <input type="text" name="email" placeholder="Enter Email" required=""></input>
                 </div>
 
-                <label for="psw">Password</label>
+                <label for="psw" class="password-label">Password</label>
                 <div class="form_item">
                     <input type="password" name="psw" placeholder="Enter Password" class="form_item" required=""></input>
                 </div>
-                <button type="submit" class="btn">Login</button>
-                <button type="reset" class="btn cancel" onclick="closeForm()">Close</button>
+                <div class="login-btns">
+                    <button type="submit" class="btn">Login</button>
+                    <button type="reset" class="btn cancel" onclick="closeForm()">Close</button>
+                </div>
+
             </form>
         </div>
 
