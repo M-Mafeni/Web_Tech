@@ -1,0 +1,11 @@
+<div class="nav-items" id = "topnav">
+    <a href="#" class="brand-logo"><img class="nav_logo" src="/assets/logo_white_embedded.svg"></img></a>
+    <a href="#" class="brand-favicon"><img class="nav_favicon" src="/assets/favicon_white.png"></img></a>
+    <a class="icon" onclick="makeBarResponsive()"><i class="fa fa-bars"></i></a>
+    <div class="nav-wrapper" id = "mobile-nav">
+        <a class="nav_links" href="#" onclick="openForm()">Login/Register</a>
+        {{#if main-page}}
+            <a class="nav_links" href="#about_us">About Us</a>
+        {{/if}}
+    </div>
+</div>
