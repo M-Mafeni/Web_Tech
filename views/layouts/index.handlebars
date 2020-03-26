@@ -21,22 +21,21 @@
 
             <div class="booking_bar">
                 <form class="booking_form" action="/bookings.html" method="GET">
-                    <!-- <div class = "booking_left">
-                    </div> -->
                     <div class="form_item">
                         <input type="text" name="origin" placeholder="Enter Origin Base" required=""></input>
                     </div>
                     <div class="form_item">
                         <input type="text" name="destination" placeholder="Enter Destination Base" required="" class="dest"></input>
                     </div>
+
                     <div class="form_item">
-                        <input type="date" name="outbound_date" value="" required=""></input>
+                        <input id="outbound_date" type="date" name="outbound_date" value="" required=""></input>
                     </div>
                     <div class="form_item">
                         <input type="date" name="inbound_date" value="" required=""></input>
                     </div>
-                    <div class="form_item">
-                        <input class="btn" type="submit" value ="Find journey"></input>
+                    <div class="booking_button">
+                        <input class="btn" type="submit" value ="Find my journey"></input>
                     </div>
                 </form>
             </div>

@@ -98,6 +98,22 @@ body{
     background: #007cbf;
 }
 
+.email-label {
+    padding-left: 5%;
+    padding-right: 7%;
+}
+
+.login-btns {
+    margin-top: 5%;
+    margin-left:25%;
+
+}
+
+.password-label {
+    padding-left: 5%;
+}
+
+
 .star_bg {
     background-image: url(/assets/space.jpg);
     background-size: cover;
@@ -117,24 +133,51 @@ body{
 
 .booking_bar {
     margin: 5% auto;
-    width: 70%;
-    padding: 1%;
+    width: 75%;
+    padding: 1% 2%;
     border-radius: 15px;
     background: var(--main-bg-colour);
+    max-width: 1100px;
+}
+
+
+::-webkit-input-placeholder { /* Edge */
+    color: white;
+}
+
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+    color: white;
+}
+
+::placeholder {
+    color: white;
 }
 
 .form_item input[type="text"] {
     font-size: 80%;
-    width: 9em;
+    width: 8em;
 }
 
 .dest {
-    width: 11em !important;
+    width: 10.7em !important;
 }
 
 .form_item {
     display: inline-block;
     margin: 0 2%;
+}
+
+.booking_button {
+    display: inline-block;
+    margin: 0 2%;
+}
+
+.booking_button input[type="submit"] {
+    margin: 0;
+    display: block;
+    width: 100%;
+    /* font-size: 100%; */
+    /* text-transform: none; */
 }
 
 input {
@@ -156,6 +199,7 @@ input[type="date"] {
         center
         no-repeat;
     cursor:pointer;
+    width: 8.3em !important;
 }
 
 input[type="date"]:focus {
@@ -296,6 +340,32 @@ footer svg:hover path {
     fill: #2cbcad !important;
 }
 
+@media only screen and (max-width: 1400px) {
+    .booking_button {
+        width: 95%;
+        margin: 1.5% auto;
+        margin-bottom: 0;
+    }
+
+    .booking_button input[type="submit"] {
+        font-size: 100%;
+        text-transform: none;
+    }
+}
+
+@media only screen and (max-width: 1020px) {
+    .form_item {
+        margin-left: 1.5%;
+        margin-right: 1.5%;
+    }
+}
+
+@media only screen and (max-width: 980px) {
+    .form_item {
+        margin-left: 1.5%;
+        margin-right: 1.5%;
+    }
+}
 
 @media only screen and (max-width: 700px) {
     .advert_text {
@@ -400,22 +470,4 @@ footer svg:hover path {
     .advert_text {
         font-size: 150%;
     }
-}
-
-.email-label {
-    padding-left: 5%;
-    padding-right: 7%;
-/*    color: black;*/
-}
-
-.login-btns {
-    margin-top: 5%;
-    margin-left:25%;
-/*    padding-left: 10%;*/
-
-}
-
-.password-label {
-    padding-left: 5%;
-
 }
