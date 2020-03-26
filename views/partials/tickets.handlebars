@@ -1,0 +1,27 @@
+<h1 class="Journey_Text">{{heading}}</h1>
+    {{#each ticketData}}
+        <div  class="ticket-card">
+            <div class="ticket-content price">£{{price}}</div>
+            <div class="ticket-content source" >
+                <span class="date">{{o_date}}</span>
+                <br/>
+                 <i class="fa fa-clock-o"></i>
+                 <span class="time">{{o_time}}</span>
+                 <br/>
+                 <i class="fa fa-map-marker"></i>
+                <span class="location">{{origin_place}}</span>
+            </div>
+            <div class="ticket-content sideways_rocket">
+                <img src="assets/sideways_rocket.svg"></img>
+            </div>
+            <div class="ticket-content destination">
+                <span class="date">{{d_date}}</span>
+                <br/>
+                 <i class="fa fa-clock-o"></i>
+                 <span class="time">{{d_time}}</span>
+                 <br/>
+                 <i class="fa fa-map-marker"></i>
+                <span class="location">{{destination_place}}</span>
+            </div>
+        </div>
+    {{/each}}

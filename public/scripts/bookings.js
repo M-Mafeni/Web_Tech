@@ -3,10 +3,42 @@
 $(document).ready(start);
 
 function start(){
-    $(".ticket-card").click(ticket_selected);
+    $("#outbound div.ticket-card").click(ticket_selected);
+    $("#inbound div.ticket-card").click(return_selected);
     $(window).scroll(fixSummary);
 }
+function return_selected(){
+    $(".d_ticket-selected").removeClass("d_ticket-selected");
+    $(this).addClass("d_ticket-selected");
 
+    var source = $(this).find(".source");
+    var departureDate = source.find(".date").text();
+    var departureTime = source.find(".time").text();
+    var departureLoc = source.find(".location").text();
+
+    var destination = $(this).find(".destination");
+    var arrivalDate = destination.find(".date").text();
+    var arrivalTime = destination.find(".time").text();
+    var arrivalLoc = destination.find(".location").text();
+
+    var price = $(this).find(".price").text();
+
+    $("#mobile_summary").show();
+    $("#summary-title-mobile").text("Summary");
+    $("#summary_price_mobile").text(price);
+
+    // code for large viewports
+    $("#d_unselected").remove();
+    $("#d_summary_details").show();
+    $("#d_summary_details").addClass("change_height");
+    $("#d_summary_details .departureDate").text(departureDate);
+    $("#d_summary_details .departureTime").text(departureTime);
+    $("#d_summary_details .departureLocation").text(departureLoc);
+    $("#d_summary_details .arrivalDate").text(arrivalDate);
+    $("#d_summary_details .arrivalTime").text(arrivalTime);
+    $("#d_summary_details .arrivalLocation").text(arrivalLoc);
+    $("#d_summary_price").text(price);
+}
 function ticket_selected() {
     $(".ticket-selected").removeClass("ticket-selected");
     $(this).addClass("ticket-selected");
@@ -28,15 +60,15 @@ function ticket_selected() {
     $("#summary_price_mobile").text(price);
 
     // code for large viewports
-    $("#unselected").remove();
+    $("#o_unselected").remove();
     $("#summary_details").show();
     $("#summary_details").addClass("change_height");
-    $(".departureDate").text(departureDate);
-    $(".departureTime").text(departureTime);
-    $(".departureLocation").text(departureLoc);
-    $(".arrivalDate").text(arrivalDate);
-    $(".arrivalTime").text(arrivalTime);
-    $(".arrivalLocation").text(arrivalLoc);
+    $("#summary_details .departureDate").text(departureDate);
+    $("#summary_details .departureTime").text(departureTime);
+    $("#summary_details .departureLocation").text(departureLoc);
+    $("#summary_details .arrivalDate").text(arrivalDate);
+    $("#summary_details .arrivalTime").text(arrivalTime);
+    $("#summary_details .arrivalLocation").text(arrivalLoc);
     $("#summary_price").text(price);
 
     // display continue buttons

@@ -53,6 +53,10 @@ body {
     background: var(--ticket-highlight);;
 }
 
+.d_ticket-selected {
+    background: var(--ticket-highlight);;
+}
+
 .ticket-card:hover{
     cursor: pointer;
 }
