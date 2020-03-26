@@ -40,10 +40,10 @@
         </div>
 
         <div class="row">
-            {{#if tickets}}
+            {{#if o_tickets}}
                 <div class="column tickets">
-                <h1>Outbound Journeys</h1>
-                    {{#each tickets}}
+                <h1 class="Journey_Text">Outbound Journeys</h1>
+                    {{#each o_tickets}}
                         <div class="ticket-card">
                             <div class="ticket-content price">£{{price}}</div>
                             <div class="ticket-content source" >

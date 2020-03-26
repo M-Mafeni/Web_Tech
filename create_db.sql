@@ -31,7 +31,9 @@ VALUES
 (datetime("2020-03-22 19:30:00"),"USA",datetime("2020-03-23 08:00:00"),"Mars Colony One",400),
 (datetime("2020-04-11 10:00:00"),"Moon Base",datetime("2020-04-24 01:00:00"),"UK",250),
 (datetime("2020-03-23 12:30:00"),"UK",datetime("2020-03-24 18:00:00"),"International Space Station",200),
-(datetime("2020-03-22 19:30:00"),"Mars Colony One",datetime("2020-03-23 08:00:00"),"Moon Base",350);
+(datetime("2020-03-22 19:30:00"),"Mars Colony One",datetime("2020-03-23 08:00:00"),"Moon Base",350),
+(datetime("2020-03-26 11:30:00"),"Mars Colony One",datetime("2020-03-27 08:00:00"),"USA",350);
+
 
 DROP TABLE IF EXISTS User_Ticket;
 CREATE TABLE User_Ticket(

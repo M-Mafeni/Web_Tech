@@ -7,7 +7,8 @@ const session = require('express-session');
 const port = 8080;
 const sqlite = require('sqlite3').verbose();
 const bcrypt = require('bcrypt');
-const df = require('./format')
+const df = require('./format');
+const xhtml = 'application/xhtml+xml';
 
 //connect to astra.db database
 let db = new sqlite.Database('./astra.db');
@@ -36,7 +37,7 @@ app.listen(port, () => console.log(`listening on port ${port}!`));
 
 //for the main page return main.handlebars with its layout being the index page
 app.get('/',function (req,res) {
-    res.type('application/xhtml+xml');
+    res.type(xhtml);
     res.render('main',{layout:'index',loggedin:req.session.loggedin});
 });
 
@@ -45,29 +46,42 @@ app.get('/bookings.html',function (req,res) {
     /*only go to the bookings page if the user is logged in and they have
      entered a query i.e localhost:8080/bookings.html wouldn't work on its own
     */
-    res.type('application/xhtml+xml');
+    res.type(xhtml);
     if(req.session.loggedin && !isEmpty(req.query)){
         let origin = req.query.origin;
         let destination = req.query.destination;
-        let date = req.query.outbound_date;
+        let o_date = req.query.outbound_date;
+        let d_date = req.query.inbound_date;
         let sql = "SELECT date(origin_date) AS o_date,time(origin_date) as o_time,origin_place,"
          + "date(destination_date) AS d_date,time(destination_date) as d_time,destination_place,price "
           + "FROM Ticket WHERE origin_place = ? AND destination_place = ? AND o_date = ? ";
-        db.all(sql,[origin,destination,date],(err,tickets) => {
+        db.all(sql,[origin,destination,o_date],(err,o_tickets) => {
             if(err){
                 throw err;
             }
-            tickets.forEach((ticket, i) => {
+            o_tickets.forEach((ticket, i) => {
                 ticket.o_date = df.formatDate(ticket.o_date);
                 ticket.d_date = df.formatDate(ticket.d_date);
                 ticket.o_time = df.formatTime(ticket.o_time);
                 ticket.d_time = df.formatTime(ticket.d_time);
             });
-            //add tickets attribute to main (used for templating in bookings page)
-            res.render('main',{layout:'bookings',
-                       tickets: tickets,
-                       loggedin:req.session.loggedin
+            db.all(sql,[destination,origin,d_date], (err,d_tickets) => {
+                if(err){
+                    throw err;
+                }
+                d_tickets.forEach((ticket, i) => {
+                    ticket.o_date = df.formatDate(ticket.o_date);
+                    ticket.d_date = df.formatDate(ticket.d_date);
+                    ticket.o_time = df.formatTime(ticket.o_time);
+                    ticket.d_time = df.formatTime(ticket.d_time);
+                });
+                //add tickets attribute to main (used for templating in bookings page)
+                res.render('main',{layout:'bookings',
+                           o_tickets: o_tickets,
+                           d_tickets: d_tickets,
+                           loggedin:req.session.loggedin
                         });
+            });
         });
     }
     else{
