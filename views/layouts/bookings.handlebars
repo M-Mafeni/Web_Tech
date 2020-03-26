@@ -57,11 +57,11 @@
             {{#if o_tickets}}
                 <div class="column tickets">
                     <div id="outbound">
-                        {{> tickets heading = "Outbound Journeys" ticketData = o_tickets journey = "\"outbound\""}}
+                        {{> tickets heading = "Outbound Journeys" ticketData = o_tickets}}
                     </div>
                     {{#if d_tickets}}
                         <div id="inbound">
-                            {{> tickets heading = "Inbound Journeys" ticketData = d_tickets journey = "\"inbound\"" }}
+                            {{> tickets heading = "Inbound Journeys" ticketData = d_tickets }}
                         </div>
                         {{else}}
                             <no-tickets>
