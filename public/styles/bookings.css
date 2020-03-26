@@ -310,3 +310,10 @@ h1 {
         margin-top: 15%;
     }
 }
+
+#d_summary_price_mobile {
+    position: relative;
+    left: 75%;
+    float:none;
+
+}

@@ -92,12 +92,14 @@ function ticket_selected() {
 
 function showSummary(){
     $("#mobile_summary").addClass("change_height_mobile");
+    $("#d_mobile_summary").addClass("change_height_mobile");
     $(".fa-angle-double-up").addClass("disable-fa");
     $(".fa-angle-double-down").removeClass("disable-fa");
 }
 
 function closeSummary(){
     $("#mobile_summary").removeClass("change_height_mobile");
+    $("#d_mobile_summary").removeClass("change_height_mobile");
     $(".fa-angle-double-down").addClass("disable-fa");
     $(".fa-angle-double-up").removeClass("disable-fa");
 }
