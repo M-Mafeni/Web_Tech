@@ -25,7 +25,13 @@ function return_selected(){
 
     $("#mobile_summary").show();
     $("#summary-title-mobile").text("Summary");
-    $("#summary_price_mobile").text(price);
+    $("#d_summary_price_mobile").text(price);
+    $("#d_mobile_summary .departureDate").text(departureDate);
+    $("#d_mobile_summary .departureTime").text(departureTime);
+    $("#d_mobile_summary .departureLocation").text(departureLoc);
+    $("#d_mobile_summary .arrivalDate").text(arrivalDate);
+    $("#d_mobile_summary .arrivalTime").text(arrivalTime);
+    $("#d_mobile_summary .arrivalLocation").text(arrivalLoc);
 
     // code for large viewports
     $("#d_unselected").remove();
@@ -54,10 +60,16 @@ function ticket_selected() {
     var arrivalLoc = destination.find(".location").text();
 
     var price = $(this).find(".price").text();
-
+    //mobile code
     $("#mobile_summary").show();
     $("#summary-title-mobile").text("Summary");
     $("#summary_price_mobile").text(price);
+    $("#mobile_summary .departureDate").text(departureDate);
+    $("#mobile_summary .departureTime").text(departureTime);
+    $("#mobile_summary .departureLocation").text(departureLoc);
+    $("#mobile_summary .arrivalDate").text(arrivalDate);
+    $("#mobile_summary .arrivalTime").text(arrivalTime);
+    $("#mobile_summary .arrivalLocation").text(arrivalLoc);
 
     // code for large viewports
     $("#o_unselected").remove();
