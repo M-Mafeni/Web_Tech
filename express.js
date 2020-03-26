@@ -37,7 +37,7 @@ app.listen(port, () => console.log(`listening on port ${port}!`));
 //for the main page return main.handlebars with its layout being the index page
 app.get('/',function (req,res) {
     res.type('application/xhtml+xml');
-    res.render('main',{layout:'index'});
+    res.render('main',{layout:'index',loggedin:req.session.loggedin});
 });
 
 
@@ -46,7 +46,7 @@ app.get('/bookings.html',function (req,res) {
      entered a query i.e localhost:8080/bookings.html wouldn't work on its own
     */
     res.type('application/xhtml+xml');
-    if(req.session.loggedIn|| !isEmpty(req.query)){
+    if(req.session.loggedin && !isEmpty(req.query)){
         let origin = req.query.origin;
         let destination = req.query.destination;
         let date = req.query.outbound_date;
@@ -65,7 +65,9 @@ app.get('/bookings.html',function (req,res) {
             });
             //add tickets attribute to main (used for templating in bookings page)
             res.render('main',{layout:'bookings',
-                       tickets: tickets  });
+                       tickets: tickets,
+                       loggedin:req.session.loggedin
+                        });
         });
     }
     else{
