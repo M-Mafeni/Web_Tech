@@ -358,12 +358,16 @@ footer svg:hover path {
         margin-left: 1.5%;
         margin-right: 1.5%;
     }
+
+    .advert_text {
+        margin-bottom: 10%;
+    }
 }
 
 @media only screen and (max-width: 980px) {
     .booking_left {
         float: left;
-        margin-left: 4%;
+        margin-left: 2%;
     }
 
     .booking_right {
@@ -446,7 +450,7 @@ footer svg:hover path {
 
     .advert_text {
         /* font-size: 50px; */
-        margin-bottom: 25%;
+        margin-bottom: 15%;
     }
 
     .booking_left, .booking_right {
