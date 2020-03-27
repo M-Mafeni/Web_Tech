@@ -466,6 +466,7 @@ footer svg:hover path {
 
     .booking_button {
         margin-top: 5%;
+        margin-bottom: 2%;
     }
 
     div.header {
@@ -509,8 +510,6 @@ footer svg:hover path {
     .advert_text {
         font-size: 200%;
     }
-
-
 }
 
 @media only screen and (max-width: 400px) {
