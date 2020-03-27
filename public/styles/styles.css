@@ -158,8 +158,8 @@ body{
     width: 8em;
 }
 
-.dest {
-    width: 10.7em !important;
+input[type="text"].dest {
+    width: 10.7em;
 }
 
 .form_item {
@@ -361,9 +361,36 @@ footer svg:hover path {
 }
 
 @media only screen and (max-width: 980px) {
+    .booking_left {
+        float: left;
+        margin-left: 4%;
+    }
+
+    .booking_right {
+        float: right;
+        margin-right: 4%;
+    }
+
     .form_item {
-        margin-left: 1.5%;
-        margin-right: 1.5%;
+        display: block;
+    }
+
+    .form_item input[type="text"] {
+        width: 20em;
+    }
+
+    .dest input {
+        width: 20em;
+    }
+}
+
+@media only screen and (max-width: 750px) {
+    .form_item input[type="text"] {
+        width: 15em;
+    }
+
+    .dest input {
+        width: 15em;
     }
 }
 
@@ -371,6 +398,14 @@ footer svg:hover path {
     .advert_text {
         margin: 10% 0;
         font-size: 250%;
+    }
+
+    .form_item input[type="text"] {
+        width: 13em;
+    }
+
+    .dest input {
+        width: 13em;
     }
 }
 
@@ -414,13 +449,13 @@ footer svg:hover path {
         margin-bottom: 25%;
     }
 
-    .booking_bar {
-        /* position: relative;
-        top: 30%; */
+    .booking_left, .booking_right {
+        float: left;
+        clear: both;
+        margin-left: 10%;
     }
 
-    .form_item {
-        width:80%;
+    .booking_right .form_item input {
     }
 
     div.header {
@@ -464,6 +499,8 @@ footer svg:hover path {
     .advert_text {
         font-size: 200%;
     }
+
+
 }
 
 @media only screen and (max-width: 400px) {
