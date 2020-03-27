@@ -450,12 +450,22 @@ footer svg:hover path {
     }
 
     .booking_left, .booking_right {
-        float: left;
+        float: none;
         clear: both;
-        margin-left: 10%;
+        margin: 0;
     }
 
     .booking_right .form_item input {
+        margin: 0 auto;
+        width: 90% !important;
+    }
+
+    .booking_left .form_item input {
+        width: 90%;
+    }
+
+    .booking_button {
+        margin-top: 5%;
     }
 
     div.header {
