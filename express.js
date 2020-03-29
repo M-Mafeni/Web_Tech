@@ -41,8 +41,20 @@ app.get('/',function (req,res) {
     res.render('main',{layout:'index',loggedin:req.session.loggedin});
 });
 
+//register page
+app.get('/register',function (req,res) {
+    if (!req.session.loggedin) {
+        res.type(xhtml);
+        res.render('main',{layout:'register'})
+    }
+    else {
+        // user shouldn't be able to register when already logged in
+        res.redirect("/");
+    }
+});
 
-app.get('/bookings.html',function (req,res) {
+
+app.get('/bookings',function (req,res) {
     /*only go to the bookings page if the user is logged in and they have
      entered a query i.e localhost:8080/bookings.html wouldn't work on its own
     */
@@ -118,4 +130,13 @@ app.post('/login',function(req,res){
             });
         }
     });
+});
+
+app.get('/logout',function (req,res) {
+    if (req.session.loggedin) {
+        req.session.loggedin = false;
+        req.session.username = null;
+        res.redirect('/');
+    }
+    else res.redirect('/');
 });
