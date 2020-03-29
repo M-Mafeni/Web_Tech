@@ -1,3 +1,18 @@
 body {
-    margin-top: 10%;
+    margin: 100px 0;
+}
+
+.login-form-container {
+    padding-top: 5%;
+}
+
+.register-title {
+    text-align: center;
+    font-size: 200%;
+}
+
+@media only screen and (max-width: 700px) {
+    .register-title {
+        font-size: 170%;
+    }
 }
