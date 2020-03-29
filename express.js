@@ -141,7 +141,7 @@ app.post('/registered',function(req,res){
 
     let sql = "SELECT * FROM User WHERE email = ?";
     let insertSQL = db.prepare("INSERT INTO User(email,password) VALUES (?, ?);");
-    let email =req.body.email;
+    let email = req.body.email;
     let password = req.body.psw;
     let confirmPassword = req.body.confirm_psw;
 
