@@ -23,7 +23,7 @@ body {
     display: block;
     z-index: 10;
     overflow: hidden;
-    transition: background 0.5s;
+    transition: background 0.3s;
     font-size: 80%;
 }
 
@@ -96,6 +96,7 @@ body {
     padding-bottom: 30px;
     width: 50%;
     max-width: 450px;
+    min-width: 250px;
     background: var(--main-bg-colour);
 }
 
@@ -116,6 +117,12 @@ body {
 
 .registerText a {
     display: inline-block;
+    font-weight: bolder;
+    color: #dddddd;
+}
+
+.registerText a:hover {
+    text-decoration: underline;
 }
 
 .star_bg {
@@ -436,7 +443,7 @@ footer svg:hover path {
 
     .nav-wrapper {
         clear: both;
-		-webkit-transition: all 0.3s ease-out;
+		-webkit-transition: backgroud 0.3s ease-out;
 		-moz-transition: all 0.3s ease-out;
 		-ms-transition: all 0.3s ease-out;
 		-o-transition: all 0.3s ease-out;
@@ -540,5 +547,9 @@ footer svg:hover path {
 @media only screen and (max-width: 400px) {
     .advert_text {
         font-size: 150%;
+    }
+
+    input[type="text"], input[type="password"], input[type="date"] {
+        font-size: 60% !important;
     }
 }
