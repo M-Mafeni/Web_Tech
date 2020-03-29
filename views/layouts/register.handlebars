@@ -18,15 +18,15 @@
         {{> login}}
 
         <!-- mostly copied from the login form -->
-        <form class="login-form-container" id = "loginFormContent" action="/registered" method="post">
+        <form class="login-form-container" id = "loginFormContent" action="/login" method="post">
             <h1 class="register-title">Register</h1>
             <label class= "email-label" for="email">Email</label>
             <input type="text" name="email" placeholder="Enter Email" required=""></input>
 
             <label for="psw" class="password-label">Password</label>
             <input type="password" name="psw" placeholder="Enter Password" class="form_item" required=""></input>
-            <label for="confirm_psw" class="password-label">Password</label>
-            <input type="password" name="confirm_psw" placeholder="Confirm Password" class="form_item" required=""></input>
+            <label for="confirm-psw" class="password-label">Password</label>
+            <input type="password" name="confirm-psw" placeholder="Confirm Password" class="form_item" required=""></input>
 
             <div class="login-btns">
                 <button type="submit" class="btn">Register</button>

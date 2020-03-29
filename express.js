@@ -132,40 +132,6 @@ app.post('/login',function(req,res){
     });
 });
 
-app.post('/registered',function(req,res){
-    // 1. check that email not already registered
-    // 2. check if passwords match
-
-    let sql = "SELECT * FROM User WHERE email = ?";
-    let insertSQL = db.prepare("INSERT INTO User(email,password) VALUES (?, ?);");
-    let email =req.body.email;
-    let password = req.body.psw;
-    let confirmPassword = req.body.confirm_psw;
-
-    db.get(sql,[email],(err,user) => {
-        if(user == undefined) {
-            if (password == confirmPassword) {
-                bcrypt.hash(password, 10, function(err, hash) {
-                    insertSQL.run(email, hash);
-                    console.log("user " + email + " registered with password " + hash);
-                    res.redirect("/");
-                });
-            }
-            else {
-                /*for now its sending you to an error page.
-                should change this to be a prompt instead*/
-                res.send("Passwords do not match");
-            }
-        }
-        else {
-            /*for now its sending you to an error page.
-            should change this to be a prompt instead*/
-            res.send("Email already registered");
-        }
-    });
-});
-
-
 app.get('/logout',function (req,res) {
     if (req.session.loggedin) {
         req.session.loggedin = false;
