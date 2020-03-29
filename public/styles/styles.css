@@ -1,7 +1,7 @@
 :root{
     --main-bg-colour: #007cbf;
     --dark-blue-banner: #00304A;
-    --light-green-colour: #1f877d;
+    --light-green-colour: #2cbbad;
 }
 
 html {
@@ -119,10 +119,18 @@ body {
     display: inline-block;
     font-weight: bolder;
     color: #dddddd;
+    transition: color 0.3s;
 }
 
 .registerText a:hover {
-    text-decoration: underline;
+    color: var(--light-green-colour);
+    /* color: var(--dark-blue-banner); */
+
+
+}
+
+.registerText a:focus {
+    color: var(--light-green-colour);
 }
 
 .star_bg {
