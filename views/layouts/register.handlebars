@@ -8,6 +8,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"></link>
 <link rel="stylesheet" href="/styles/styles.css"></link>
 <link rel="stylesheet" href="/styles/bookings.css"></link>
+<link rel="stylesheet" href="/styles/register.css"></link>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Righteous"></link>
 <link href="https://fonts.googleapis.com/css2?family=Rubik" rel="stylesheet"></link>
 <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300" rel="stylesheet"></link>
@@ -17,7 +18,24 @@
     <body>
         {{> navbar}}
         {{> login}}
-        Register
+
+        <!-- mostly copied from the login form -->
+        <form class="login-form-container" id = "loginFormContent" action="/login" method="post">
+            <h1 class="login-title">Register</h1>
+            <label class= "email-label" for="email">Email</label>
+            <input type="text" name="email" placeholder="Enter Email" required=""></input>
+
+            <label for="psw" class="password-label">Password</label>
+            <input type="password" name="psw" placeholder="Enter Password" class="form_item" required=""></input>
+            <label for="confirm-psw" class="password-label">Password</label>
+            <input type="password" name="confirm-psw" placeholder="Confirm Password" class="form_item" required=""></input>
+
+            <div class="login-btns">
+                <button type="submit" class="btn">Register</button>
+            </div>
+
+        </form>
+
     </body>
     {{> footer}}
 </html>
