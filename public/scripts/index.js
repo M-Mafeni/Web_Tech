@@ -4,6 +4,7 @@ $(document).ready(start);
 
 function start(){
     $(window).scroll(change_bar);
+    $(window).resize(setLoginPos);
 
     var modal = document.getElementById("loginForm");
     window.onclick = function(event) {
@@ -32,11 +33,12 @@ function change_bar() {
 }
 
 function openForm() {
-  document.getElementById("loginForm").style.display = "block";
+    document.getElementById("loginForm").style.display = "block";
+    setLoginPos();
 }
 
 function closeForm() {
-  document.getElementById("loginForm").style.display = "none";
+    document.getElementById("loginForm").style.display = "none";
 }
 
 function makeBarResponsive() {
@@ -48,4 +50,10 @@ function makeBarResponsive() {
         $("#mobile-nav").removeClass("responsive");
         change_bar();
     }
+}
+
+function setLoginPos() {
+    var height = $(window).height();
+    var loginHeight = $("#loginFormContent").height();
+    $("#loginForm").css("padding-top", (height-loginHeight)/2);
 }
