@@ -3,11 +3,12 @@
 $(document).ready(start);
 
 function start(){
-    $("#outbound div.ticket-card").click(ticket_selected);
-    $("#inbound div.ticket-card").click(return_selected);
+    $("#outbound div.ticket-card").click(outbound_selected);
+    $("#inbound div.ticket-card").click(inbound_selected);
     $(window).scroll(fixSummary);
 }
-function return_selected(){
+
+function inbound_selected(){
     $(".d_ticket-selected").removeClass("d_ticket-selected");
     $(this).addClass("d_ticket-selected");
 
@@ -44,8 +45,20 @@ function return_selected(){
     $("#d_summary_details .arrivalTime").text(arrivalTime);
     $("#d_summary_details .arrivalLocation").text(arrivalLoc);
     $("#d_summary_price").text(price);
+
+    // put it into the hidden form for submission
+    $('input[name="in_price"]').val(price);
+    $('input[name="in_o_date"]').val(departureDate);
+    $('input[name="in_o_time"]').val(departureTime);
+    $('input[name="in_o_loc"]').val(departureLoc);
+    $('input[name="in_d_date"]').val(arrivalDate);
+    $('input[name="in_d_time"]').val(arrivalTime);
+    $('input[name="in_d_loc"]').val(arrivalLoc);
+
+    if ($("#summary_price").text().length > 0) showContinueButtons();
 }
-function ticket_selected() {
+
+function outbound_selected() {
     $(".ticket-selected").removeClass("ticket-selected");
     $(this).addClass("ticket-selected");
 
@@ -83,6 +96,19 @@ function ticket_selected() {
     $("#summary_details .arrivalLocation").text(arrivalLoc);
     $("#summary_price").text(price);
 
+    // put it into the hidden form for submission
+    $('input[name="out_price"]').val(price);
+    $('input[name="out_o_date"]').val(departureDate);
+    $('input[name="out_o_time"]').val(departureTime);
+    $('input[name="out_o_loc"]').val(departureLoc);
+    $('input[name="out_d_date"]').val(arrivalDate);
+    $('input[name="out_d_time"]').val(arrivalTime);
+    $('input[name="out_d_loc"]').val(arrivalLoc);
+
+    if ($("#d_summary_price").text().length > 0) showContinueButtons();
+}
+
+function showContinueButtons() {
     // display continue buttons
     $(".no-continue").removeClass("no-continue");
 
@@ -90,14 +116,14 @@ function ticket_selected() {
     if ($(".fa-angle-double-down").hasClass("disable-fa")) $(".fa-angle-double-up").removeClass("disable-fa");
 }
 
-function showSummary(){
+function showSummary() {
     $("#mobile_summary").addClass("change_height_mobile");
     $("#d_mobile_summary").addClass("change_height_mobile");
     $(".fa-angle-double-up").addClass("disable-fa");
     $(".fa-angle-double-down").removeClass("disable-fa");
 }
 
-function closeSummary(){
+function closeSummary() {
     $("#mobile_summary").removeClass("change_height_mobile");
     $("#d_mobile_summary").removeClass("change_height_mobile");
     $(".fa-angle-double-down").addClass("disable-fa");
@@ -105,13 +131,17 @@ function closeSummary(){
 }
 
 function fixSummary() {
-    var fromTop = $(window).scrollTop();
-    var summaryOffset = $("#summaryTop").position().top - 20;
+    // var fromTop = $(window).scrollTop();
+    // var summaryOffset = $("#summaryTop").position().top - 20;
+    //
+    // if (fromTop > summaryOffset) {
+    //     $("#summary").addClass("summary_fixed");
+    //
+    // } else {
+    //     $("#summary").removeClass("summary_fixed");
+    // }
+}
 
-    if (fromTop > summaryOffset) {
-        $("#summary").addClass("summary_fixed");
-
-    } else {
-        $("#summary").removeClass("summary_fixed");
-    }
+function confirmBooking() {
+    $('#hidden-form').submit();
 }

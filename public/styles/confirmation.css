@@ -1,0 +1,13 @@
+body {
+    margin-left: 4%;
+    margin-right: 4%;
+    margin-top: 8%;
+}
+
+.confirm-header h1 {
+    font-size: 150%;
+}
+
+.btn .pay-now {
+    margin: auto;
+}

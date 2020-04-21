@@ -19,7 +19,9 @@
 body {
     box-sizing: border-box;
     margin: 2%;
-    margin-top: 7%
+    margin-top: 7%;
+    min-height: 800px;
+
 }
 
 .column{
@@ -239,6 +241,10 @@ h1 {
     position: relative;
     top:75%;
     left:40%
+}
+
+.hidden-form {
+    display: none;
 }
 
 @media only screen and (max-width: 1000px) {

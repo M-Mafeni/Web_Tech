@@ -50,7 +50,8 @@
                     <span class = "location arrivalLocation"></span>
                 </p>
             </div>
-            <button class="btn continue-mobile no-continue">Continue</button>
+            <button type = "submit" class="btn continue-mobile no-continue" onclick="confirmBooking()">Continue</button>
+
         </div>
 
         <div class="row">
@@ -71,8 +72,8 @@
                 </div>
                 <span id = "summaryTop"></span>
                 <div class="column summary" id = "summary">
-                    <h1>Summary</h1>
-                    <p id = "o_unselected">No ticket selected</p>
+                <h1>Summary</h1>
+                    <p id = "o_unselected">No outbound ticket selected</p>
                     <div id = "summary_price" class = "summary_price"></div>
                     <div id = "summary_details" class = "summary_details">
                         <div class = "date departureDate"></div>
@@ -82,7 +83,8 @@
                         <span class = "time arrivalTime"></span>
                         <span class = "location arrivalLocation"></span>
                     </div>
-                    <p id = "d_unselected">No return ticket selected</p>
+                    <p id = "d_unselected">No inbound ticket selected</p>
+
                     <div id = "d_summary_price" class = "summary_price"></div>
                     <div id = "d_summary_details" class = "summary_details">
                         <div class = "date departureDate"></div>
@@ -92,7 +94,29 @@
                         <span class = "time arrivalTime"></span>
                         <span class = "location arrivalLocation"></span>
                     </div>
-                    <a href="#Return"><button type="button" name="continue" class = "btn no-continue">Continue</button></a>
+
+                    <form id = "hidden-form" action = "/confirmation" method="POST">
+                        <div class = "hidden-form">
+                            <input type="text" name="out_price" />
+                            <input type="text" name="out_o_date" />
+                            <input type="text" name="out_o_time" />
+                            <input type="text" name="out_o_loc" />
+                            <input type="text" name="out_d_date" />
+                            <input type="text" name="out_d_time" />
+                            <input type="text" name="out_d_loc" />
+
+                            <input type="text" name="in_price" />
+                            <input type="text" name="in_o_date" />
+                            <input type="text" name="in_o_time" />
+                            <input type="text" name="in_o_loc" />
+                            <input type="text" name="in_d_date" />
+                            <input type="text" name="in_d_time" />
+                            <input type="text" name="in_d_loc" />
+
+                        </div>
+                        <input type="submit" name="continue" class = "btn no-continue" value="Continue" />
+
+                    </form>
                 </div>
             {{else}}
                 <no-tickets>

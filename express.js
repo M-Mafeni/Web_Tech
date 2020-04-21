@@ -109,9 +109,24 @@ app.get('/bookings',function (req,res) {
 
 });
 
-function isEmpty(obj){
-    return Object.keys(obj).length === 0;
-}
+app.post('/confirmation',function (req,res) {
+    let outbound = {price:req.body.out_price.substring(1), o_date:req.body.out_o_date, d_date:req.body.out_d_date,
+                    origin_place:req.body.out_o_loc, destination_place:req.body.out_d_loc,
+                    o_time:req.body.out_o_time, d_time:req.body.out_d_time};
+    let inbound = {price:req.body.in_price.substring(1), o_date:req.body.in_o_date, d_date:req.body.in_d_date,
+                    origin_place:req.body.in_o_loc, destination_place:req.body.in_d_loc,
+                    o_time:req.body.in_o_time, d_time:req.body.in_d_time};
+
+    let finalTickets = {outbound, inbound};
+
+    res.type(xhtml);
+    res.render('main',{layout:'confirmation',loggedin:req.session.loggedin, final_tickets:finalTickets});
+});
+
+app.post('/confirmed', function(req,res) {
+    res.type(xhtml);
+    res.render('main',{layout:'index',loggedin:req.session.loggedin,prompt:'Purchased ticket.',result:'prompt-success'});
+});
 
 app.post('/login',function(req,res){
     let sql = "SELECT * FROM User WHERE email = ?";
@@ -205,3 +220,7 @@ app.get('/logout',function (req,res) {
     }
     else res.redirect('/');
 });
+
+function isEmpty(obj){
+    return Object.keys(obj).length === 0;
+}
