@@ -61,45 +61,50 @@ app.get('/bookings',function (req,res) {
      entered a query i.e localhost:8080/bookings.html wouldn't work on its own
     */
     res.type(xhtml);
-    if(req.session.loggedin && !isEmpty(req.query)){
-        let origin = req.query.origin;
-        let destination = req.query.destination;
-        let o_date = req.query.outbound_date;
-        let d_date = req.query.inbound_date;
-        let sql = "SELECT date(origin_date) AS o_date,time(origin_date) as o_time,origin_place,"
-         + "date(destination_date) AS d_date,time(destination_date) as d_time,destination_place,price "
-          + "FROM Ticket WHERE origin_place = ? AND destination_place = ? AND o_date = ? ";
-        db.all(sql,[origin,destination,o_date],(err,o_tickets) => {
-            if(err){
-                throw err;
-            }
-            o_tickets.forEach((ticket, i) => {
-                ticket.o_date = df.formatDate(ticket.o_date);
-                ticket.d_date = df.formatDate(ticket.d_date);
-                ticket.o_time = df.formatTime(ticket.o_time);
-                ticket.d_time = df.formatTime(ticket.d_time);
-            });
-            db.all(sql,[destination,origin,d_date], (err,d_tickets) => {
+    if(req.session.loggedin){
+        if(!isEmpty(req.query)){
+            let origin = req.query.origin;
+            let destination = req.query.destination;
+            let o_date = req.query.outbound_date;
+            let d_date = req.query.inbound_date;
+            let sql = "SELECT date(origin_date) AS o_date,time(origin_date) as o_time,origin_place,"
+             + "date(destination_date) AS d_date,time(destination_date) as d_time,destination_place,price "
+              + "FROM Ticket WHERE origin_place = ? AND destination_place = ? AND o_date = ? ";
+            db.all(sql,[origin,destination,o_date],(err,o_tickets) => {
                 if(err){
                     throw err;
                 }
-                d_tickets.forEach((ticket, i) => {
+                o_tickets.forEach((ticket, i) => {
                     ticket.o_date = df.formatDate(ticket.o_date);
                     ticket.d_date = df.formatDate(ticket.d_date);
                     ticket.o_time = df.formatTime(ticket.o_time);
                     ticket.d_time = df.formatTime(ticket.d_time);
                 });
-                //add tickets attribute to main (used for templating in bookings page)
-                res.render('main',{layout:'bookings',
-                           o_tickets: o_tickets,
-                           d_tickets: d_tickets,
-                           loggedin:req.session.loggedin
-                        });
+                db.all(sql,[destination,origin,d_date], (err,d_tickets) => {
+                    if(err){
+                        throw err;
+                    }
+                    d_tickets.forEach((ticket, i) => {
+                        ticket.o_date = df.formatDate(ticket.o_date);
+                        ticket.d_date = df.formatDate(ticket.d_date);
+                        ticket.o_time = df.formatTime(ticket.o_time);
+                        ticket.d_time = df.formatTime(ticket.d_time);
+                    });
+                    //add tickets attribute to main (used for templating in bookings page)
+                    res.render('main',{layout:'bookings',
+                               o_tickets: o_tickets,
+                               d_tickets: d_tickets,
+                               loggedin:req.session.loggedin
+                            });
+                });
             });
-        });
+        }
+        else {
+            res.redirect('/');
+        }
     }
-    else{
-        res.redirect("/");
+    else {
+        res.render('main',{layout:'index',loggedin:req.session.loggedin,prompt:'You are not logged in.',result:'prompt-fail'});
     }
 
 });
@@ -114,10 +119,11 @@ app.post('/login',function(req,res){
     let password = req.body.psw;
     db.get(sql,[email],(err,user) => {
         if(user == undefined){
-            /*for now its sending you to an error page.
-            should change this to be a prompt instead*/
-            res.send("Incorrect Email");
-        }else{
+            // setup prompt and render page
+            res.type(xhtml);
+            res.render('main',{layout:'index',loggedin:req.session.loggedin,prompt:'Unregistered email.',result:'prompt-fail'});
+        }
+        else{
             //password is hashed using bcrypt so hashes need to be compared
             //user.password = hash from db
             bcrypt.compare(password,user.password,function(err,valid){
@@ -125,9 +131,15 @@ app.post('/login',function(req,res){
                     //user is logged in with that username
                     req.session.loggedin = true;
                     req.session.username = email;
-                    res.redirect('/');
-                }else{
-                    res.send("Invalid Password");
+
+                    // setup prompt and render page
+                    res.type(xhtml);
+                    res.render('main',{layout:'index',loggedin:req.session.loggedin,prompt:'Successfully logged in.',result:'prompt-success'});
+                }
+                else{
+                    // setup prompt and render page
+                    res.type(xhtml);
+                    res.render('main',{layout:'index',loggedin:req.session.loggedin,prompt:'Invalid password.',result:'prompt-fail'});
                 }
             });
         }
@@ -156,24 +168,28 @@ app.post('/registered',function(req,res){
                         // log the new user in
                         req.session.loggedin = true;
                         req.session.username = email;
-                        res.redirect("/");
+
+                        // setup prompt and render page
+                        res.type(xhtml);
+                        res.render('main',{layout:'index',loggedin:req.session.loggedin,prompt:'Successfully registered and logged in.',result:'prompt-success'});
                     });
                 }
                 else {
-                    /*for now its sending you to an error page.
-                    should change this to be a prompt instead*/
-                    res.send("Passwords do not match");
+                    // setup prompt and render page
+                    res.type(xhtml);
+                    res.render('main',{layout:'register',prompt:'Passwords do not match.',result:'prompt-fail'})
                 }
             }
             else {
-                /*for now its sending you to an error page.
-                should change this to be a prompt instead*/
-                res.send("Email already registered");
+                // setup prompt and render page
+                res.type(xhtml);
+                res.render('main',{layout:'register',prompt:'Email already registered.',result:'prompt-fail'})
             }
         });
     }
     else {
-        res.send("Email not valid");
+        res.type(xhtml);
+        res.render('main',{layout:'register',prompt:'Invalid email.',result:'prompt-fail'})
     }
 });
 
@@ -182,7 +198,10 @@ app.get('/logout',function (req,res) {
     if (req.session.loggedin) {
         req.session.loggedin = false;
         req.session.username = null;
-        res.redirect('/');
+
+        // setup prompt and render page
+        res.type(xhtml);
+        res.render('main',{layout:'index',loggedin:req.session.loggedin,prompt:'Successfully logged out.',result:'prompt-success'});
     }
     else res.redirect('/');
 });

@@ -2,6 +2,8 @@
     --main-bg-colour: #007cbf;
     --dark-blue-banner: #00304A;
     --light-green-colour: #2cbbad;
+    --success-colour: #1f877d;
+    --fail-colour: #d1392e;
 }
 
 html {
@@ -320,6 +322,21 @@ input[type="date"]:hover::-webkit-calendar-picker-indicator:hover {
 
 .about_us p {
     margin-top: 7%;
+}
+
+.prompt {
+    padding: 1% 0;
+    margin-bottom: 2%;
+    text-align: center;
+}
+
+.prompt-success {
+    background: var(--success-colour);
+}
+
+.prompt-fail {
+    /* background: var(--fail-colour); */
+    background: var(--fail-colour);
 }
 
 footer {
