@@ -2,11 +2,16 @@
 const express = require('express');
 const exphbs  = require('express-handlebars');
 const app = express();
+const app1 = express(); //for http server
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const port = 8080;
+const secure_port = 3000;
 const sqlite = require('sqlite3').verbose();
 const bcrypt = require('bcrypt');
+const fs = require('fs');
+const http = require('http');
+const https = require('https');
 const df = require('./format');
 const xhtml = 'application/xhtml+xml';
 const validator = require("email-validator");
@@ -35,14 +40,25 @@ app.use(session({
 	saveUninitialized: true
 }));
 
-app.listen(port, () => console.log(`listening on port ${port}!`));
+
+//listen to both http and https ports
+const httpServer = http.createServer(app1).listen(port,() => console.log(`listening on port ${port}!`));
+// redirect all http requests to https server
+app1.get('*',function(req,res){
+    res.redirect('https://localhost:3000'+req.url);
+});
+const httpsServer = https.createServer({
+    key: fs.readFileSync('server.key'),
+    cert: fs.readFileSync('server.cert')
+},app)
+.listen(secure_port,() => console.log(`listening on port ${secure_port}! \n Go to https://localhost:3000`));
+// app.listen(port, () => console.log(`listening on port ${port}!`));
 
 //for the main page return main.handlebars with its layout being the index page
 app.get('/',function (req,res) {
     res.type(xhtml);
     res.render('main',{layout:'index',loggedin:req.session.loggedin});
 });
-
 //register page
 app.get('/register',function (req,res) {
     if (!req.session.loggedin) {
