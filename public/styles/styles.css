@@ -345,7 +345,7 @@ input[type="date"]:hover::-webkit-calendar-picker-indicator:hover {
 }
 
 h2.about_subheader {
-    font-size: 170%;
+    font-size: 150%;
     font-family: 'Righteous';
 }
 
@@ -364,7 +364,6 @@ h2.about_subheader {
 }
 
 .prompt-fail {
-    /* background: var(--fail-colour); */
     background: var(--fail-colour);
 }
 
