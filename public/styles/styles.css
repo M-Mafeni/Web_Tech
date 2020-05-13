@@ -324,6 +324,35 @@ input[type="date"]:hover::-webkit-calendar-picker-indicator:hover {
     margin-top: 7%;
 }
 
+.quote_wrapper {
+    padding: 3% 5%;
+    border-style: solid;
+    border-radius: 15px;
+    /* border-width: 10px; */
+    border-color: var(--main-bg-colour);
+    /* background: var(--success-colour); */
+
+}
+
+.quote {
+    font-size: 130%;
+
+}
+
+.quote_author {
+    margin-top: 2%;
+    text-align: right;
+}
+
+h2.about_subheader {
+    font-size: 170%;
+    font-family: 'Righteous';
+}
+
+.join_us {
+    text-align: center;
+}
+
 .prompt {
     padding: 1% 0;
     margin-bottom: 2%;
@@ -378,6 +407,16 @@ footer a:hover {
 
 footer svg:hover path {
     fill: #2cbcad !important;
+}
+
+footer svg:hover {
+    /* animation: spin 2s; */
+}
+
+@keyframes spin {
+   0% {
+      transform: rotate(360deg);
+   }
 }
 
 @media only screen and (max-width: 1400px) {

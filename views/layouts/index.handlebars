@@ -52,20 +52,33 @@
         <section class="about_us">
             <div class="header">About Us</div>
 
+            <div class="quote_wrapper">
+                <div class="quote"><em>“The future is here, brighter than ever. At Astra, we believe that nobody should be restricted from travelling where their heart desires.”</em></div>
+                <div class="quote_author">- Mr Lorem Ipsum, CEO</div>
+            </div>
+
             <p>
-                <img class="about_logo" src="/assets/logo_white_embedded.svg"></img>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+                <img class="about_logo" src="/assets/logo_white_animated.svg"></img>
+                We are an all-in-one online booking service who help coordinate your transportation to get you to your next interplanetary destination. Given your intended date of travel, we list departure and arrival times from 106 different space-travel companies to give you a central website to book your tickets.
             </p>
 
             <p>
                 <img class="right_col" src="/assets/spaceX_ship.png"></img>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                <h2 class="about_subheader">Our mission</h2>
+                We aim to make your booking process run more smoothly. As space-travel companies expand and increase in number, we understand it can be stressful finding the flight that best suits you. With Astra, you need not worry about these matters as we handle it for you at the click of a button.
             </p>
 
             <p>
                 <img class="left_col" src="/assets/spaceX_ship_moon.jpg"></img>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+                <h2 class="about_subheader">Who we are</h2>
+                Our company is handled by our passionate and dilligent team from a total of 50 offices worldwide, in the UK, USA, China, Canada, Ireland and many more. We continuously improve our services to ensure that you have a better experience travelling intergalactically in the near future.
             </p>
+
+            {{#if loggedin}}
+                <p class="join_us"><a href="#">Book your next flight today</a> to embark on the journey of your dreams.</p>
+            {{else}}
+                <p class="join_us"><a href="/register">Join us today</a> to embark on the journey of your dreams.</p>
+            {{/if}}
 
         </section>
 
