@@ -299,18 +299,15 @@ input[type="date"]:hover::-webkit-calendar-picker-indicator:hover {
     height: 130px;
     width: auto;
     margin: 5% 2%;
+    margin-bottom: 10%;
 }
 
 .left_col {
     float: left;
     height: 225px;
     width: auto;
-    margin-right: 5%
-}
-
-.about_images {
-    height: 250px;
-    width: auto;
+    margin-right: 5%;
+    margin-bottom: 10%;
 }
 
 .right_col {
@@ -318,25 +315,26 @@ input[type="date"]:hover::-webkit-calendar-picker-indicator:hover {
     height: 250px;
     width: auto;
     margin-left: 2%;
+    margin-bottom: 10%;
 }
 
 .about_us p {
     margin-top: 7%;
 }
 
+.about_subsection {
+    margin-bottom: 10%;
+}
+
 .quote_wrapper {
     padding: 3% 5%;
     border-style: solid;
     border-radius: 15px;
-    /* border-width: 10px; */
     border-color: var(--main-bg-colour);
-    /* background: var(--success-colour); */
-
 }
 
 .quote {
     font-size: 130%;
-
 }
 
 .quote_author {
@@ -351,6 +349,15 @@ h2.about_subheader {
 
 .join_us {
     text-align: center;
+}
+
+.about_us a {
+    color: var(--main-bg-colour);
+    transition: color 0.3s;
+}
+
+.about_us a:hover {
+    color: #2cbcad;
 }
 
 .prompt {
@@ -385,7 +392,7 @@ footer svg path {
 }
 
 footer a {
-    color: #007cbf;
+    color: var(--main-bg-colour);
     transition: color 0.3s;
 }
 
@@ -431,6 +438,22 @@ footer svg:hover {
     }
 }
 
+@media only screen and (max-width: 1150px) {
+    /* .about_logo {
+        height: 110px;
+    }
+
+    .left_col {
+        height: 200px;
+    }
+
+    .right_col {
+        height: 200px;
+    } */
+
+}
+
+
 @media only screen and (max-width: 1020px) {
     .form_item {
         margin-left: 1.5%;
@@ -439,6 +462,19 @@ footer svg:hover {
 
     .advert_text {
         margin-bottom: 10%;
+    }
+
+    .about_logo {
+        height: 100px;
+        margin-bottom: 15%;
+    }
+
+    .left_col {
+        height: 200px;
+    }
+
+    .right_col {
+        height: 210px;
     }
 }
 
@@ -463,6 +499,14 @@ footer svg:hover {
 
     .dest input {
         width: 20em;
+    }
+
+    .right_col, .left_col, .about_logo {
+        float: none;
+        margin-bottom: 2%;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
     }
 }
 
