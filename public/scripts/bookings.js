@@ -23,6 +23,7 @@ function inbound_selected(){
     var arrivalLoc = destination.find(".location").text();
 
     var price = $(this).find(".price").text();
+    var in_id = $(this).find(".ticket_id").text();
 
     $("#mobile_summary").show();
     $("#summary-title-mobile").text("Summary");
@@ -46,7 +47,8 @@ function inbound_selected(){
     $("#d_summary_details .arrivalLocation").text(arrivalLoc);
     $("#d_summary_price").text(price);
 
-    // put it into the hidden form for submission
+    // put it into the hidden form for submission - is there a better way?
+    $('input[name="in_id"]').val(in_id);
     $('input[name="in_price"]').val(price);
     $('input[name="in_o_date"]').val(departureDate);
     $('input[name="in_o_time"]').val(departureTime);
@@ -73,6 +75,8 @@ function outbound_selected() {
     var arrivalLoc = destination.find(".location").text();
 
     var price = $(this).find(".price").text();
+    var out_id = $(this).find(".ticket_id").text();
+
     //mobile code
     $("#mobile_summary").show();
     $("#summary-title-mobile").text("Summary");
@@ -96,7 +100,8 @@ function outbound_selected() {
     $("#summary_details .arrivalLocation").text(arrivalLoc);
     $("#summary_price").text(price);
 
-    // put it into the hidden form for submission
+    // put it into the hidden form for submission - is there a better way?
+    $('input[name="out_id"]').val(out_id);
     $('input[name="out_price"]').val(price);
     $('input[name="out_o_date"]').val(departureDate);
     $('input[name="out_o_time"]').val(departureTime);

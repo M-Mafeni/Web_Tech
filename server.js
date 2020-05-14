@@ -83,7 +83,7 @@ app.get('/bookings',function (req,res) {
             let destination = req.query.destination;
             let o_date = req.query.outbound_date;
             let d_date = req.query.inbound_date;
-            let sql = "SELECT date(origin_date) AS o_date,time(origin_date) as o_time,origin_place,"
+            let sql = "SELECT id, date(origin_date) AS o_date,time(origin_date) as o_time,origin_place,"
              + "date(destination_date) AS d_date,time(destination_date) as d_time,destination_place,price "
               + "FROM Ticket WHERE origin_place = ? AND destination_place = ? AND o_date = ? ";
             db.all(sql,[origin,destination,o_date],(err,o_tickets) => {
@@ -126,22 +126,35 @@ app.get('/bookings',function (req,res) {
 });
 
 app.post('/confirmation',function (req,res) {
-    let outbound = {price:req.body.out_price.substring(1), o_date:req.body.out_o_date, d_date:req.body.out_d_date,
-                    origin_place:req.body.out_o_loc, destination_place:req.body.out_d_loc,
-                    o_time:req.body.out_o_time, d_time:req.body.out_d_time};
-    let inbound = {price:req.body.in_price.substring(1), o_date:req.body.in_o_date, d_date:req.body.in_d_date,
-                    origin_place:req.body.in_o_loc, destination_place:req.body.in_d_loc,
-                    o_time:req.body.in_o_time, d_time:req.body.in_d_time};
+    if (req.session.loggedin) {
+        let outbound = {id:req.body.out_id, price:req.body.out_price.substring(1), o_date:req.body.out_o_date, d_date:req.body.out_d_date,
+                        origin_place:req.body.out_o_loc, destination_place:req.body.out_d_loc,
+                        o_time:req.body.out_o_time, d_time:req.body.out_d_time};
+        let inbound = {id:req.body.in_id, price:req.body.in_price.substring(1), o_date:req.body.in_o_date, d_date:req.body.in_d_date,
+                        origin_place:req.body.in_o_loc, destination_place:req.body.in_d_loc,
+                        o_time:req.body.in_o_time, d_time:req.body.in_d_time};
+        let finalTickets = {outbound, inbound};
 
-    let finalTickets = {outbound, inbound};
-
-    res.type(xhtml);
-    res.render('main',{layout:'confirmation',loggedin:req.session.loggedin, final_tickets:finalTickets});
+        res.type(xhtml);
+        res.render('main',{layout:'confirmation',loggedin:req.session.loggedin, final_tickets:finalTickets});
+    }
+    else {
+        res.render('main',{layout:'index',loggedin:req.session.loggedin,prompt:'You are not logged in.',result:'prompt-fail'});
+    }
 });
 
 app.post('/confirmed', function(req,res) {
-    res.type(xhtml);
-    res.render('main',{layout:'index',loggedin:req.session.loggedin,prompt:'Purchased ticket.',result:'prompt-success'});
+    if (req.session.loggedin) {
+        let sql = db.prepare("INSERT INTO User_Ticket(user_id, ticket_id) VALUES (?, ?)");
+        sql.run(req.session.username, req.body.out_id);
+        sql.run(req.session.username, req.body.in_id);
+
+        res.type(xhtml);
+        res.render('main',{layout:'index',loggedin:req.session.loggedin,prompt:'Purchased ticket.',result:'prompt-success'});
+    }
+    else {
+        res.render('main',{layout:'index',loggedin:req.session.loggedin,prompt:'You are not logged in.',result:'prompt-fail'});
+    }
 });
 
 app.post('/login',function(req,res){
