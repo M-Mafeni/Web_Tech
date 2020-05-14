@@ -15,6 +15,7 @@ body {
     background: #000000;
     color: white;
     font-size: 150%;
+    min-width: 355px;
 }
 
 .nav-items {
@@ -126,9 +127,6 @@ body {
 
 .registerText a:hover {
     color: var(--light-green-colour);
-    /* color: var(--dark-blue-banner); */
-
-
 }
 
 .registerText a:focus {
@@ -139,7 +137,6 @@ body {
     background-image: url(/assets/space.jpg);
     background-size: cover;
     width: 100%;
-    min-width: 355px;
     height: 630px;
     padding-top: 10%;
     text-align: center;
@@ -278,7 +275,7 @@ input[type="date"]:hover::-webkit-calendar-picker-indicator:hover {
 
 .about_us {
     position: relative;
-    margin:auto;
+    margin: auto;
     margin-top: 10%;
     margin-bottom: 5%;
     width: 83%;
@@ -291,6 +288,7 @@ input[type="date"]:hover::-webkit-calendar-picker-indicator:hover {
     text-align: center;
     width: 50%;
     margin: 5% auto;
+    margin-bottom: 8%;
     border-radius: 15px;
 }
 
@@ -299,7 +297,8 @@ input[type="date"]:hover::-webkit-calendar-picker-indicator:hover {
     height: 130px;
     width: auto;
     margin: 5% 2%;
-    margin-bottom: 10%;
+    margin-right: 5%;
+    /* margin-bottom: 10%; */
 }
 
 .left_col {
@@ -307,24 +306,22 @@ input[type="date"]:hover::-webkit-calendar-picker-indicator:hover {
     height: 225px;
     width: auto;
     margin-right: 5%;
-    margin-bottom: 10%;
+    /* margin-bottom: 8%; */
 }
 
 .right_col {
     float:right;
     height: 250px;
     width: auto;
-    margin-left: 2%;
-    margin-bottom: 10%;
-}
-
-.about_us p {
-    margin-top: 7%;
+    margin-left: 5%;
+    /* margin-bottom: 8%; */
 }
 
 .about_subsection {
+    margin-top: 7%;
     margin-bottom: 10%;
 }
+
 
 .quote_wrapper {
     padding: 3% 5%;
@@ -349,6 +346,7 @@ h2.about_subheader {
 
 .join_us {
     text-align: center;
+    font-size: 130%;
 }
 
 .about_us a {
@@ -438,18 +436,21 @@ footer svg:hover {
     }
 }
 
-@media only screen and (max-width: 1150px) {
-    /* .about_logo {
-        height: 110px;
+@media only screen and (max-width: 1250px) {
+    .about_logo {
+        height: 100px;
+        margin-bottom: 11%;
     }
 
     .left_col {
-        height: 200px;
+        height: 190px;
+        margin-bottom: 8%;
     }
 
     .right_col {
         height: 200px;
-    } */
+        margin-bottom: 8%;
+    }
 
 }
 
@@ -462,19 +463,6 @@ footer svg:hover {
 
     .advert_text {
         margin-bottom: 10%;
-    }
-
-    .about_logo {
-        height: 100px;
-        margin-bottom: 15%;
-    }
-
-    .left_col {
-        height: 200px;
-    }
-
-    .right_col {
-        height: 210px;
     }
 }
 
@@ -503,7 +491,7 @@ footer svg:hover {
 
     .right_col, .left_col, .about_logo {
         float: none;
-        margin-bottom: 2%;
+        margin-bottom: 5%;
         display: block;
         margin-left: auto;
         margin-right: auto;
@@ -517,6 +505,10 @@ footer svg:hover {
 
     .dest input {
         width: 15em;
+    }
+
+    .header {
+        width: 100%;
     }
 }
 
@@ -545,7 +537,6 @@ footer svg:hover {
         float: none;
 		display: block;
         clear: both;
-        /* border-top: 1px solid #808080; */
     }
 
     .nav-wrapper {
@@ -597,7 +588,7 @@ footer svg:hover {
 
     div.header {
         font-size: 40px;
-        width: 65%;
+        margin-bottom: 10%;
     }
 
     img.about_logo {
@@ -610,6 +601,11 @@ footer svg:hover {
 
     img.left_col {
         height:160px;
+    }
+
+    .right_col, .left_col, .about_logo {
+        margin-top: 10%;
+        margin-bottom: 10%;
     }
 
     .nav-items a.brand-logo {
@@ -637,6 +633,7 @@ footer svg:hover {
         padding: 0px 0px;
         font-size: 10px;
         height: 50px;
+        min-width: 355px;
     }
 
     footer svg {
@@ -649,6 +646,10 @@ footer svg:hover {
     .advert_text {
         font-size: 200%;
     }
+
+    .join_us {
+        font-size: 110%;
+    }
 }
 
 @media only screen and (max-width: 400px) {
@@ -659,4 +660,17 @@ footer svg:hover {
     input[type="text"], input[type="password"], input[type="date"] {
         font-size: 80% !important;
     }
+
+    img.right_col {
+        height: 130px;
+    }
+
+    img.left_col {
+        height: 130px;
+    }
+
+    img.about_logo {
+        height: 50px;
+    }
+
 }
