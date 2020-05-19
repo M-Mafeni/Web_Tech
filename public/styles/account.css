@@ -1,0 +1,68 @@
+body {
+    margin-top: 9%;
+}
+
+.title-header {
+    font-size: 150%;
+}
+
+.subheader {
+    font-size: 140%;
+    margin-bottom: 3%;
+}
+
+.personal-details {
+    padding: 2% 4%;
+    border-style: solid;
+    border-color: var(--main-bg-colour);
+    border-radius: 15px;
+    margin-top: 1%;
+    margin-bottom: 5%;
+    display: inline-block;
+    width: 100%;
+}
+
+.account-left, .account-right {
+    width: 50%;
+}
+
+.account-left {
+    float: left;
+    padding-right: 3%;
+}
+
+.account-right {
+    float:right;
+    padding-left: 3%;
+}
+
+.account-details {
+    padding-bottom: 1%;
+}
+
+strong {
+    font-weight: bolder;
+    margin-right: 5%;
+}
+
+@media only screen and (max-width: 750px) {
+    body {
+        margin-top: 12%;
+    }
+}
+
+@media only screen and (max-width: 650px) {
+    .account-left, .account-right {
+        width: 100%;
+        float: none;
+        clear: both;
+        padding-left: 0;
+        padding-right: 0;
+    }
+}
+
+@media only screen and (max-width: 400px) {
+    body {
+        margin-top: 15%;
+    }
+}

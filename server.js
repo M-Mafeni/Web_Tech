@@ -188,7 +188,7 @@ app.post('/confirmed', function(req,res) {
 
         console.log("user purchased tickets with IDs " + req.body.out_id + " and " + req.body.in_id);
 
-        res.render('main',{layout:'index',loggedin:req.session.loggedin,prompt:'Purchased ticket.',result:'prompt-success'});
+        res.render('main',{layout:'index',loggedin:req.session.loggedin,prompt:'Ticket purchased.',result:'prompt-success'});
     }
     else {
         res.render('main',{layout:'index',loggedin:req.session.loggedin,prompt:'You are not logged in.',result:'prompt-fail'});
@@ -203,7 +203,7 @@ app.post('/login',function(req,res){
     db.get(sql,[email],(err,user) => {
         if(user == undefined){
             // setup prompt and render page
-            res.render('main',{layout:'index',loggedin:req.session.loggedin,prompt:'Unregistered email.',result:'prompt-fail'});
+            res.render('main',{layout:'index',loggedin:req.session.loggedin,prompt:'Email unregistered.',result:'prompt-fail'});
         }
         else{
             //password is hashed using bcrypt so hashes need to be compared
@@ -215,11 +215,11 @@ app.post('/login',function(req,res){
                     req.session.username = email;
 
                     // setup prompt and render page
-                    res.render('main',{layout:'index',loggedin:req.session.loggedin,prompt:'Successfully logged in.',result:'prompt-success'});
+                    res.render('main',{layout:'index',loggedin:req.session.loggedin,prompt:'Logged in successfully.',result:'prompt-success'});
                 }
                 else{
                     // setup prompt and render page
-                    res.render('main',{layout:'index',loggedin:req.session.loggedin,prompt:'Incorrect password.',result:'prompt-fail'});
+                    res.render('main',{layout:'index',loggedin:req.session.loggedin,prompt:'Password incorrect.',result:'prompt-fail'});
                 }
             });
         }
@@ -255,7 +255,7 @@ app.post('/registered',function(req,res){
                             req.session.username = email;
 
                             // setup prompt and render page
-                            res.render('main',{layout:'index',loggedin:req.session.loggedin,prompt:'Successfully registered and logged in.',result:'prompt-success'});
+                            res.render('main',{layout:'index',loggedin:req.session.loggedin,prompt:'Registered and logged in successfully.',result:'prompt-success'});
                         });
                     }
                     else {
@@ -270,7 +270,7 @@ app.post('/registered',function(req,res){
             });
         }
         else {
-            res.render('main',{layout:'register',prompt:'Invalid email.',result:'prompt-fail'})
+            res.render('main',{layout:'register',prompt:'Email not valid.',result:'prompt-fail'})
         }
     }
     else {
@@ -286,7 +286,7 @@ app.get('/logout',function (req,res) {
 
         // setup prompt and render page
         res.type(xhtml);
-        res.render('main',{layout:'index',loggedin:req.session.loggedin,prompt:'Successfully logged out.',result:'prompt-success'});
+        res.render('main',{layout:'index',loggedin:req.session.loggedin,prompt:'Logged out successfully.',result:'prompt-success'});
     }
     else res.redirect('/');
 });

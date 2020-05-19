@@ -8,6 +8,7 @@
 <link rel="stylesheet" href="/styles/bookings.css"></link>
 <link rel="stylesheet" href="/styles/register.css"></link>
 <link rel="stylesheet" href="/styles/confirmation.css"></link>
+<link rel="stylesheet" href="/styles/account.css"></link>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Righteous"></link>
 <link href="https://fonts.googleapis.com/css2?family=Rubik" rel="stylesheet"></link>
 <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300" rel="stylesheet"></link>
@@ -19,14 +20,22 @@
         {{> login}}
 
         {{> prompt}}
-        <h1 class="confirm-header">My Account</h1>
+        <h1 class="title-header">My Account</h1>
 
-        Email: {{email}} <br/>
-        First name: {{first_name}} <br/>
-        Last name: {{last_name}} <br/>
-        Address: {{address}}
 
-        {{> tickets heading = "Previously purchased tickets" ticketData = purchased_tickets}}
+        <div class="personal-details">
+            <div class="subheader">Personal Details</div>
+            <div class="account-details account-left"><strong>First name:</strong> {{first_name}}</div>
+            <div class="account-details account-right"><strong>Last name:</strong> {{last_name}}</div>
+            <div class="account-details account-left"><strong>Email:</strong> {{email}}</div>
+            <div class="account-details account-right"><strong>Address:</strong> {{#if address}} {{address}} {{else}} No address specified {{/if}}</div>
+        </div>
+
+        {{#if purchased_tickets}}
+            {{> tickets heading = "Previously purchased tickets" ticketData = purchased_tickets}}
+        {{else}}
+            <a href="/">Book your first flight today.</a>
+        {{/if}}
 
     </body>
     {{> footer}}
