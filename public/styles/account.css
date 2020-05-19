@@ -40,6 +40,15 @@ body {
     padding-bottom: 1%;
 }
 
+.account-link {
+    color: var(--main-bg-colour);
+    transition: color 0.3s;
+}
+
+.account-link:hover {
+    color: #2cbcad;
+}
+
 strong {
     font-weight: bolder;
     margin-right: 5%;

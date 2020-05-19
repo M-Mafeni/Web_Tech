@@ -15,7 +15,7 @@ body {
     background: #000000;
     color: white;
     font-size: 150%;
-    min-width: 355px;
+    /* min-width: 355px; */
 }
 
 .nav-items {
@@ -28,6 +28,7 @@ body {
     overflow: hidden;
     transition: background 0.3s;
     font-size: 80%;
+    /* min-width: 355px; */
 }
 
 .nav_links {
@@ -541,7 +542,7 @@ footer svg:hover {
 
     .nav-wrapper {
         clear: both;
-		-webkit-transition: backgroud 0.3s ease-out;
+		-webkit-transition: background 0.3s ease-out;
 		-moz-transition: all 0.3s ease-out;
 		-ms-transition: all 0.3s ease-out;
 		-o-transition: all 0.3s ease-out;
@@ -633,7 +634,7 @@ footer svg:hover {
         padding: 0px 0px;
         font-size: 10px;
         height: 50px;
-        min-width: 355px;
+        /* min-width: 355px; */
     }
 
     footer svg {
@@ -671,6 +672,10 @@ footer svg:hover {
 
     img.about_logo {
         height: 50px;
+    }
+
+    .quote {
+        font-size: 110%;
     }
 
 }

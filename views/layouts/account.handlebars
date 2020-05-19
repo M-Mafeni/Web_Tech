@@ -9,6 +9,7 @@
 <link rel="stylesheet" href="/styles/register.css"></link>
 <link rel="stylesheet" href="/styles/confirmation.css"></link>
 <link rel="stylesheet" href="/styles/account.css"></link>
+<script src="/scripts/index.js"></script>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Righteous"></link>
 <link href="https://fonts.googleapis.com/css2?family=Rubik" rel="stylesheet"></link>
 <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300" rel="stylesheet"></link>
@@ -34,7 +35,8 @@
         {{#if purchased_tickets}}
             {{> tickets heading = "Previously purchased tickets" ticketData = purchased_tickets}}
         {{else}}
-            <a href="/">Book your first flight today.</a>
+            <h1 class="Journey_Text">Previously purchased tickets</h1>
+            <a href="/" class="account-link">Book your first flight today.</a>
         {{/if}}
 
     </body>

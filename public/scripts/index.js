@@ -7,11 +7,21 @@ function start(){
     $(window).resize(setLoginPos);
 
     var modal = document.getElementById("loginForm");
+    var clickCount = 0;
+
     window.onclick = function(event) {
-      // console.log("clicked");
       if (event.target == modal) {
         modal.style.display = "none";
       }
+
+      // if ($("#mobile-nav").hasClass("responsive") && ($(this) == $("a[href='#about_us']") || $(this) != $("#mobile-nav"))) {
+      //     clickCount++;
+      //     if (clickCount > 1) {
+      //         $("#mobile-nav").removeClass("responsive");
+      //         clickCount = 0;
+      //     }
+      // }
+      // else clickCount = 0;
     }
 
     var now = new Date();
