@@ -11,3 +11,44 @@ body {
 .ticket-card:hover{
     cursor: auto;
 }
+
+.pay-header {
+    margin-top: 5%;
+    margin-left: 2%;
+    font-size: 130%;
+}
+
+select {
+    display: block;
+    margin-bottom: 4%;
+}
+
+.confirm-form {
+    margin-top: 2%;
+    padding-left: 2%;
+    padding-right: 2%;
+    width: 70%;
+}
+
+#payButton {
+    display: none;
+}
+
+@media only screen and (max-width: 850px) {
+    body {
+        margin-top: 12%;
+    }
+}
+
+@media only screen and (max-width: 700px) {
+    #payButton, .confirm-form {
+        width: 100%;
+    }
+}
+
+@media only screen and (max-width: 550px) {
+    select {
+        margin-top: 6%;
+        margin-bottom: 6%;
+    }
+}
