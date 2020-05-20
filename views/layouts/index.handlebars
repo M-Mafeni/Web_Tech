@@ -27,10 +27,21 @@
 
                     <span class = "booking_left">
                         <div class="form_item">
-                            <input type="text" name="origin" placeholder="Enter Origin Base" required=""></input>
+                            <input list = "outbound" type="text" name="origin" placeholder="Enter Origin Base" required="">
+                            </input>
+                            <datalist id="outbound">
+                                {{#each outbound}}
+                                    <option value="{{origin_place}}"></option>
+                                {{/each}}
+                            </datalist>
                         </div>
                         <div class="form_item">
-                            <input type="text" name="destination" placeholder="Enter Destination Base" required="" class="dest"></input>
+                            <input list = "inbound" type="text" name="destination" placeholder="Enter Destination Base" required="" class="dest"></input>
+                            <datalist id="inbound">
+                                {{#each inbound}}
+                                    <option value="{{destination_place}}"></option>
+                                {{/each}}
+                            </datalist>
                         </div>
                     </span>
                     <span class = "booking_right">

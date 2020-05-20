@@ -57,7 +57,14 @@ const httpsServer = https.createServer({
 //for the main page return main.handlebars with its layout being the index page
 app.get('/',function (req,res) {
     res.type(xhtml);
-    res.render('main',{layout:'index',loggedin:req.session.loggedin});
+    let sql = "SELECT DISTINCT origin_place FROM Ticket";
+    db.all(sql,[],(err,outbound)=>{
+        //probably can fuse 2 queries together but might involve filtering returned list
+        let sql1 = "SELECT DISTINCT destination_place FROM Ticket";
+        db.all(sql1,[],(err,inbound)=>{
+            res.render('main',{layout:'index',loggedin:req.session.loggedin,outbound:outbound,inbound:inbound});
+        });
+    });
 });
 
 app.get('/account',function (req,res) {
@@ -248,7 +255,7 @@ app.post('/registered',function(req,res){
                     if (password == confirmPassword) {
                         bcrypt.hash(password, 10, function(err, hash) {
                             insertSQL.run(email,hash,first_name,last_name,address);
-                            console.log("user " + email + " registered with password " + hash);
+                            // console.log("user " + email + " registered with password " + hash);
 
                             // log the new user in
                             req.session.loggedin = true;
@@ -278,7 +285,12 @@ app.post('/registered',function(req,res){
     }
 });
 
-
+app.get('/outbound',function(req,res){
+    let sql = "SELECT origin_place FROM Ticket";
+    db.all(sql,[],(err,places)=>{
+        res.send(places);
+    });
+});
 app.get('/logout',function (req,res) {
     if (req.session.loggedin) {
         req.session.loggedin = false;
