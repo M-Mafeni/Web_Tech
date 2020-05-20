@@ -62,7 +62,11 @@ app.get('/',function (req,res) {
         //probably can fuse 2 queries together but might involve filtering returned list
         let sql1 = "SELECT DISTINCT destination_place FROM Ticket";
         db.all(sql1,[],(err,inbound)=>{
-            res.render('main',{layout:'index',loggedin:req.session.loggedin,outbound:outbound,inbound:inbound});
+            let prompt = req.session.prompt;
+            let result = req.session.result;
+            req.session.prompt = null;
+            req.session.result = null;
+            res.render('main',{layout:'index',loggedin:req.session.loggedin,outbound:outbound,inbound:inbound,prompt:prompt,result:result});
         });
     });
 });
@@ -92,7 +96,10 @@ app.get('/account',function (req,res) {
         });
     }
     else {
-        res.render('main',{layout:'index',loggedin:req.session.loggedin,prompt:'You are not logged in.',result:'prompt-fail'});
+        req.session.prompt = 'You are not logged in.';
+        req.session.result = 'prompt-fail';
+        res.redirect('/');
+        // res.render('main',{layout:'index',loggedin:req.session.loggedin,prompt:'You are not logged in.',result:'prompt-fail'});
     }
 
 });
@@ -159,7 +166,10 @@ app.get('/bookings',function (req,res) {
         }
     }
     else {
-        res.render('main',{layout:'index',loggedin:req.session.loggedin,prompt:'You are not logged in.',result:'prompt-fail'});
+        req.session.prompt = 'You are not logged in.';
+        req.session.result = 'prompt-fail';
+        res.redirect('/');
+        // res.render('main',{layout:'index',loggedin:req.session.loggedin,prompt:'You are not logged in.',result:'prompt-fail'});
     }
 
 });
@@ -178,7 +188,10 @@ app.post('/confirmation',function (req,res) {
         res.render('main',{layout:'confirmation',loggedin:req.session.loggedin, final_tickets:finalTickets});
     }
     else {
-        res.render('main',{layout:'index',loggedin:req.session.loggedin,prompt:'You are not logged in.',result:'prompt-fail'});
+        req.session.prompt= 'You are not logged in.';
+        req.session.result = 'prompt-fail';
+        res.redirect('/');
+        // res.render('main',{layout:'index',loggedin:req.session.loggedin,prompt:'You are not logged in.',result:'prompt-fail'});
     }
 });
 
@@ -194,11 +207,16 @@ app.post('/confirmed', function(req,res) {
         });
 
         console.log("user purchased tickets with IDs " + req.body.out_id + " and " + req.body.in_id);
-
-        res.render('main',{layout:'index',loggedin:req.session.loggedin,prompt:'Ticket purchased.',result:'prompt-success'});
+        req.session.prompt= 'Ticket purchased.';
+        req.session.result = 'prompt-success';
+        res.redirect('/');
+        // res.render('main',{layout:'index',loggedin:req.session.loggedin,prompt:'Ticket purchased.',result:'prompt-success'});
     }
     else {
-        res.render('main',{layout:'index',loggedin:req.session.loggedin,prompt:'You are not logged in.',result:'prompt-fail'});
+        req.session.prompt = 'You are not logged in.';
+        req.session.result = 'prompt-fail';
+        res.redirect('/');
+        // res.render('main',{layout:'index',loggedin:req.session.loggedin,prompt:'You are not logged in.',result:'prompt-fail'});
     }
 });
 
@@ -210,7 +228,10 @@ app.post('/login',function(req,res){
     db.get(sql,[email],(err,user) => {
         if(user == undefined){
             // setup prompt and render page
-            res.render('main',{layout:'index',loggedin:req.session.loggedin,prompt:'Email unregistered.',result:'prompt-fail'});
+            req.session.prompt = 'Email unregistered.';
+            req.session.result = 'prompt-fail';
+            res.redirect('/');
+            // res.render('main',{layout:'index',loggedin:req.session.loggedin,prompt:'Email unregistered.',result:'prompt-fail'});
         }
         else{
             //password is hashed using bcrypt so hashes need to be compared
@@ -220,13 +241,19 @@ app.post('/login',function(req,res){
                     //user is logged in with that username
                     req.session.loggedin = true;
                     req.session.username = email;
+                    req.session.prompt = 'Logged in successfully.';
+                    req.session.result = 'prompt-success';
 
                     // setup prompt and render page
-                    res.render('main',{layout:'index',loggedin:req.session.loggedin,prompt:'Logged in successfully.',result:'prompt-success'});
+                    // res.render('main',{layout:'index',loggedin:req.session.loggedin,prompt:'Logged in successfully.',result:'prompt-success'});
+                    res.redirect('/');
                 }
                 else{
                     // setup prompt and render page
-                    res.render('main',{layout:'index',loggedin:req.session.loggedin,prompt:'Password incorrect.',result:'prompt-fail'});
+                    // res.render('main',{layout:'index',loggedin:req.session.loggedin,prompt:'Password incorrect.',result:'prompt-fail'});
+                    req.session.prompt = 'Password incorrect';
+                    req.session.result = 'prompt-fail';
+                    res.redirect('/');
                 }
             });
         }
@@ -260,24 +287,35 @@ app.post('/registered',function(req,res){
                             // log the new user in
                             req.session.loggedin = true;
                             req.session.username = email;
-
+                            req.session.prompt = 'Registered and logged in successfully.';
+                            req.session.result = 'prompt-success';
                             // setup prompt and render page
-                            res.render('main',{layout:'index',loggedin:req.session.loggedin,prompt:'Registered and logged in successfully.',result:'prompt-success'});
+                            // res.render('main',{layout:'index',loggedin:req.session.loggedin,prompt:'Registered and logged in successfully.',result:'prompt-success'});
+                            res.redirect('/');
                         });
                     }
                     else {
                         // setup prompt and render page
-                        res.render('main',{layout:'register',prompt:'Passwords do not match.',result:'prompt-fail'})
+                        req.session.prompt = 'Passwords do not match';
+                        req.session.result = 'prompt-fail';
+                        // res.render('main',{layout:'register',prompt:'Passwords do not match.',result:'prompt-fail'})
+                        res.redirect('/');
                     }
                 }
                 else {
                     // setup prompt and render page
-                    res.render('main',{layout:'register',prompt:'Email already registered.',result:'prompt-fail'})
+                    req.session.prompt = 'Email already registered';
+                    req.session.result = 'prompt-fail';
+                    res.redirect('/');
+                    // res.render('main',{layout:'register',prompt:'Email already registered.',result:'prompt-fail'})
                 }
             });
         }
         else {
-            res.render('main',{layout:'register',prompt:'Email not valid.',result:'prompt-fail'})
+            req.session.prompt = 'Email not valid';
+            req.session.result = 'prompt-fail';
+            res.redirect('/');
+            // res.render('main',{layout:'register',prompt:'Email not valid.',result:'prompt-fail'})
         }
     }
     else {
@@ -285,12 +323,6 @@ app.post('/registered',function(req,res){
     }
 });
 
-app.get('/outbound',function(req,res){
-    let sql = "SELECT origin_place FROM Ticket";
-    db.all(sql,[],(err,places)=>{
-        res.send(places);
-    });
-});
 app.get('/logout',function (req,res) {
     if (req.session.loggedin) {
         req.session.loggedin = false;
@@ -298,9 +330,12 @@ app.get('/logout',function (req,res) {
 
         // setup prompt and render page
         res.type(xhtml);
-        res.render('main',{layout:'index',loggedin:req.session.loggedin,prompt:'Logged out successfully.',result:'prompt-success'});
+        req.session.prompt = 'Logged out successfully.';
+        req.session.result='prompt-success';
+        // res.redirect('/');
+        // res.render('main',{layout:'index',loggedin:req.session.loggedin,prompt:'Logged out successfully.',result:'prompt-success'});
     }
-    else res.redirect('/');
+    res.redirect('/');
 });
 
 function isEmpty(obj){
