@@ -7,51 +7,70 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"></link>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"></link>
 <link rel="stylesheet" href="/styles/styles.css"></link>
+<link rel="stylesheet" href="/styles/admin.css"></link>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Righteous"></link>
 <link href="https://fonts.googleapis.com/css2?family=Rubik" rel="stylesheet"></link>
 {{> header title = "Astra | Admin"}}
 
 <body>
-    {{> navbar main-page=false  }}
-
-    <div class="admin_bar booking_bar">
-        <form class="booking_form" action="/admin/addticket" method="post">
-            <span class = "booking_left">
-                <div class="form_item">
-                    <input list = "places" type="text" name="origin" placeholder="Enter Origin Base" required="">
-                    </input>
-                </div>
-                <div class="form_item">
-                    <input list = "places" type="text" name="destination" placeholder="Enter Destination Base" required="" class="dest"></input>
-                </div>
-                <datalist id="places">
-                    {{#each destinations}}
-                        <option value="{{name}}"></option>
-                    {{/each}}
-                </datalist>
-            </span>
-            <span class = "booking_right">
-                <div class="form_item">
-                    <input id="outbound_date" type="date" name="outbound_date" value="" required=""></input>
-                </div>
-                <div class="form_item">
-                    <input id="outbound_time" type="time" name="outbound_time" value="" required=""></input>
-                </div>
-                <div class="form_item">
-                    <input type="date" name="inbound_date" value="" required=""></input>
-                </div>
-                <div class="form_item">
-                    <input id="inbound_time" type="time" name="inbound_time" value="" required=""></input>
-                </div>
-                <div class="form_item">
-                    <input id="price" type="number" name="price" value="" required=""></input>
-                </div>
-            </span>
-            <div class="booking_button">
-                <input class="btn" type="submit" value ="Enter New Ticket"></input>
-            </div>
-        </form>
+    <div class= "admin_navbar">
+        {{> navbar main-page=false }}
     </div>
+    <div class="admin_container">
+        <div class="admin_prompt">
+            {{> prompt }}
+        </div>
+        <div class="admin_bar booking_bar">
+            <form class="booking_form" action="/admin/addticket" method="post">
+                <span class = "booking_left">
+                    <div class="form_item">
+                        <input list = "places" type="text" name="origin" placeholder="Enter Origin Base" required="">
+                        </input>
+                    </div>
+                    <div class="form_item">
+                        <input list = "places" type="text" name="destination" placeholder="Enter Destination Base" required="" class="dest"></input>
+                    </div>
+                    <datalist id="places">
+                        {{#each destinations}}
+                            <option value="{{name}}"></option>
+                        {{/each}}
+                    </datalist>
+                </span>
+                <span class = "booking_right">
+                    <div class="form_item">
+                        <input id="outbound_date" type="date" name="outbound_date" value="" required=""></input>
+                    </div>
+                    <div class="form_item">
+                        <input id="outbound_time" type="time" name="outbound_time" value="" required=""></input>
+                    </div>
+                    <div class="form_item">
+                        <input type="date" name="inbound_date" value="" required=""></input>
+                    </div>
+                    <div class="form_item">
+                        <input id="inbound_time" type="time" name="inbound_time" value="" required=""></input>
+                    </div>
+                    <div class="form_item">
+                        <input id="price" type="number" name="price" value="" required=""></input>
+                    </div>
+                </span>
+                <div class="booking_button">
+                    <input class="btn" type="submit" value ="Enter New Ticket"></input>
+                </div>
+            </form>
+        </div>
+        <div class=" admin_destination booking_bar">
+            <form class="booking_form" action="/admin/destination" method="post">
+                <!-- <div class="form_item">
+                </div> -->
+                <input type="text" name="destination" value="" required=""></input>
+
+                <div class="booking_button">
+                    <input class="btn" type="submit" value ="Enter New Destination"></input>
+                </div>
+            </form>
+        </div>
+    </div>
+
 </body>
 
 </html>

@@ -1,0 +1,24 @@
+.admin_navbar{
+    position: relative;
+}
+.admin_bar{
+    position: absolute;
+    margin-top: 18%;
+    margin-left: 15%;
+    width:90%;
+    max-width: 1300px;
+}
+
+.admin_destination{
+    position: absolute;
+    margin-top: 30%;
+    margin-left: 15%;
+    width:40%;
+}
+
+.admin_prompt{
+    /* padding-left: 50%; */
+    position: absolute;
+    margin-top: 8%;
+    width:100%;
+}

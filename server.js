@@ -334,7 +334,11 @@ app.get('/admin/',function(req,res){
     res.type(xhtml);
     let sql = "SELECT name FROM Destination";
     db.all(sql,[],(err,destinations)=>{
-            res.render('main',{layout:'admin_ticket',destinations:destinations});
+            let prompt = req.session.prompt;
+            let result = req.session.result;
+            // req.session.prompt = null;
+            // req.session.result = null;
+            res.render('main',{layout:'admin_ticket',destinations:destinations,prompt:prompt,result:result});
     });
 });
 app.post('/admin/addticket',function(req,res){
@@ -366,10 +370,24 @@ app.post('/admin/addticket',function(req,res){
             req.session.prompt = 'Destination not valid.';
             req.session.result = 'prompt-fail';
         }
-        res.redirect('/');
+        res.redirect('/admin');
 
         console.log(ids);
 
+    });
+});
+app.post('/admin/destination',function(req,res){
+    let name = req.body.destination;
+    let sql = "INSERT INTO Destination(name) VALUES(?)";
+    db.run(sql,[name],function(err){
+        if(!err){
+            req.session.prompt = 'New Destination added';
+            req.session.result = 'prompt-success';
+        }else{
+            req.session.prompt = 'Destination already exists.';
+            req.session.result = 'prompt-fail';
+        }
+        res.redirect('/admin');
     });
 });
 app.get('/logout',function (req,res) {
