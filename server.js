@@ -74,9 +74,9 @@ app.get('/',function (req,res) {
 app.get('/account',function (req,res) {
     res.type(xhtml);
     if (req.session.loggedin) {
-        let userSQL = "SELECT * from User WHERE email = ?";
-        let ticketSQL = "SELECT id, date(origin_date) AS o_date,time(origin_date) as o_time,origin_place,"
-         + "date(destination_date) AS d_date,time(destination_date) as d_time,destination_place,price "
+        let userSQL = "SELECT * FROM User WHERE email = ?";
+        let ticketSQL = "SELECT id, date(origin_date) AS o_date,time(origin_date) AS o_time,origin_place,"
+         + "date(destination_date) AS d_date,time(destination_date) AS d_time,destination_place,price "
          + "FROM (SELECT ticket_id FROM User_Ticket WHERE user_id = ?) INNER JOIN Ticket ON ticket_id = Ticket.id "
          + "ORDER BY o_date DESC, o_time DESC, d_date DESC, d_time DESC";
 
@@ -251,7 +251,7 @@ app.post('/login',function(req,res){
                 else{
                     // setup prompt and render page
                     // res.render('main',{layout:'index',loggedin:req.session.loggedin,prompt:'Password incorrect.',result:'prompt-fail'});
-                    req.session.prompt = 'Password incorrect';
+                    req.session.prompt = 'Password incorrect.';
                     req.session.result = 'prompt-fail';
                     res.redirect('/');
                 }
@@ -296,7 +296,7 @@ app.post('/registered',function(req,res){
                     }
                     else {
                         // setup prompt and render page
-                        req.session.prompt = 'Passwords do not match';
+                        req.session.prompt = 'Passwords do not match.';
                         req.session.result = 'prompt-fail';
                         // res.render('main',{layout:'register',prompt:'Passwords do not match.',result:'prompt-fail'})
                         res.redirect('/');
@@ -304,7 +304,7 @@ app.post('/registered',function(req,res){
                 }
                 else {
                     // setup prompt and render page
-                    req.session.prompt = 'Email already registered';
+                    req.session.prompt = 'Email already registered.';
                     req.session.result = 'prompt-fail';
                     res.redirect('/');
                     // res.render('main',{layout:'register',prompt:'Email already registered.',result:'prompt-fail'})
@@ -312,7 +312,7 @@ app.post('/registered',function(req,res){
             });
         }
         else {
-            req.session.prompt = 'Email not valid';
+            req.session.prompt = 'Email not valid.';
             req.session.result = 'prompt-fail';
             res.redirect('/');
             // res.render('main',{layout:'register',prompt:'Email not valid.',result:'prompt-fail'})

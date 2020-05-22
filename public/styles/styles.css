@@ -290,6 +290,10 @@ input[type="date"]:hover::-webkit-calendar-picker-indicator:hover {
     width: 83%;
 }
 
+#animated_rocket {
+    width: 100%;
+}
+
 .header {
     background: #007cbf;
     font-family: 'Righteous', sans-serif;
