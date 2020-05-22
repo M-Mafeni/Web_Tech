@@ -330,9 +330,47 @@ app.post('/registered',function(req,res){
         res.redirect('/');
     }
 });
-app.get('/admin/tickets',function(req,res){
+app.get('/admin/',function(req,res){
     res.type(xhtml);
-    res.render('main',{layout:'admin_ticket'});
+    let sql = "SELECT name FROM Destination";
+    db.all(sql,[],(err,destinations)=>{
+            res.render('main',{layout:'admin_ticket',destinations:destinations});
+    });
+});
+app.post('/admin/addticket',function(req,res){
+    let origin = req.body.origin;
+    let destination = req.body.destination;
+    let o_date = req.body.outbound_date;
+    let o_time = req.body.outbound_time;
+    let o_date_time = o_date + " " + o_time;
+    let d_date = req.body.inbound_date;
+    let d_time = req.body.inbound_time;
+    let d_date_time = d_date + " " + d_time;
+    let price = req.body.price;
+
+    // console.log(o_date_time);
+    // console.log(o_time);
+    let insertTicketSQL = db.prepare("INSERT INTO Ticket(origin_date,origin_id,destination_date,destination_id,price) VALUES (datetime(?),?,datetime(?),?,?)");
+    let id_sql = "SELECT t1.id AS o_id, t2.id AS d_id FROM  Destination as t1 INNER JOIN Destination as t2 WHERE t1.name = ? AND t2.name = ?"
+    //get destination IDs
+    db.get(id_sql, [origin,destination],(err,ids)=>{
+        if(ids!== undefined){
+            let o_id = ids.o_id;
+            let d_id = ids.d_id;
+            // console.log(o_id);
+            // console.log(d_id);
+            insertTicketSQL.run(o_date_time,o_id,d_date_time,d_id,price);
+            req.session.prompt = 'Ticket added.';
+            req.session.result = 'prompt-success';
+        }else{
+            req.session.prompt = 'Destination not valid.';
+            req.session.result = 'prompt-fail';
+        }
+        res.redirect('/');
+
+        console.log(ids);
+
+    });
 });
 app.get('/logout',function (req,res) {
     if (req.session.loggedin) {

@@ -30,12 +30,13 @@ INSERT INTO Destination(name) VALUES
 DROP TABLE IF EXISTS Ticket;
 CREATE TABLE Ticket(
     id INTEGER PRIMARY KEY,
-    --thinking that origin and destination could be stored better
     origin_date TEXT, --can store both date and time as a string in sqlite
     origin_id INTEGER,
     destination_date TEXT,
     destination_id INTEGER,
     price REAL,
+    -- using the name as a key instead would lead to better queries
+    -- but I saw something online saying that should only be done if the strings never goning to change
     FOREIGN KEY(origin_id) REFERENCES Destination(id),
     FOREIGN KEY(destination_id) REFERENCES Destination(id)
 );
