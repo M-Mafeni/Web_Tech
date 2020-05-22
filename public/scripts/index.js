@@ -7,7 +7,7 @@ function start(){
     $(window).resize(setLoginPos);
 
     var modal = document.getElementById("loginForm");
-    var clickCount = 0;
+    // var clickCount = 0;
 
     window.onclick = function(event) {
       if (event.target == modal) {

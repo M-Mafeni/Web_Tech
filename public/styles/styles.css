@@ -145,6 +145,10 @@ body {
     margin-bottom: 2%;
 }
 
+#about_link {
+    visibility: hidden;
+}
+
 .advert_text {
     text-align: center;
     font-size: 330%;
@@ -184,6 +188,10 @@ input:-webkit-autofill, input:-webkit-autofill:hover,  input:-webkit-autofill:fo
 .form_item input[type="text"] {
     font-size: 80%;
     width: 8em;
+}
+
+[list]::-webkit-calendar-picker-indicator {
+    display: none;  /* remove dropdown arrow for input list */
 }
 
 input[type="text"].dest {
@@ -288,7 +296,7 @@ input[type="date"]:hover::-webkit-calendar-picker-indicator:hover {
     font-size: 60px;
     text-align: center;
     width: 50%;
-    margin: 5% auto;
+    margin: 0 auto;
     margin-bottom: 8%;
     border-radius: 15px;
 }
@@ -445,7 +453,7 @@ footer svg:hover {
 
     .left_col {
         height: 190px;
-        margin-bottom: 8%;
+        margin-bottom: 9%;
     }
 
     .right_col {
