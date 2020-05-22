@@ -57,17 +57,22 @@ const httpsServer = https.createServer({
 //for the main page return main.handlebars with its layout being the index page
 app.get('/',function (req,res) {
     res.type(xhtml);
-    let sql = "SELECT DISTINCT origin_place FROM Ticket";
-    db.all(sql,[],(err,outbound)=>{
-        //probably can fuse 2 queries together but might involve filtering returned list
-        let sql1 = "SELECT DISTINCT destination_place FROM Ticket";
-        db.all(sql1,[],(err,inbound)=>{
+    let sql = "SELECT name FROM Destination";
+    db.all(sql,[],(err,destinations)=>{
             let prompt = req.session.prompt;
             let result = req.session.result;
             req.session.prompt = null;
             req.session.result = null;
-            res.render('main',{layout:'index',loggedin:req.session.loggedin,outbound:outbound,inbound:inbound,prompt:prompt,result:result});
-        });
+            res.render('main',{layout:'index',loggedin:req.session.loggedin,destinations:destinations,prompt:prompt,result:result});
+        //probably can fuse 2 queries together but might involve filtering returned list
+        // let sql1 = "SELECT DISTINCT destination_place FROM Ticket";
+        // db.all(sql1,[],(err,inbound)=>{
+        //     let prompt = req.session.prompt;
+        //     let result = req.session.result;
+        //     req.session.prompt = null;
+        //     req.session.result = null;
+        //     res.render('main',{layout:'index',loggedin:req.session.loggedin,outbound:outbound,inbound:inbound,prompt:prompt,result:result});
+        // });
     });
 });
 
@@ -75,8 +80,8 @@ app.get('/account',function (req,res) {
     res.type(xhtml);
     if (req.session.loggedin) {
         let userSQL = "SELECT * FROM User WHERE email = ?";
-        let ticketSQL = "SELECT id, date(origin_date) AS o_date,time(origin_date) AS o_time,origin_place,"
-         + "date(destination_date) AS d_date,time(destination_date) AS d_time,destination_place,price "
+        let ticketSQL = "SELECT id, date(origin_date) AS o_date,time(origin_date) AS o_time,(SELECT name FROM Destination Where Destination.id = Ticket.origin_id) AS origin_place,"
+         + "date(destination_date) AS d_date,time(destination_date) AS d_time,(SELECT name FROM Destination Where Destination.id = Ticket.destination_id) AS destination_place,price "
          + "FROM (SELECT ticket_id FROM User_Ticket WHERE user_id = ?) INNER JOIN Ticket ON ticket_id = Ticket.id "
          + "ORDER BY o_date DESC, o_time DESC, d_date DESC, d_time DESC";
 
@@ -129,9 +134,12 @@ app.get('/bookings',function (req,res) {
             let destination = req.query.destination;
             let o_date = req.query.outbound_date;
             let d_date = req.query.inbound_date;
-            let sql = "SELECT id, date(origin_date) AS o_date,time(origin_date) as o_time,origin_place,"
-             + "date(destination_date) AS d_date,time(destination_date) as d_time,destination_place,price "
-              + "FROM Ticket WHERE origin_place = ? AND destination_place = ? AND o_date = ? ORDER BY price DESC";
+            // let sql = "SELECT id, date(origin_date) AS o_date,time(origin_date) as o_time,origin_place,"
+            //  + "date(destination_date) AS d_date,time(destination_date) as d_time,destination_place,price "
+            //   + "FROM Ticket WHERE origin_place = ? AND destination_place = ? AND o_date = ? ORDER BY price DESC";
+            let sql = "SELECT id, date(origin_date) AS o_date,time(origin_date) as o_time,(SELECT name FROM Destination Where Destination.id = Ticket.origin_id) AS origin_place,"
+            +   "date(destination_date) AS d_date,time(destination_date) as d_time,(SELECT name FROM Destination Where Destination.id = Ticket.destination_id) AS destination_place,price "
+            +   "FROM Ticket WHERE origin_place = ? AND destination_place = ? AND o_date = ? ORDER BY price DESC"
             db.all(sql,[origin,destination,o_date],(err,o_tickets) => {
                 if(err){
                     throw err;
@@ -322,7 +330,10 @@ app.post('/registered',function(req,res){
         res.redirect('/');
     }
 });
-
+app.get('/admin/tickets',function(req,res){
+    res.type(xhtml);
+    res.render('main',{layout:'admin_ticket'});
+});
 app.get('/logout',function (req,res) {
     if (req.session.loggedin) {
         req.session.loggedin = false;

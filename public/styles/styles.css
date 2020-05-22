@@ -154,6 +154,7 @@ body {
     font-size: 330%;
 }
 
+
 .booking_bar {
     margin: 5% auto;
     width: 75%;
@@ -161,6 +162,12 @@ body {
     border-radius: 15px;
     background: var(--main-bg-colour);
     max-width: 1100px;
+}
+
+.admin_bar{
+    position: absolute;
+    margin-top: 15%;
+    margin-left: 15%;
 }
 
 input {

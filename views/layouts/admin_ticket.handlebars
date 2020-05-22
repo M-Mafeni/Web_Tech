@@ -1,0 +1,56 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-GB" xml:lang="en-GB">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="/scripts/index.js"></script>
+<meta name="viewport" content="width=device-width" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"></link>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"></link>
+<link rel="stylesheet" href="/styles/styles.css"></link>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Righteous"></link>
+<link href="https://fonts.googleapis.com/css2?family=Rubik" rel="stylesheet"></link>
+{{> header title = "Astra | Admin"}}
+
+<body>
+    {{> navbar main-page=false  }}
+    <div class="">
+
+    </div>
+    <div class="booking_bar admin_bar">
+    <form class="booking_form" action="/bookings" method="GET">
+
+        <span class = "booking_left">
+            <div class="form_item">
+                <input list = "outbound" type="text" name="origin" placeholder="Enter Origin Base" required="">
+                </input>
+                <datalist id="outbound">
+                    {{#each outbound}}
+                        <option value="{{origin_place}}"></option>
+                    {{/each}}
+                </datalist>
+            </div>
+            <div class="form_item">
+                <input list = "inbound" type="text" name="destination" placeholder="Enter Destination Base" required="" class="dest"></input>
+                <datalist id="inbound">
+                    {{#each inbound}}
+                        <option value="{{destination_place}}"></option>
+                    {{/each}}
+                </datalist>
+            </div>
+        </span>
+        <span class = "booking_right">
+            <div class="form_item">
+                <input id="outbound_date" type="date" name="outbound_date" value="" required=""></input>
+            </div>
+            <div class="form_item">
+                <input type="date" name="inbound_date" value="" required=""></input>
+            </div>
+        </span>
+        <div class="booking_button">
+            <input class="btn" type="submit" value ="Enter new ticket"></input>
+        </div>
+    </form>
+</div>
+</body>
+
+</html>
