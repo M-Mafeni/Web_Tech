@@ -2,8 +2,11 @@
 
 $(document).ready(start);
 
+var svgOnScreen = false;
+
 function start(){
     $(window).scroll(change_bar);
+    $(window).scroll(playSVG);
     $(window).resize(setLoginPos);
 
     var modal = document.getElementById("loginForm");
@@ -66,4 +69,22 @@ function setLoginPos() {
     var height = $(window).height();
     var loginHeight = $("#loginFormContent").height();
     $("#loginForm").css("padding-top", (height-loginHeight)/2);
+}
+
+// restarts the animated rocket svg when it comes on-screen
+function playSVG() {
+    let svg = $("#animated_rocket");
+    let svgTop = svg.offset().top - $(window).scrollTop();
+    let svgBottom = svgTop + svg.height();
+
+    if (!svgOnScreen && ((svgTop < $(window).height() && svgTop > 0) || svgBottom > $(window).height() && svgBottom < 0)) {
+        var image = new Image();
+        image.src = "assets/sideways_rocket_animated.svg";
+        $("#animated_rocket").attr('src', image.src);
+        svgOnScreen = true;
+    }
+
+    else if ((svgTop >= $(window).height() || svgTop <= 0) && (svgBottom <= $(window).height() || svgBottom >= 0)) {
+        svgOnScreen = false;
+    }
 }

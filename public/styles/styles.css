@@ -145,9 +145,6 @@ body {
     margin-bottom: 2%;
 }
 
-#about_link {
-    visibility: hidden;
-}
 
 .advert_text {
     text-align: center;
@@ -288,13 +285,18 @@ input[type="date"]:hover::-webkit-calendar-picker-indicator:hover {
 .about_us {
     position: relative;
     margin: auto;
-    margin-top: 10%;
     margin-bottom: 5%;
     width: 83%;
 }
 
+#about_link {
+    visibility: hidden;
+}
+
 #animated_rocket {
+    margin-top: 5%;
     width: 100%;
+    margin-bottom: 3%;
 }
 
 .header {
