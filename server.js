@@ -63,7 +63,7 @@ app.get('/',function (req,res) {
             let result = req.session.result;
             req.session.prompt = null;
             req.session.result = null;
-            res.render('main',{layout:'index',loggedin:req.session.loggedin,destinations:destinations,prompt:prompt,result:result});
+            res.render('main',{layout:'index',loggedin:req.session.loggedin,isAdmin:req.session.isAdmin,destinations:destinations,prompt:prompt,result:result});
         //probably can fuse 2 queries together but might involve filtering returned list
         // let sql1 = "SELECT DISTINCT destination_place FROM Ticket";
         // db.all(sql1,[],(err,inbound)=>{
@@ -332,7 +332,6 @@ app.post('/registered',function(req,res){
     }
 });
 /*
-Add security for admin pages
 Add way to update and delete tickets
 make pages responsive
 */
@@ -346,10 +345,13 @@ app.get('/admin',function(req,res){
                     let result = req.session.result;
                     // req.session.prompt = null;
                     // req.session.result = null;
-                    res.render('main',{layout:'admin',loggedin:req.session.loggedin,destinations:destinations,prompt:prompt,result:result});
+                    res.render('main',{layout:'admin',loggedin:req.session.loggedin,isAdmin:req.session.isAdmin,destinations:destinations,prompt:prompt,result:result});
             });
         }else{
-            res.send('not an admin');
+            res.status(401).send('not an admin.');
+            // req.session.prompt = 'You are not an Admin.';
+            // req.session.result = 'prompt-fail';
+            // res.redirect('/');
         }
     }else{
         req.session.prompt = 'You are not logged in.';
@@ -395,7 +397,10 @@ app.post('/admin/addticket',function(req,res){
 
             });
         }else{
-            res.send('not an admin');
+            res.status(401).send('not an admin.');
+            // req.session.prompt = 'You are not an Admin.';
+            // req.session.result = 'prompt-fail';
+            // res.redirect('/');
         }
     }else{
         req.session.prompt = 'You are not logged in.';
@@ -419,7 +424,33 @@ app.post('/admin/destination',function(req,res){
                 res.redirect('/admin');
             });
         }else{
-            res.send('not an admin');
+            res.status(401).send('not an admin.');
+            // req.session.prompt = 'You are not an Admin.';
+            // req.session.result = 'prompt-fail';
+            // res.redirect('/');
+        }
+    }else{
+        req.session.prompt = 'You are not logged in.';
+        req.session.result = 'prompt-fail';
+        res.redirect('/');
+    }
+});
+app.get('/admin/tickets',function(req,res){
+    if(req.session.loggedin){
+        if(req.session.isAdmin){
+            //get all tickets
+            // let sql = "SELECT * FROM Ticket ORDER BY origin_date DESC";
+            let sql = "SELECT id, date(origin_date) AS o_date,time(origin_date) as o_time,(SELECT name FROM Destination Where Destination.id = Ticket.origin_id) AS origin_place,"
+            +   "date(destination_date) AS d_date,time(destination_date) as d_time,(SELECT name FROM Destination Where Destination.id = Ticket.destination_id) AS destination_place,price "
+            +   "FROM Ticket ORDER BY origin_date DESC";
+            db.all(sql,[],(err,tickets)=>{
+                res.render('main',{layout:'update_tickets',loggedin:req.session.loggedin,isAdmin:req.session.isAdmin,tickets:tickets});
+            });
+        }else{
+            res.status(401).send('not an admin.');
+            // req.session.prompt = 'You are not an Admin.';
+            // req.session.result = 'prompt-fail';
+            // res.redirect('/');
         }
     }else{
         req.session.prompt = 'You are not logged in.';
@@ -431,7 +462,7 @@ app.get('/logout',function (req,res) {
     if (req.session.loggedin) {
         req.session.loggedin = false;
         req.session.username = null;
-
+        req.session.isAdmin = false;
         // setup prompt and render page
         res.type(xhtml);
         req.session.prompt = 'Logged out successfully.';

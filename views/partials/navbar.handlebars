@@ -19,7 +19,9 @@
         {{else}}
             <a class="nav_links" onclick="openForm()">Login/Register</a>
         {{/if}}
-
+        {{#if isAdmin}}
+            <a class="nav_links" href="/admin">Admin</a>
+        {{/if}}
         {{#if main-page}}
             <a class="nav_links" href="#about_us">About Us</a>
         {{/if}}

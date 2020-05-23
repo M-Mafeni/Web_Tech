@@ -1,26 +1,22 @@
 
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en-GB" xml:lang="en-GB">
+<meta name="viewport" content="width=device-width" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="/scripts/index.js"></script>
-<meta name="viewport" content="width=device-width" />
+<script src="/scripts/bookings.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"></link>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"></link>
 <link rel="stylesheet" href="/styles/styles.css"></link>
-<link rel="stylesheet" href="/styles/admin.css"></link>
+<link rel="stylesheet" href="/styles/bookings.css"></link>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Righteous"></link>
 <link href="https://fonts.googleapis.com/css2?family=Rubik" rel="stylesheet"></link>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300" rel="stylesheet"></link>
 {{> header title = "Astra | Admin"}}
-
 <body>
-    <div class= "admin_navbar">
-        {{> navbar main-page=false }}
-    </div>
-    <div class="admin_container">
-        <div class="admin_prompt">
-            {{> prompt }}
-        </div>
-        <div class="admin_bar booking_bar">
+    {{> navbar main-page=false }}
+    {{> prompt }}
+        <div class="booking_bar">
             <form class="booking_form" action="/admin/addticket" method="post">
                 <span class = "booking_left">
                     <div class="form_item">
@@ -58,7 +54,7 @@
                 </div>
             </form>
         </div>
-        <div class=" admin_destination booking_bar">
+        <div class="booking_bar">
             <form class="booking_form" action="/admin/destination" method="post">
                 <!-- <div class="form_item">
                 </div> -->
@@ -69,8 +65,6 @@
                 </div>
             </form>
         </div>
-    </div>
-
 </body>
 
 </html>
