@@ -346,7 +346,7 @@ app.get('/admin',function(req,res){
                     let result = req.session.result;
                     // req.session.prompt = null;
                     // req.session.result = null;
-                    res.render('main',{layout:'admin_ticket',loggedin:req.session.loggedin,destinations:destinations,prompt:prompt,result:result});
+                    res.render('main',{layout:'admin',loggedin:req.session.loggedin,destinations:destinations,prompt:prompt,result:result});
             });
         }else{
             res.send('not an admin');
