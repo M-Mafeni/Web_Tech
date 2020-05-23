@@ -4,6 +4,13 @@ $(document).ready(start);
 
 function start() {
     $("div.ticket-card").click(selected);
+    var now = new Date();
+
+    var day = ("0" + now.getDate()).slice(-2);
+    var month = ("0" + (now.getMonth() + 1)).slice(-2);
+
+    var today = now.getFullYear()+"-"+(month)+"-"+(day) ;
+    $('#outbound_date').val(today);
 }
 
 function selected(){
@@ -49,4 +56,20 @@ function deleteTicket() {
             console.log(`Error ${error}`);
         }
     });
+}
+
+function updateTicket(){
+    var id = $(".ticket-selected").find('.ticket_id').text();
+    window.location.href = '/admin/tickets/'+id;
+    // $.ajax({
+    //     url: '/admin/tickets/'+id,
+    //     type: "GET",
+    //     success: function(result){
+    //         // console.log(result);
+    //         window.location.href = '/admin/tickets/'+id;
+    //     },
+    //     error:function(error){
+    //         console.log(`Error ${error}`);
+    //     }
+    // })
 }

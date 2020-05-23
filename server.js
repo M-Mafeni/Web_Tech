@@ -458,7 +458,69 @@ app.get('/admin/tickets',function(req,res){
         res.redirect('/');
     }
 });
-
+app.get('/admin/tickets/:id',function(req,res){
+    if(req.session.loggedin){
+        if(req.session.isAdmin){
+            let id = req.params.id;
+            let sql = "SELECT id, date(origin_date) AS o_date,time(origin_date) as o_time,(SELECT name FROM Destination Where Destination.id = Ticket.origin_id) AS origin_place,"
+            +   "date(destination_date) AS d_date,time(destination_date) as d_time,(SELECT name FROM Destination Where Destination.id = Ticket.destination_id) AS destination_place,price "
+            +   "FROM Ticket WHERE id = ?";
+            db.get(sql,[id],function(err,ticket){
+                if(!err){
+                    res.render('main',{layout:'change_tickets',loggedin:req.session.loggedin,isAdmin:req.session.isAdmin,ticket:ticket});
+                }else{
+                    console.log(err);
+                }
+            });
+        }else{
+            res.status(401).send('not an admin.');
+        }
+    }else{
+        req.session.prompt = 'You are not logged in.';
+        req.session.result = 'prompt-fail';
+        res.redirect('/');
+    }
+});
+app.post('/admin/tickets/:id',function(req,res){
+    if(req.session.loggedin && req.session.isAdmin){
+        let id = req.params.id;
+        let origin = req.body.origin;
+        let destination = req.body.destination;
+        let o_date = req.body.outbound_date;
+        let o_time = req.body.outbound_time;
+        let o_date_time = o_date + " " + o_time;
+        let d_date = req.body.inbound_date;
+        let d_time = req.body.inbound_time;
+        let d_date_time = d_date + " " + d_time;
+        let price = req.body.price;
+        let id_sql = "SELECT t1.id AS o_id, t2.id AS d_id FROM  Destination as t1 INNER JOIN Destination as t2 WHERE t1.name = ? AND t2.name = ?"
+        let sql = "UPDATE Ticket SET origin_date = datetime(?), origin_id = ?, "
+                  + "destination_date = datetime(?), destination_id = ?, price = ? "
+                  + "WHERE id = ?";
+        db.get(id_sql, [origin,destination],(err,ids)=>{
+            if(!err){
+                if(ids !== undefined){
+                    let o_id = ids.o_id;
+                    let d_id = ids.d_id;
+                    db.run(sql,[o_date_time,o_id,d_date_time,d_id,price,id],function(err){
+                        if(err){
+                            console.log(err);
+                        }else{
+=                            res.redirect('/admin/tickets');
+                        }
+                    });
+                }else{
+                    console.log('names not defined');
+                }
+            }else{
+                console.log(err);
+            }
+        });
+        // db.get(sql,[])
+    }else{
+        res.status(401).send('You are not an Admin.');
+    }
+});
 app.delete('/admin/tickets/:id',function(req,res){
     if(req.session.loggedin && req.session.isAdmin){
         let id = req.params.id;

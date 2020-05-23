@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-GB" xml:lang="en-GB">
+<meta name="viewport" content="width=device-width" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<!-- <script src="/scripts/index.js"></script> -->
+<script src="/scripts/bookings.js"></script>
+<script src="/scripts/admin.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"></link>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"></link>
+<link rel="stylesheet" href="/styles/styles.css"></link>
+<link rel="stylesheet" href="/styles/bookings.css"></link>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Righteous"></link>
+<link href="https://fonts.googleapis.com/css2?family=Rubik" rel="stylesheet"></link>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300" rel="stylesheet"></link>
+
+{{> header title = "Astra | Admin"}}
+
+<body>
+    {{> navbar }}
+    <div class="booking_bar">
+        <form class="booking_form" action="/admin/tickets/{{ticket.id}}" method="POST" >
+            <span class = "booking_left">
+                <div class="form_item">
+                    <input list = "places" type="text" name="origin" value="{{ticket.origin_place}}" placeholder="Enter Origin Base" required="">
+                    </input>
+                </div>
+                <div class="form_item">
+                    <input list = "places" type="text" name="destination" value="{{ticket.destination_place}}" placeholder="Enter Destination Base" required="" class="dest"></input>
+                </div>
+                <datalist id="places">
+                    {{#each destinations}}
+                        <option value="{{name}}"></option>
+                    {{/each}}
+                </datalist>
+            </span>
+            <span class = "booking_right">
+                <div class="form_item">
+                    <input id="outbound_date" type="date" name="outbound_date" value="{{ticket.o_date}}" required=""></input>
+                </div>
+                <div class="form_item">
+                    <input id="outbound_time" type="time" name="outbound_time" value="{{ticket.o_time}}" required=""></input>
+                </div>
+                <div class="form_item">
+                    <input type="date" name="inbound_date" value="{{ticket.d_date}}" required=""></input>
+                </div>
+                <div class="form_item">
+                    <input id="inbound_time" type="time" name="inbound_time" value="{{ticket.d_time}}" required=""></input>
+                </div>
+                <div class="form_item">
+                    <input id="price" type="number" name="price" value="{{ticket.price}}" required=""></input>
+                </div>
+            </span>
+            <div class="booking_button">
+                <input class="btn" type="submit" value ="Update Ticket"></input>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
