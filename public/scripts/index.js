@@ -1,8 +1,10 @@
 "use strict";
 
-$(document).ready(start);
-
 var svgOnScreen = false;
+var animated_rocket = new Image();
+animated_rocket.src = "assets/sideways_rocket_animated.svg";
+
+$(document).ready(start);
 
 function start(){
     $(window).scroll(change_bar);
@@ -78,9 +80,7 @@ function playSVG() {
     let svgBottom = svgTop + svg.height();
 
     if (!svgOnScreen && ((svgTop < $(window).height() && svgTop > 0) || svgBottom > $(window).height() && svgBottom < 0)) {
-        var image = new Image();
-        image.src = "assets/sideways_rocket_animated.svg";
-        $("#animated_rocket").attr('src', image.src);
+        $("#animated_rocket").attr('src', animated_rocket.src);
         svgOnScreen = true;
     }
 
