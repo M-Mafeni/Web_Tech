@@ -249,6 +249,7 @@ app.post('/login',function(req,res){
                     //user is logged in with that username
                     req.session.loggedin = true;
                     req.session.username = email;
+                    req.session.isAdmin = user.isAdmin;
                     req.session.prompt = 'Logged in successfully.';
                     req.session.result = 'prompt-success';
 
@@ -330,65 +331,101 @@ app.post('/registered',function(req,res){
         res.redirect('/');
     }
 });
-app.get('/admin/',function(req,res){
-    res.type(xhtml);
-    let sql = "SELECT name FROM Destination";
-    db.all(sql,[],(err,destinations)=>{
-            let prompt = req.session.prompt;
-            let result = req.session.result;
-            // req.session.prompt = null;
-            // req.session.result = null;
-            res.render('main',{layout:'admin_ticket',destinations:destinations,prompt:prompt,result:result});
-    });
+/*
+Add security for admin pages
+Add way to update and delete tickets
+make pages responsive
+*/
+app.get('/admin',function(req,res){
+    if(req.session.loggedin){
+        if(req.session.isAdmin){
+            res.type(xhtml);
+            let sql = "SELECT name FROM Destination";
+            db.all(sql,[],(err,destinations)=>{
+                    let prompt = req.session.prompt;
+                    let result = req.session.result;
+                    // req.session.prompt = null;
+                    // req.session.result = null;
+                    res.render('main',{layout:'admin_ticket',loggedin:req.session.loggedin,destinations:destinations,prompt:prompt,result:result});
+            });
+        }else{
+            res.send('not an admin');
+        }
+    }else{
+        req.session.prompt = 'You are not logged in.';
+        req.session.result = 'prompt-fail';
+        res.redirect('/');
+    }
+
 });
 app.post('/admin/addticket',function(req,res){
-    let origin = req.body.origin;
-    let destination = req.body.destination;
-    let o_date = req.body.outbound_date;
-    let o_time = req.body.outbound_time;
-    let o_date_time = o_date + " " + o_time;
-    let d_date = req.body.inbound_date;
-    let d_time = req.body.inbound_time;
-    let d_date_time = d_date + " " + d_time;
-    let price = req.body.price;
+    if(req.session.loggedin){
+        if(req.session.isAdmin){
+            let origin = req.body.origin;
+            let destination = req.body.destination;
+            let o_date = req.body.outbound_date;
+            let o_time = req.body.outbound_time;
+            let o_date_time = o_date + " " + o_time;
+            let d_date = req.body.inbound_date;
+            let d_time = req.body.inbound_time;
+            let d_date_time = d_date + " " + d_time;
+            let price = req.body.price;
 
-    // console.log(o_date_time);
-    // console.log(o_time);
-    let insertTicketSQL = db.prepare("INSERT INTO Ticket(origin_date,origin_id,destination_date,destination_id,price) VALUES (datetime(?),?,datetime(?),?,?)");
-    let id_sql = "SELECT t1.id AS o_id, t2.id AS d_id FROM  Destination as t1 INNER JOIN Destination as t2 WHERE t1.name = ? AND t2.name = ?"
-    //get destination IDs
-    db.get(id_sql, [origin,destination],(err,ids)=>{
-        if(ids!== undefined){
-            let o_id = ids.o_id;
-            let d_id = ids.d_id;
-            // console.log(o_id);
-            // console.log(d_id);
-            insertTicketSQL.run(o_date_time,o_id,d_date_time,d_id,price);
-            req.session.prompt = 'Ticket added.';
-            req.session.result = 'prompt-success';
+            // console.log(o_date_time);
+            // console.log(o_time);
+            let insertTicketSQL = db.prepare("INSERT INTO Ticket(origin_date,origin_id,destination_date,destination_id,price) VALUES (datetime(?),?,datetime(?),?,?)");
+            let id_sql = "SELECT t1.id AS o_id, t2.id AS d_id FROM  Destination as t1 INNER JOIN Destination as t2 WHERE t1.name = ? AND t2.name = ?"
+            //get destination IDs
+            db.get(id_sql, [origin,destination],(err,ids)=>{
+                if(ids!== undefined){
+                    let o_id = ids.o_id;
+                    let d_id = ids.d_id;
+                    // console.log(o_id);
+                    // console.log(d_id);
+                    insertTicketSQL.run(o_date_time,o_id,d_date_time,d_id,price);
+                    req.session.prompt = 'Ticket added.';
+                    req.session.result = 'prompt-success';
+                }else{
+                    req.session.prompt = 'Destination not valid.';
+                    req.session.result = 'prompt-fail';
+                }
+                res.redirect('/admin');
+
+                console.log(ids);
+
+            });
         }else{
-            req.session.prompt = 'Destination not valid.';
-            req.session.result = 'prompt-fail';
+            res.send('not an admin');
         }
-        res.redirect('/admin');
-
-        console.log(ids);
-
-    });
+    }else{
+        req.session.prompt = 'You are not logged in.';
+        req.session.result = 'prompt-fail';
+        res.redirect('/');
+    }
 });
 app.post('/admin/destination',function(req,res){
-    let name = req.body.destination;
-    let sql = "INSERT INTO Destination(name) VALUES(?)";
-    db.run(sql,[name],function(err){
-        if(!err){
-            req.session.prompt = 'New Destination added';
-            req.session.result = 'prompt-success';
+    if(req.session.loggedin){
+        if(req.session.isAdmin){
+            let name = req.body.destination;
+            let sql = "INSERT INTO Destination(name) VALUES(?)";
+            db.run(sql,[name],function(err){
+                if(!err){
+                    req.session.prompt = 'New Destination added';
+                    req.session.result = 'prompt-success';
+                }else{
+                    req.session.prompt = 'Destination already exists.';
+                    req.session.result = 'prompt-fail';
+                }
+                res.redirect('/admin');
+            });
         }else{
-            req.session.prompt = 'Destination already exists.';
-            req.session.result = 'prompt-fail';
+            res.send('not an admin');
         }
-        res.redirect('/admin');
-    });
+    }else{
+        req.session.prompt = 'You are not logged in.';
+        req.session.result = 'prompt-fail';
+        res.redirect('/');
+    }
 });
 app.get('/logout',function (req,res) {
     if (req.session.loggedin) {
