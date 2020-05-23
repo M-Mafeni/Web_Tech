@@ -3,8 +3,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en-GB" xml:lang="en-GB">
 <meta name="viewport" content="width=device-width" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script src="/scripts/index.js"></script>
+<!-- <script src="/scripts/index.js"></script> -->
 <script src="/scripts/bookings.js"></script>
+<script src="/scripts/admin.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"></link>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"></link>
 <link rel="stylesheet" href="/styles/styles.css"></link>
@@ -12,14 +13,33 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Righteous"></link>
 <link href="https://fonts.googleapis.com/css2?family=Rubik" rel="stylesheet"></link>
 <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300" rel="stylesheet"></link>
+<link rel="stylesheet" href="/styles/admin.css"></link>
 
 {{> header title = "Astra | Admin"}}
 
 <body>
     {{> navbar }}
-    <div class="">
-        {{> tickets heading = "All Tickets" ticketData = tickets}}
+    <div class="column summary">
+        <p id = "o_unselected">No ticket selected</p>
+        <div id = "summary_details" class = "summary_details">
+            <div class = "date departureDate"></div>
+            <span class = "time departureTime"></span>
+            <span class = "location departureLocation"></span>
+            <div id = "arrivalDate" class = "date arrivalDate"></div>
+            <span class = "time arrivalTime"></span>
+            <span class = "location arrivalLocation"></span>
+        </div>
+        <div class="buttons">
+            <button class= "btn delete" type="button" name="delete" onclick="deleteTicket()">Delete Ticket</button>
+            <button class= "btn update" type="button" name="delete" onclick="updateTicket()">Modify Ticket</button>
+        </div>
     </div>
+    <div class="row">
+        <div class="column tickets">
+            {{> tickets heading = "All Tickets" ticketData = tickets isAdmin = true}}
+        </div>
+    </div>
+
 </body>
 
 </html>

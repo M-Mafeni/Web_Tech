@@ -458,6 +458,25 @@ app.get('/admin/tickets',function(req,res){
         res.redirect('/');
     }
 });
+
+app.delete('/admin/tickets/:id',function(req,res){
+    if(req.session.loggedin && req.session.isAdmin){
+        let id = req.params.id;
+        let sql = "DELETE FROM Ticket WHERE id = ?";
+        db.run(sql ,[id],function(err){
+            if(!err){
+                res.status(200);
+                //sending url redirection happens on client side
+                res.send('/admin/tickets');
+            }else{
+                res.status(400);
+                res.send(err);
+            }
+        });
+    }else{
+        res.status(401).send('You are not an Admin.');
+    }
+});
 app.get('/logout',function (req,res) {
     if (req.session.loggedin) {
         req.session.loggedin = false;

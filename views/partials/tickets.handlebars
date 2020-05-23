@@ -1,4 +1,36 @@
 <h1 class="Journey_Text">{{heading}}</h1>
+    {{#if isAdmin}}
+    <div class="booking_bar">
+        <form class="booking_form" action="#" method="GET">
+
+            <span class = "booking_left">
+                <div class="form_item">
+                    <input list = "places" type="text" name="origin" placeholder="Enter Origin Base">
+                    </input>
+                </div>
+                <div class="form_item">
+                    <input list = "places" type="text" name="destination" placeholder="Enter Destination Base"  class="dest"></input>
+                </div>
+                <datalist id="places">
+                    {{#each destinations}}
+                        <option value="{{name}}"></option>
+                    {{/each}}
+                </datalist>
+            </span>
+            <span class = "booking_right">
+                <div class="form_item">
+                    <input id="outbound_date" type="date" name="outbound_date" value="" ></input>
+                </div>
+                <div class="form_item">
+                    <input type="date" name="inbound_date" value="" ></input>
+                </div>
+            </span>
+            <div class="booking_button">
+                <input class="btn" type="submit" value ="Filter Tickets"></input>
+            </div>
+        </form>
+    </div>
+    {{/if}}
     {{#each ticketData}}
         <div class="ticket-card">
             <div class="ticket_id">{{id}}</div>

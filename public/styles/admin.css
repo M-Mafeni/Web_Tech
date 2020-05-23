@@ -27,3 +27,22 @@
     position: absolute;
     margin-top: 5%;
 }
+.buttons{
+    /* width:100%; */
+    /* display: block; */
+}
+.buttons button{
+    /* display: inline-block; */
+    /* display: inline; */
+    /* width: 100%; */
+}
+.delete{
+    /* position: relative; */
+    /* float:left; */
+    /* margin-left:0%; */
+    background: #c23e0e;
+}
+
+.update{
+    float:right;
+}
