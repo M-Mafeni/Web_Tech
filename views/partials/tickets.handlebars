@@ -1,5 +1,5 @@
 <h1 class="Journey_Text">{{heading}}</h1>
-    {{#if isAdmin}}
+    {{#if isAdminPage}}
     <div class="booking_bar">
         <form class="booking_form" action="#" method="GET">
 
@@ -56,5 +56,8 @@
                  <i class="fa fa-map-marker"></i>
                 <span class="location">{{destination_place}}</span>
             </div>
+            {{#if ../isAccount}}
+                <a href="/account/refund/{{id}}"><input type="submit" name="refund" class = "btn" value="Refund ticket"/></a>
+            {{/if}}
         </div>
     {{/each}}

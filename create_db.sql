@@ -14,9 +14,9 @@ CREATE TABLE User(
 --passwords stored unencrypted as a test
 --will change later
 INSERT INTO User(email,password,first_name,last_name,Address,isAdmin) VALUES
-    ("JohnS@hotmail.co.uk","$2b$10$bk/1afHVab43.J941yYsjeovFhGQBcf6O5.dhaCxGVTO1jD1ELFua","John","Smith","33 Cross Drive,London,W5D14",1),
-    ("AshleyA@gmail.com","$2b$10$JqGO/7vannEgyeMQL3eJXucXHrWtow8EusU8KP4rUnYjKonbCG1FO","Ashley","Axel","11 Grimms Way,Leeds,LS11ED",0),
-    ("JamesKirk@space.co.uk","$2b$10$n39S2WJWJDObx0.efj6Mlur3xnPv/jmUxQ3zLyzv1OOAcUVETnf7.","James","Kirk","9 Star Place,Guildford,GU12EX",0);
+    ("JohnS@hotmail.co.uk","$2b$10$bk/1afHVab43.J941yYsjeovFhGQBcf6O5.dhaCxGVTO1jD1ELFua","John","Smith","33 Cross Drive, London, W5D14",1),
+    ("AshleyA@gmail.com","$2b$10$JqGO/7vannEgyeMQL3eJXucXHrWtow8EusU8KP4rUnYjKonbCG1FO","Ashley","Axel","11 Grimms Way, Leeds, LS11ED",0),
+    ("JamesKirk@space.co.uk","$2b$10$n39S2WJWJDObx0.efj6Mlur3xnPv/jmUxQ3zLyzv1OOAcUVETnf7.","James","Kirk","9 Star Place, Guildford, GU12EX",0);
 
 DROP TABLE IF EXISTS Destination;
 CREATE TABLE Destination(
@@ -54,6 +54,7 @@ VALUES
 
 DROP TABLE IF EXISTS User_Ticket;
 CREATE TABLE User_Ticket(
+    id INTEGER PRIMARY KEY,
     user_id INTEGER,
     ticket_id INTEGER,
     FOREIGN KEY(user_id) REFERENCES User(id),

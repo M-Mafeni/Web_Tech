@@ -98,11 +98,12 @@ app.get('/account',function (req,res) {
                 let result = req.session.result;
                 req.session.prompt = null;
                 req.session.result = null;
+                // let isAccount = true;
                 res.render('main',{layout:'account/account',email:req.session.username,
                             first_name: user.first_name, last_name: user.last_name,
                             address: user.Address, purchased_tickets:purchased_tickets,
                             loggedin:req.session.loggedin, prompt:prompt,result:result,
-                            isAdmin:req.session.isAdmin});
+                            isAccount:true, isAdmin:req.session.isAdmin});
             });
         });
     }
@@ -292,6 +293,57 @@ app.post('/account/delete',function (req,res) {
                     res.redirect('/account/delete');
                 }
             });
+        });
+    }
+    else {
+        req.session.prompt = 'You are not logged in.';
+        req.session.result = 'prompt-fail';
+        res.redirect('/');
+    }
+});
+
+app.get('/account/refund/:id', function (req,res) {
+    res.type(xhtml);
+    if (req.session.loggedin) {
+        let sql = "SELECT id, date(origin_date) AS o_date,time(origin_date) as o_time,(SELECT name FROM Destination Where Destination.id = Ticket.origin_id) AS origin_place,"
+        +   "date(destination_date) AS d_date,time(destination_date) as d_time,(SELECT name FROM Destination Where Destination.id = Ticket.destination_id) AS destination_place,price "
+        +   "FROM Ticket WHERE id = ?";
+
+        db.all(sql, [req.params.id], (err, tickets) => {
+            tickets.forEach((ticket, i) => {
+                ticket.o_date = df.formatDate(ticket.o_date);
+                ticket.d_date = df.formatDate(ticket.d_date);
+                ticket.o_time = df.formatTime(ticket.o_time);
+                ticket.d_time = df.formatTime(ticket.d_time);
+            });
+
+            let prompt = req.session.prompt;
+            let result = req.session.result;
+            req.session.prompt = null;
+            req.session.result = null;
+
+            res.render('main',{layout:'account/account-refund', loggedin:req.session.loggedin, prompt:prompt,result:result,
+                               isAdmin:req.session.isAdmin, refund_ticket: tickets});
+        });
+    }
+    else {
+        req.session.prompt = 'You are not logged in.';
+        req.session.result = 'prompt-fail';
+        res.redirect('/');
+    }
+});
+
+app.post('/account/refund/:id',function (req,res) {
+    res.type(xhtml);
+    if (req.session.loggedin) {
+        let ticketSQL = "DELETE FROM User_Ticket WHERE id = (SELECT id FROM User_Ticket "
+                      + "WHERE user_id = (SELECT id FROM User WHERE email = ?) "
+                      + "AND ticket_id = ? LIMIT 1)";
+
+        db.run(ticketSQL, [req.session.username, req.params.id], (err2, temp) => {
+            req.session.prompt = 'Ticket successfully refunded.';
+            req.session.result = 'prompt-success';
+            res.redirect('/account');
         });
     }
     else {
@@ -542,7 +594,7 @@ app.get('/admin',function(req,res){
                     let result = req.session.result;
                     // req.session.prompt = null;
                     // req.session.result = null;
-                    res.render('main',{layout:'admin',loggedin:req.session.loggedin,isAdmin:req.session.isAdmin,destinations:destinations,prompt:prompt,result:result});
+                    res.render('main',{layout:'admin',loggedin:req.session.loggedin,isAdmin:req.session.isAdmin,isAdminPage:true,destinations:destinations,prompt:prompt,result:result});
             });
         }else{
             res.status(401).send('not an admin.');
@@ -641,7 +693,7 @@ app.get('/admin/tickets',function(req,res){
             +   "date(destination_date) AS d_date,time(destination_date) as d_time,(SELECT name FROM Destination Where Destination.id = Ticket.destination_id) AS destination_place,price "
             +   "FROM Ticket ORDER BY origin_date DESC";
             db.all(sql,[],(err,tickets)=>{
-                res.render('main',{layout:'update_tickets',loggedin:req.session.loggedin,isAdmin:req.session.isAdmin,tickets:tickets});
+                res.render('main',{layout:'update_tickets',loggedin:req.session.loggedin,isAdmin:req.session.isAdmin,isAdminPage:true,tickets:tickets});
             });
         }else{
             res.status(401).send('not an admin.');
@@ -664,7 +716,7 @@ app.get('/admin/tickets/:id',function(req,res){
             +   "FROM Ticket WHERE id = ?";
             db.get(sql,[id],function(err,ticket){
                 if(!err){
-                    res.render('main',{layout:'change_tickets',loggedin:req.session.loggedin,isAdmin:req.session.isAdmin,ticket:ticket});
+                    res.render('main',{layout:'change_tickets',loggedin:req.session.loggedin,isAdmin:req.session.isAdmin,isAdminPage:true,ticket:ticket});
                 }else{
                     console.log(err);
                 }
