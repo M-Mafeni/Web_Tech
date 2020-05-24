@@ -137,7 +137,7 @@ app.get('/account/edit',function (req,res) {
     }
 });
 
-app.post('/account/save',function (req,res) {
+app.post('/account/edit',function (req,res) {
     res.type(xhtml);
     if (req.session.loggedin) {
         if(req.body.email != null){
@@ -179,6 +179,64 @@ app.post('/account/save',function (req,res) {
             res.redirect('/account');
         }
 
+    }
+    else {
+        req.session.prompt = 'You are not logged in.';
+        req.session.result = 'prompt-fail';
+        res.redirect('/');
+    }
+});
+
+app.get('/account/password', function (req,res) {
+    res.type(xhtml);
+    if (req.session.loggedin) {
+        let prompt = req.session.prompt;
+        let result = req.session.result;
+        req.session.prompt = null;
+        req.session.result = null;
+        res.render('main',{layout:'account/account-password', loggedin:req.session.loggedin, prompt:prompt,result:result});
+    }
+    else {
+        req.session.prompt = 'You are not logged in.';
+        req.session.result = 'prompt-fail';
+        res.redirect('/');
+    }
+});
+
+app.post('/account/password', function (req,res) {
+    res.type(xhtml);
+    if (req.session.loggedin) {
+        if(req.body.old_password != null) {
+            let getPasswordSQL = "SELECT password FROM User WHERE email = ?";
+            let updateSQL = "UPDATE User SET password = ? WHERE email = ?";
+
+            db.get(getPasswordSQL, [req.session.username], (err, user) => {
+                bcrypt.compare(req.body.old_password, user.password, function(err2,valid) {
+                    if (valid) {
+                        if (req.body.new_password == req.body.confirm_password) {
+                            bcrypt.hash(req.body.new_password, 10, function(err3, hash) {
+                                db.run(updateSQL, [hash, req.session.username], (err4, temp) => {
+                                    req.session.prompt = 'Password updated successfully.';
+                                    req.session.result = 'prompt-success';
+                                    res.redirect('/account');
+                                });
+                            });
+                        }
+                        else {
+                            req.session.prompt = 'Passwords do not match.';
+                            req.session.result = 'prompt-fail';
+                            res.redirect('/account/password');
+                        }
+                    }
+                    else {
+                        req.session.prompt = 'Password incorrect.';
+                        req.session.result = 'prompt-fail';
+                        res.redirect('/account/password');
+                    }
+                });
+            });
+        }
+        else res.redirect('/account');
     }
     else {
         req.session.prompt = 'You are not logged in.';
