@@ -42,6 +42,25 @@ function selected(){
     $("#summary_details .arrivalTime").text(arrivalTime);
     $("#summary_details .arrivalLocation").text(arrivalLoc);
     $("#summary_price").text(price);
+
+    $("#mobile_summary").show();
+    $("#summary-title-mobile").text("Summary");
+    $("#d_summary_price_mobile").text(price);
+    $("#d_mobile_summary .departureDate").text(departureDate);
+    $("#d_mobile_summary .departureTime").text(departureTime);
+    $("#d_mobile_summary .departureLocation").text(departureLoc);
+    $("#d_mobile_summary .arrivalDate").text(arrivalDate);
+    $("#d_mobile_summary .arrivalTime").text(arrivalTime);
+    $("#d_mobile_summary .arrivalLocation").text(arrivalLoc);
+
+    $(".mobile").show();
+
+    showContinueButtons();
+}
+
+function showContinueButtons() {
+    // display arrows
+    if ($(".fa-angle-double-down").hasClass("disable-fa")) $(".fa-angle-double-up").removeClass("disable-fa");
 }
 
 function checkEqual(ticket,t1,t2){

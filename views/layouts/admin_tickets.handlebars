@@ -20,6 +20,46 @@
 
 <body>
     {{> navbar }}
+    <div class = "summary-icon">
+        <span id="summary-title-mobile">No ticket selected</span>
+        <i class="fa fa-angle-double-down disable-fa" onclick="closeSummary()"></i>
+        <i class="fa fa-angle-double-up disable-fa" onclick="showSummary()"></i>
+        <div id = "summary_price_mobile" class = "summary_price_mobile"></div>
+
+        <!-- <div class = "summary-mobile" id="mobile_summary">
+            <p class = "summary_details_mobile_source">
+                <div class = "date departureDate"></div>
+                <span class = "time departureTime"></span>
+                <span class = "location departureLocation"></span>
+            </p>
+            <p class = "summary_details_mobile_destination">
+                <div class = "date arrivalDate"></div>
+                <span class = "time arrivalTime"></span>
+                <span class = "location arrivalLocation"></span>
+            </p>
+        </div> -->
+
+        <div id = "d_summary_price_mobile" class = "summary_price_mobile"></div>
+        <div class = "summary-mobile" id="d_mobile_summary">
+            <p class = "summary_details_mobile_source">
+                <div class = "date departureDate"></div>
+                <span class = "time departureTime"></span>
+                <span class = "location departureLocation"></span>
+            </p>
+            <p class = "summary_details_mobile_destination">
+                <div class = "date arrivalDate"></div>
+                <span class = "time arrivalTime"></span>
+                <span class = "location arrivalLocation"></span>
+            </p>
+        </div>
+        <div class="buttons mobile">
+            <button class= "btn delete" type="button" name="delete" onclick="deleteTicket()">Delete Ticket</button>
+            <!-- <a href="#"></a> -->
+            <button class= "btn update" type="button" name="delete" onclick="updateTicket()">Modify Ticket</button>
+        </div>
+        <!-- <button type = "submit" class="btn continue-mobile no-continue" onclick="confirmBooking()">Continue</button> -->
+
+    </div>
     <div class="column summary">
         <p id = "o_unselected">No ticket selected</p>
         <div id = "summary_details" class = "summary_details">

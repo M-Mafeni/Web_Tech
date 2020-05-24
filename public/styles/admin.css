@@ -1,13 +1,31 @@
 .admin_navbar{
     position: relative;
 }
+
 .admin_bar{
-    position: absolute;
+    /* position: absolute;
     margin-top: 18%;
     margin-left: 15%;
-    width:90%;
-    max-width: 1300px;
+
+    max-width: 1300px; */
+    /* margin-top:18%; */
+    /* display: inline-block; */
+    /* max-width:1800px; */
 }
+.dest_btn{
+    width: 100%;
+}
+@media only screen and (max-width: 800px){
+    .admin_bar{
+        /* position: absolute;
+        margin-top: 18%;
+        margin-left: 15%;
+        width:90%;
+        max-width: 1300px; */
+        margin-top:18%;
+    }
+}
+
 
 .admin_destination{
     position: absolute;
@@ -15,26 +33,8 @@
     margin-left: 15%;
     width:40%;
 }
-
-.admin_prompt{
-    /* padding-left: 50%; */
-    position: absolute;
-    margin-top: 8%;
-    width:100%;
-}
-
-.admin_tickets{
-    position: absolute;
-    margin-top: 5%;
-}
-.buttons{
-    /* width:100%; */
-    /* display: block; */
-}
-.buttons button{
-    /* display: inline-block; */
-    /* display: inline; */
-    /* width: 100%; */
+.mobile{
+    display: none;
 }
 .filter{
     width:100%;

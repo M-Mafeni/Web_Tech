@@ -9,6 +9,8 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"></link>
 <link rel="stylesheet" href="/styles/styles.css"></link>
 <link rel="stylesheet" href="/styles/bookings.css"></link>
+<link rel="stylesheet" href="/styles/admin.css"></link>
+
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Righteous"></link>
 <link href="https://fonts.googleapis.com/css2?family=Rubik" rel="stylesheet"></link>
 <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300" rel="stylesheet"></link>
@@ -16,7 +18,7 @@
 <body>
     {{> navbar main-page=false }}
     {{> prompt }}
-        <div class="booking_bar">
+        <div class="admin_bar booking_bar">
             <form class="booking_form" action="/admin/addticket" method="post">
                 <span class = "booking_left">
                     <div class="form_item">
@@ -45,10 +47,11 @@
                     <div class="form_item">
                         <input id="inbound_time" type="time" name="inbound_time" value="" required=""></input>
                     </div>
-                    <div class="form_item">
-                        <input id="price" type="number" name="price" value="" required=""></input>
-                    </div>
+
                 </span>
+                <div class="form_item">
+                    <input id="price" type="number" name="price" value="" required=""></input>
+                </div>
                 <div class="booking_button">
                     <input class="btn" type="submit" value ="Enter New Ticket"></input>
                 </div>
@@ -60,7 +63,7 @@
                 </div> -->
                 <input type="text" name="destination" value="" required=""></input>
 
-                <div class="booking_button">
+                <div class="booking_button dest_btn">
                     <input class="btn" type="submit" value ="Enter New Destination"></input>
                 </div>
             </form>
