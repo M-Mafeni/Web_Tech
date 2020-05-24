@@ -101,7 +101,8 @@ app.get('/account',function (req,res) {
                 res.render('main',{layout:'account/account',email:req.session.username,
                             first_name: user.first_name, last_name: user.last_name,
                             address: user.Address, purchased_tickets:purchased_tickets,
-                            loggedin:req.session.loggedin, prompt:prompt,result:result});
+                            loggedin:req.session.loggedin, prompt:prompt,result:result,
+                            isAdmin:req.session.isAdmin});
             });
         });
     }
@@ -126,7 +127,8 @@ app.get('/account/edit',function (req,res) {
             req.session.result = null;
             res.render('main',{layout:'account/account-edit',email:req.session.username,
                         first_name: user.first_name, last_name: user.last_name,
-                        address: user.Address, loggedin:req.session.loggedin, prompt:prompt,result:result});
+                        address: user.Address, loggedin:req.session.loggedin, prompt:prompt,result:result,
+                        isAdmin:req.session.isAdmin});
         });
 
     }
@@ -194,7 +196,8 @@ app.get('/account/password', function (req,res) {
         let result = req.session.result;
         req.session.prompt = null;
         req.session.result = null;
-        res.render('main',{layout:'account/account-password', loggedin:req.session.loggedin, prompt:prompt,result:result});
+        res.render('main',{layout:'account/account-password', loggedin:req.session.loggedin, prompt:prompt,result:result,
+                           isAdmin:req.session.isAdmin});
     }
     else {
         req.session.prompt = 'You are not logged in.';
@@ -246,6 +249,59 @@ app.post('/account/password', function (req,res) {
 });
 
 
+app.get('/account/delete',function (req,res) {
+    res.type(xhtml);
+    if (req.session.loggedin) {
+        let prompt = req.session.prompt;
+        let result = req.session.result;
+        req.session.prompt = null;
+        req.session.result = null;
+        res.render('main',{layout:'account/account-delete', loggedin:req.session.loggedin, prompt:prompt,result:result, isAdmin:req.session.isAdmin});
+    }
+    else {
+        req.session.prompt = 'You are not logged in.';
+        req.session.result = 'prompt-fail';
+        res.redirect('/');
+    }
+});
+
+app.post('/account/delete',function (req,res) {
+    res.type(xhtml);
+    if (req.session.loggedin) {
+        let idPasswordSQL = "SELECT id, password FROM User WHERE email = ?";
+        let userSQL = "DELETE FROM User WHERE id = ?";
+        let ticketSQL = "DELETE FROM User_Ticket WHERE user_id = ?";
+
+        db.get(idPasswordSQL, [req.session.username], (err, user) => {
+            bcrypt.compare(req.body.password, user.password, function(err2,valid) {
+                if (valid) {
+                    db.run(userSQL, [user.id], (err2, temp) => {
+                        db.run(ticketSQL, [user.id], (err3, temp2) => {
+                            req.session.loggedin = false;
+                            req.session.username = null;
+                            req.session.isAdmin = false;
+                            req.session.prompt = 'Account successfully deleted.';
+                            req.session.result = 'prompt-success';
+                            res.redirect('/');
+                        });
+                    });
+                }
+                else {
+                    req.session.prompt = 'Password incorrect.';
+                    req.session.result = 'prompt-fail';
+                    res.redirect('/account/delete');
+                }
+            });
+        });
+    }
+    else {
+        req.session.prompt = 'You are not logged in.';
+        req.session.result = 'prompt-fail';
+        res.redirect('/');
+    }
+});
+
+
 //register page
 app.get('/register',function (req,res) {
     if (!req.session.loggedin) {
@@ -254,7 +310,7 @@ app.get('/register',function (req,res) {
         let result = req.session.result;
         req.session.prompt = null;
         req.session.result = null;
-        res.render('main',{layout:'register', prompt:prompt,result:result});
+        res.render('main',{layout:'register', prompt:prompt,result:result, isAdmin:req.session.isAdmin});
     }
     else {
         // user shouldn't be able to register when already logged in
@@ -304,7 +360,8 @@ app.get('/bookings',function (req,res) {
                     res.render('main',{layout:'bookings',
                                o_tickets: o_tickets,
                                d_tickets: d_tickets,
-                               loggedin:req.session.loggedin
+                               loggedin:req.session.loggedin,
+                               isAdmin:req.session.isAdmin
                             });
                 });
             });
