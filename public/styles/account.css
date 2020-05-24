@@ -1,5 +1,10 @@
 body {
-    margin-top: 9%;
+    /* margin-top: 9%; */
+}
+
+.account-wrapper {
+    margin-left: 4%;
+    margin-right: 4%;
 }
 
 .title-header {
@@ -52,6 +57,10 @@ body {
 strong {
     font-weight: bolder;
     margin-right: 5%;
+}
+
+.ticket-card:hover{
+    cursor: auto;
 }
 
 @media only screen and (max-width: 750px) {

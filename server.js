@@ -93,10 +93,15 @@ app.get('/account',function (req,res) {
                     ticket.o_time = df.formatTime(ticket.o_time);
                     ticket.d_time = df.formatTime(ticket.d_time);
                 });
-                res.render('main',{layout:'account',email:req.session.username,
+
+                let prompt = req.session.prompt;
+                let result = req.session.result;
+                req.session.prompt = null;
+                req.session.result = null;
+                res.render('main',{layout:'account/account',email:req.session.username,
                             first_name: user.first_name, last_name: user.last_name,
                             address: user.Address, purchased_tickets:purchased_tickets,
-                            loggedin:req.session.loggedin});
+                            loggedin:req.session.loggedin, prompt:prompt,result:result});
             });
         });
     }
@@ -109,12 +114,89 @@ app.get('/account',function (req,res) {
 
 });
 
+app.get('/account/edit',function (req,res) {
+    res.type(xhtml);
+    if (req.session.loggedin) {
+        let sql = "SELECT * FROM User WHERE email = ?";
+
+        db.get(sql, [req.session.username], (err, user) => {
+            let prompt = req.session.prompt;
+            let result = req.session.result;
+            req.session.prompt = null;
+            req.session.result = null;
+            res.render('main',{layout:'account/account-edit',email:req.session.username,
+                        first_name: user.first_name, last_name: user.last_name,
+                        address: user.Address, loggedin:req.session.loggedin, prompt:prompt,result:result});
+        });
+
+    }
+    else {
+        req.session.prompt = 'You are not logged in.';
+        req.session.result = 'prompt-fail';
+        res.redirect('/');
+    }
+});
+
+app.post('/account/save',function (req,res) {
+    res.type(xhtml);
+    if (req.session.loggedin) {
+        if(req.body.email != null){
+            let passwordSQL = "SELECT password FROM User WHERE email = ?";
+            let emailSQL = "SELECT email FROM User WHERE email = ?";
+            let updateSQL = "UPDATE User SET email = ?, first_name = ?, last_name = ?, Address = ? "
+                    + "WHERE email = ?";
+
+            db.get(passwordSQL, [req.session.username], (err, user2) => {
+                bcrypt.compare(req.body.password, user2.password, function(err2,valid) {
+                    if (valid) {
+                        db.get(emailSQL, [req.body.email], (err4, temp) => {
+                            // the email shouldn't already be taken, unless taken by yourself
+                            if (temp == undefined || temp.email == req.session.username) {
+                                db.run(updateSQL, [req.body.email, req.body.first_name, req.body.last_name, req.body.address, req.session.username], (err3, user) => {
+                                    req.session.username = req.body.email;
+                                    req.session.prompt = 'Updated successfully.';
+                                    req.session.result = 'prompt-success';
+                                    res.redirect('/account');
+                                });
+                            }
+                            else {
+                                req.session.prompt = 'Email already registered.';
+                                req.session.result = 'prompt-fail';
+                                res.redirect('/account/edit');
+                            }
+                        });
+                    }
+                    else {
+                        req.session.prompt = 'Password incorrect.';
+                        req.session.result = 'prompt-fail';
+                        res.redirect('/account/edit');
+                    }
+                });
+
+            });
+        }
+        else {
+            res.redirect('/account');
+        }
+
+    }
+    else {
+        req.session.prompt = 'You are not logged in.';
+        req.session.result = 'prompt-fail';
+        res.redirect('/');
+    }
+});
+
 
 //register page
 app.get('/register',function (req,res) {
     if (!req.session.loggedin) {
         res.type(xhtml);
-        res.render('main',{layout:'register'})
+        let prompt = req.session.prompt;
+        let result = req.session.result;
+        req.session.prompt = null;
+        req.session.result = null;
+        res.render('main',{layout:'register', prompt:prompt,result:result});
     }
     else {
         // user shouldn't be able to register when already logged in
@@ -215,7 +297,7 @@ app.post('/confirmed', function(req,res) {
         });
 
         console.log("user purchased tickets with IDs " + req.body.out_id + " and " + req.body.in_id);
-        req.session.prompt= 'Ticket purchased.';
+        req.session.prompt= 'Tickets purchased.';
         req.session.result = 'prompt-success';
         res.redirect('/');
         // res.render('main',{layout:'index',loggedin:req.session.loggedin,prompt:'Ticket purchased.',result:'prompt-success'});
@@ -308,14 +390,14 @@ app.post('/registered',function(req,res){
                         req.session.prompt = 'Passwords do not match.';
                         req.session.result = 'prompt-fail';
                         // res.render('main',{layout:'register',prompt:'Passwords do not match.',result:'prompt-fail'})
-                        res.redirect('/');
+                        res.redirect('/register');
                     }
                 }
                 else {
                     // setup prompt and render page
                     req.session.prompt = 'Email already registered.';
                     req.session.result = 'prompt-fail';
-                    res.redirect('/');
+                    res.redirect('/register');
                     // res.render('main',{layout:'register',prompt:'Email already registered.',result:'prompt-fail'})
                 }
             });
@@ -323,7 +405,7 @@ app.post('/registered',function(req,res){
         else {
             req.session.prompt = 'Email not valid.';
             req.session.result = 'prompt-fail';
-            res.redirect('/');
+            res.redirect('/register');
             // res.render('main',{layout:'register',prompt:'Email not valid.',result:'prompt-fail'})
         }
     }
@@ -506,7 +588,7 @@ app.post('/admin/tickets/:id',function(req,res){
                         if(err){
                             console.log(err);
                         }else{
-=                            res.redirect('/admin/tickets');
+                            res.redirect('/admin/tickets');
                         }
                     });
                 }else{
@@ -548,7 +630,7 @@ app.get('/logout',function (req,res) {
         res.type(xhtml);
         req.session.prompt = 'Logged out successfully.';
         req.session.result='prompt-success';
-        // res.redirect('/');
+        res.redirect('/');
         // res.render('main',{layout:'index',loggedin:req.session.loggedin,prompt:'Logged out successfully.',result:'prompt-success'});
     }
     res.redirect('/');
