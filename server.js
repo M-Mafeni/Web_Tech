@@ -594,7 +594,7 @@ app.get('/admin',function(req,res){
                     let result = req.session.result;
                     // req.session.prompt = null;
                     // req.session.result = null;
-                    res.render('main',{layout:'admin',loggedin:req.session.loggedin,isAdmin:req.session.isAdmin,isAdminPage:true,destinations:destinations,prompt:prompt,result:result});
+                    res.render('main',{layout:'admin/add_tickets',loggedin:req.session.loggedin,isAdmin:req.session.isAdmin,isAdminPage:true,destinations:destinations,prompt:prompt,result:result});
             });
         }else{
             res.status(401).send('not an admin.');
@@ -699,7 +699,7 @@ app.get('/admin/tickets',function(req,res){
                     ticket.o_time = df.formatTime(ticket.o_time);
                     ticket.d_time = df.formatTime(ticket.d_time);
                 });
-                res.render('main',{layout:'admin_tickets',loggedin:req.session.loggedin,isAdmin:req.session.isAdmin,isAdminPage:true,tickets:tickets});
+                res.render('main',{layout:'admin/edit_tickets',loggedin:req.session.loggedin,isAdmin:req.session.isAdmin,isAdminPage:true,tickets:tickets});
             });
         }else{
             res.status(401).send('not an admin.');
@@ -722,7 +722,7 @@ app.get('/admin/tickets/:id',function(req,res){
             +   "FROM Ticket WHERE id = ?";
             db.get(sql,[id],function(err,ticket){
                 if(!err){
-                    res.render('main',{layout:'update_ticket',loggedin:req.session.loggedin,isAdmin:req.session.isAdmin,isAdminPage:true,ticket:ticket});
+                    res.render('main',{layout:'admin/update_ticket',loggedin:req.session.loggedin,isAdmin:req.session.isAdmin,isAdminPage:true,ticket:ticket});
                 }else{
                     console.log(err);
                 }
