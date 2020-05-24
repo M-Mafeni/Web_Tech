@@ -4,13 +4,14 @@ $(document).ready(start);
 
 function start() {
     $("div.ticket-card").click(selected);
-    var now = new Date();
-
-    var day = ("0" + now.getDate()).slice(-2);
-    var month = ("0" + (now.getMonth() + 1)).slice(-2);
-
-    var today = now.getFullYear()+"-"+(month)+"-"+(day) ;
-    $('#outbound_date').val(today);
+    // $('#filter_form').click(filterTicket);
+    // var now = new Date();
+    //
+    // var day = ("0" + now.getDate()).slice(-2);
+    // var month = ("0" + (now.getMonth() + 1)).slice(-2);
+    //
+    // var today = now.getFullYear()+"-"+(month)+"-"+(day) ;
+    // $('#outbound_date').val(today);
 }
 
 function selected(){
@@ -43,6 +44,36 @@ function selected(){
     $("#summary_price").text(price);
 }
 
+function checkEqual(ticket,t1,t2){
+    if(t1){
+        if(t1 !== t2){
+            $(ticket).hide();
+        }
+    }
+}
+function filterTicket(){
+    var origin = $('#origin').val();
+    var destination = $('#destination').val();
+    var o_date = $('#outbound_date').val();
+    if(o_date) o_date = newFormat().formatDate(o_date);
+    var d_date = $('#inbound_date').val();
+    if(d_date) d_date = newFormat().formatDate(d_date);
+    var tickets = $("div.ticket-card").toArray();
+    tickets.forEach((ticket, i) => {
+        $(ticket).show();
+        var source = $(ticket).find('div.ticket-content.source');
+        var dest = $(ticket).find('div.ticket-content.destination');
+        var t_origin = $(source).find('.location').text();
+        var t_o_date = $(source).find('.date').text();
+        var t_destination = $(dest).find('.location').text();
+        var t_d_date = $(dest).find('.date').text();
+        checkEqual(ticket,origin,t_origin);
+        checkEqual(ticket,destination,t_destination);
+        checkEqual(ticket,o_date,t_o_date);
+        checkEqual(ticket,d_date,t_d_date);
+    });
+
+}
 function deleteTicket() {
     var id = $(".ticket-selected").find('.ticket_id').text();
     //ajax for client side requests

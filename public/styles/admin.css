@@ -36,6 +36,9 @@
     /* display: inline; */
     /* width: 100%; */
 }
+.filter{
+    width:100%;
+}
 .delete{
     /* position: relative; */
     /* float:left; */
