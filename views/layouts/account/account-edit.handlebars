@@ -21,24 +21,26 @@
         {{> prompt}}
 
         <!-- mostly copied from the login form -->
-        <form class="login-form-container" action="/account/save" method="post">
-            <h1 class="register-title">Edit Account Details</h1>
-            <label class= "email-label" for="first_name">First name</label>
-            <input type="text" name="first_name" placeholder="Enter First Name" required="" value="{{first_name}}"></input>
-            <label class= "email-label" for="last_name">Last name</label>
-            <input type="text" name="last_name" placeholder="Enter Last Name" required="" value="{{last_name}}"></input>
-            <label class= "email-label" for="email">Email</label>
-            <input type="text" name="email" placeholder="Enter Email" required="" value="{{email}}"></input>
-            <label class= "email-label" for="address">Address</label>
-            <input type="text" name="address" placeholder="Enter Address" required="" value="{{address}}"></input>
-            <label class= "email-label" for="address">Confirm Password</label>
-            <input type="password" name="password" placeholder="Confirm Password" required=""></input>
+        <div class="login-form-container">
+            <form action="/account/save" method="post">
+                <h1 class="register-title">Edit Account Details</h1>
+                <label class= "email-label" for="first_name">First name</label>
+                <input type="text" name="first_name" placeholder="Enter First Name" required="" value="{{first_name}}"></input>
+                <label class= "email-label" for="last_name">Last name</label>
+                <input type="text" name="last_name" placeholder="Enter Last Name" required="" value="{{last_name}}"></input>
+                <label class= "email-label" for="email">Email</label>
+                <input type="text" name="email" placeholder="Enter Email" required="" value="{{email}}"></input>
+                <label class= "email-label" for="address">Address</label>
+                <input type="text" name="address" placeholder="Enter Address" required="" value="{{address}}"></input>
+                <label class= "email-label" for="address">Confirm Password</label>
+                <input type="password" name="password" placeholder="Confirm Password" required=""></input>
+            </form>
 
             <div class="login-btns">
-                <button type="submit" class="btn">Save details</button>
+                <button type="submit" class="btn">Save</button>
+                <a href="/account"><button type="submit" class = "btn">Back</button></a>
             </div>
-
-        </form>
+        </div>
 
     </body>
     {{> footer}}

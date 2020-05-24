@@ -630,7 +630,7 @@ app.get('/logout',function (req,res) {
         res.type(xhtml);
         req.session.prompt = 'Logged out successfully.';
         req.session.result='prompt-success';
-        res.redirect('/');
+        // res.redirect('/');
         // res.render('main',{layout:'index',loggedin:req.session.loggedin,prompt:'Logged out successfully.',result:'prompt-success'});
     }
     res.redirect('/');
