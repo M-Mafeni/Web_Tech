@@ -693,7 +693,13 @@ app.get('/admin/tickets',function(req,res){
             +   "date(destination_date) AS d_date,time(destination_date) as d_time,(SELECT name FROM Destination Where Destination.id = Ticket.destination_id) AS destination_place,price "
             +   "FROM Ticket ORDER BY origin_date DESC";
             db.all(sql,[],(err,tickets)=>{
-                res.render('main',{layout:'update_tickets',loggedin:req.session.loggedin,isAdmin:req.session.isAdmin,isAdminPage:true,tickets:tickets});
+                tickets.forEach((ticket, i) => {
+                    ticket.o_date = df.formatDate(ticket.o_date);
+                    ticket.d_date = df.formatDate(ticket.d_date);
+                    ticket.o_time = df.formatTime(ticket.o_time);
+                    ticket.d_time = df.formatTime(ticket.d_time);
+                });
+                res.render('main',{layout:'admin_tickets',loggedin:req.session.loggedin,isAdmin:req.session.isAdmin,isAdminPage:true,tickets:tickets});
             });
         }else{
             res.status(401).send('not an admin.');
@@ -716,7 +722,7 @@ app.get('/admin/tickets/:id',function(req,res){
             +   "FROM Ticket WHERE id = ?";
             db.get(sql,[id],function(err,ticket){
                 if(!err){
-                    res.render('main',{layout:'change_tickets',loggedin:req.session.loggedin,isAdmin:req.session.isAdmin,isAdminPage:true,ticket:ticket});
+                    res.render('main',{layout:'update_ticket',loggedin:req.session.loggedin,isAdmin:req.session.isAdmin,isAdminPage:true,ticket:ticket});
                 }else{
                     console.log(err);
                 }
