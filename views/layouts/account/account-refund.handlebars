@@ -7,7 +7,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"></link>
 <link rel="stylesheet" href="/styles/styles.css"></link>
 <link rel="stylesheet" href="/styles/bookings.css"></link>
-<link rel="stylesheet" href="/styles/register.css"></link>
+<link rel="stylesheet" href="/styles/account.css"></link>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Righteous"></link>
 <link href="https://fonts.googleapis.com/css2?family=Rubik" rel="stylesheet"></link>
 <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300" rel="stylesheet"></link>
@@ -18,10 +18,10 @@
         {{> navbar}}
         {{> login}}
 
-        <div class="login-form-container">
-            <h1 class="register-title">Refund Your Ticket</h1>
+        <div class="account-wrapper">
+            <!-- <h1 class="register-title">Refund Your Ticket</h1> -->
 
-            {{> tickets ticketData = refund_ticket}}
+            {{> tickets heading="Refund Your Ticket" ticketData = refund_ticket}}
 
             Are you sure you want to refund this ticket?
 
