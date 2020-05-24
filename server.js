@@ -29,6 +29,9 @@ app.set('view engine', 'handlebars');
 app.engine('handlebars', exphbs({
     layoutsDir: __dirname + '/views/layouts'
 }));
+
+//make urls case sensitive
+app.set('case sensitive routing', true);
 //this gives express access to all files in public
 app.use(express.static('public'));
 //this allows you to parse request bodies
@@ -685,6 +688,7 @@ app.post('/admin/destination',function(req,res){
     }
 });
 app.get('/admin/tickets',function(req,res){
+    res.type(xhtml);
     if(req.session.loggedin){
         if(req.session.isAdmin){
             //get all tickets
@@ -714,6 +718,7 @@ app.get('/admin/tickets',function(req,res){
     }
 });
 app.get('/admin/tickets/:id',function(req,res){
+    res.type(xhtml);
     if(req.session.loggedin){
         if(req.session.isAdmin){
             let id = req.params.id;
