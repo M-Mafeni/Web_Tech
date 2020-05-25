@@ -6,7 +6,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"></link>
 <link rel="stylesheet" href="/styles/styles.css"></link>
 <link rel="stylesheet" href="/styles/bookings.css"></link>
-<link rel="stylesheet" href="/styles/account.css"></link>
+<link rel="stylesheet" href="/styles/ticket-confirmation.css"></link>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Righteous"></link>
 <link href="https://fonts.googleapis.com/css2?family=Rubik" rel="stylesheet"></link>
 <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300" rel="stylesheet"></link>
@@ -17,25 +17,18 @@
         {{> navbar}}
         {{> login}}
 
-        <div class="account-wrapper">
-            <!-- <h1 class="register-title">Refund Your Ticket</h1> -->
-
             {{> tickets heading="Refund Your Ticket" ticketData = refund_ticket}}
 
             Are you sure you want to refund this ticket?
 
-            {{#each refund_ticket}}
-                <form action="/account/refund/{{id}}" id = "refund" method="post">
-                    <!-- <label class= "email-label" for="address">Enter password as confirmation</label>
-                    <input type="password" name="password" placeholder="Enter your password" required=""></input> -->
-                </form>
+        {{#each refund_ticket}}
+            <form action="/account/refund/{{id}}" id = "refund" method="post" />
 
-                <div class="login-btns">
-                    <button form = "refund" type="submit" class="btn">Refund</button>
-                    <a href="/account"><button type="submit" class = "btn">Back</button></a>
-                </div>
-            {{/each}}
-        </div>
+            <div class="login-btns">
+                <button form = "refund" type="submit" class="btn">Refund</button>
+                <a href="/account"><button type="submit" class = "btn">Back</button></a>
+            </div>
+        {{/each}}
 
     </body>
     {{> footer}}

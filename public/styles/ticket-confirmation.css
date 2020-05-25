@@ -1,7 +1,10 @@
+/* for pages displaying a ticket at the top, for confirmation */
+
 body {
     margin-left: 4%;
     margin-right: 4%;
     margin-top: 8%;
+    min-height: 0;
 }
 
 .btn .pay-now {
@@ -31,7 +34,7 @@ select {
 }
 
 #payButton {
-    display: none;
+    visibility: hidden;
 }
 
 @media only screen and (max-width: 850px) {

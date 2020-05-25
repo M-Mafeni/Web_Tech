@@ -10,9 +10,10 @@ function start() {
 
 function showPayButton() {
     if ($("#payment").val() != "Select card") {
-        $("#payButton").show();
+        $("#payButton").css("visibility", "visible");
     }
     else {
-        $("#payButton").hide();
+        $("#payButton").css("visibility", "hidden");
+
     }
 }

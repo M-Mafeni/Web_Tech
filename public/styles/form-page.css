@@ -1,3 +1,5 @@
+/* pages with forms - they look like the login form */
+
 body {
     margin: 100px 0;
 }
@@ -12,7 +14,7 @@ body {
 }
 
 @media only screen and (max-width: 700px) {
-    .register-title {
+    .form-title {
         font-size: 170%;
     }
 }

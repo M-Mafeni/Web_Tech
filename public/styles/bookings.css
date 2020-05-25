@@ -11,19 +11,6 @@ body {
 
 }
 
-.nav-items{
-    width: 100%;
-    position: absolute;
-    top: 0%;
-    left: 0%;
-    background: var(--dark-blue-banner);
-    -webkit-transition: background 0s;
-    -moz-transition: background 0s;
-    -ms-transition: background 0s;
-    -o-transition: background 0s;
-    transition: background 0s;
-}
-
 .column{
     float: left;
     padding: 1%;
@@ -116,21 +103,6 @@ body {
     /* font-weight: bolder; */
 }
 
-.summary {
-    width: 23%;
-    margin: 0;
-    position: absolute;
-    right: 2.2%;
-    background: var(--summary-colour);
-    border-radius: 15px;
-    padding: 2%;
-}
-
-.summary_fixed {
-    position: fixed;
-    top: 20px;
-}
-
 #arrivalDate {
     margin-top: 15%;
 }
@@ -147,6 +119,22 @@ body {
 h1 {
     font-size: 150%;
     margin-top: 2%;
+}
+
+
+.summary {
+    width: 23%;
+    margin: 0;
+    position: absolute;
+    right: 2.2%;
+    background: var(--summary-colour);
+    border-radius: 15px;
+    padding: 2%;
+}
+
+.summary_fixed {
+    position: fixed;
+    top: 20px;
 }
 
 .summary_details {

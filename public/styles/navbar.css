@@ -1,0 +1,14 @@
+/* nav bar styling for all pages except the home page (in styles.css) */
+
+.nav-items{
+    width: 100%;
+    position: absolute;
+    top: 0%;
+    left: 0%;
+    background: var(--dark-blue-banner);
+    -webkit-transition: background 0s;
+    -moz-transition: background 0s;
+    -ms-transition: background 0s;
+    -o-transition: background 0s;
+    transition: background 0s;
+}
