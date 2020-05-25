@@ -6,6 +6,7 @@ function start(){
     $(window).scroll(change_bar);
     $(window).resize(setLoginPos);
     $("#mobile-nav-bg").click(closeNav);
+    $("#about_nav_link").click(closeNav);
 
     var modal = document.getElementById("loginForm");
 

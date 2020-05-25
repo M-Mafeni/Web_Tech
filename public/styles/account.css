@@ -23,8 +23,12 @@ body {
     border-radius: 15px;
     margin-top: 1%;
     margin-bottom: 5%;
-    display: inline-block;
     width: 100%;
+}
+
+.details-wrapper {
+    display: inline-block;
+
 }
 
 .account-left, .account-right {
@@ -45,6 +49,15 @@ body {
     padding-bottom: 1%;
 }
 
+.account-btns button {
+    margin-top: 1%;
+    margin-bottom: 1%;
+}
+
+.warning:hover {
+    background: #c23e0e;
+}
+
 .account-link {
     color: var(--main-bg-colour);
     transition: color 0.3s;
@@ -63,6 +76,10 @@ strong {
     cursor: auto;
 }
 
+.ticket-card button {
+    margin-top: 3%;
+}
+
 @media only screen and (max-width: 750px) {
     body {
         margin-top: 12%;
@@ -79,8 +96,24 @@ strong {
     }
 }
 
+@media only screen and (max-width: 600px) {
+    .account-btns button {
+        width: 100%;
+    }
+
+    .ticket-card button {
+        width: 100%;
+    }
+
+
+}
+
 @media only screen and (max-width: 400px) {
     body {
         margin-top: 15%;
+    }
+
+    .account-btns button, .ticket-card button {
+        font-size: 80%;
     }
 }

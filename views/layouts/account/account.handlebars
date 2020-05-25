@@ -26,19 +26,23 @@
 
             <div class="personal-details">
                 <div class="subheader">Personal Details</div>
-                <div class="account-details account-left"><strong>First name:</strong> {{first_name}}</div>
-                <div class="account-details account-right"><strong>Last name:</strong> {{last_name}}</div>
-                <div class="account-details account-left"><strong>Email:</strong> {{email}}</div>
-                <div class="account-details account-right"><strong>Address:</strong> {{#if address}} {{address}} {{else}} No address specified {{/if}}</div>
+                <div class="details-wrapper">
+                    <div class="account-details account-left"><strong>First name:</strong> {{first_name}}</div>
+                    <div class="account-details account-right"><strong>Last name:</strong> {{last_name}}</div>
+                    <div class="account-details account-left"><strong>Email:</strong> {{email}}</div>
+                    <div class="account-details account-right"><strong>Address:</strong> {{address}}</div>
+                </div>
 
-                <a href="/account/edit"><input type="submit" name="edit" class = "btn" value="Edit details"/></a>
-                <a href="/account/password"><input type="submit" name="edit" class = "btn" value="Change password"/></a>
-                <a href="/account/delete"><input type="submit" name="edit" class = "btn" value="Delete account"/></a>
+                <div class="account-btns">
+                    <a href="/account/edit"><button type="submit" name="edit" class = "btn">Edit details</button></a>
+                    <a href="/account/password"><button type="submit" name="edit" class = "btn">Change password</button></a>
+                    <a href="/account/delete"><button type="submit" name="edit" class = "btn warning">Delete account</button></a>
+                </div>
 
             </div>
 
             {{#if purchased_tickets}}
-                {{> tickets heading = "Previously purchased tickets" ticketData = purchased_tickets}}
+                {{> tickets heading = "Purchased Tickets" ticketData = purchased_tickets}}
             {{else}}
                 <h1 class="Journey_Text">Previously purchased tickets</h1>
                 <a href="/" class="account-link">Book your first flight today.</a>
