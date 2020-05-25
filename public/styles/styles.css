@@ -71,6 +71,16 @@ body {
     padding-bottom: 1%;
 }
 
+#mobile-nav-bg {
+    display: none;
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    left: 0;
+    top: 0;
+    z-index: 1;
+}
+
 .bar_colour {
     background: #00304a;
 }

@@ -5,23 +5,15 @@ $(document).ready(start);
 function start(){
     $(window).scroll(change_bar);
     $(window).resize(setLoginPos);
+    $("#mobile-nav-bg").click(closeNav);
 
     var modal = document.getElementById("loginForm");
-    // var clickCount = 0;
 
     window.onclick = function(event) {
       if (event.target == modal) {
         modal.style.display = "none";
       }
 
-      // if ($("#mobile-nav").hasClass("responsive") && ($(this) == $("a[href='#about_us']") || $(this) != $("#mobile-nav"))) {
-      //     clickCount++;
-      //     if (clickCount > 1) {
-      //         $("#mobile-nav").removeClass("responsive");
-      //         clickCount = 0;
-      //     }
-      // }
-      // else clickCount = 0;
     }
 
     var now = new Date();
@@ -55,10 +47,10 @@ function makeBarResponsive() {
     if(!$("#mobile-nav").hasClass("responsive")) {
         $("#mobile-nav").addClass("responsive");
         $("#topnav").addClass("bar_colour");
+        $("#mobile-nav-bg").show();
     }
     else {
-        $("#mobile-nav").removeClass("responsive");
-        change_bar();
+        closeNav();
     }
 }
 
@@ -66,4 +58,10 @@ function setLoginPos() {
     var height = $(window).height();
     var loginHeight = $("#loginFormContent").height();
     $("#loginForm").css("padding-top", (height-loginHeight)/2);
+}
+
+function closeNav() {
+    $("#mobile-nav").removeClass("responsive");
+    change_bar();
+    $("#mobile-nav-bg").hide();
 }
