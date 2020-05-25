@@ -5,6 +5,10 @@ $(document).ready(start);
 function start(){
     $("#outbound div.ticket-card").click(outbound_selected);
     $("#inbound div.ticket-card").click(inbound_selected);
+    $(".fa-angle-double-down").click(closeSummary);
+    $(".fa-angle-double-up").click(showSummary);
+    $(".continue-mobile").click(confirmBooking);
+
     $(window).scroll(fixSummary);
 }
 

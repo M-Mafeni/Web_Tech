@@ -2,6 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en-GB" xml:lang="en-GB">
 <meta name="viewport" content="width=device-width" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="/scripts/bookings.js"></script>
 <script src="/scripts/admin.js"></script>
 <script src="/scripts/format.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"></link>
@@ -19,8 +20,8 @@
     {{> navbar }}
     <div class = "summary-icon">
         <span id="summary-title-mobile">No ticket selected</span>
-        <i class="fa fa-angle-double-down disable-fa" onclick="closeSummary()"></i>
-        <i class="fa fa-angle-double-up disable-fa" onclick="showSummary()"></i>
+        <i class="fa fa-angle-double-down disable-fa"></i>
+        <i class="fa fa-angle-double-up disable-fa" ></i>
         <div id = "summary_price_mobile" class = "summary_price_mobile"></div>
 
         <!-- <div class = "summary-mobile" id="mobile_summary">
@@ -50,11 +51,9 @@
             </p>
         </div>
         <div class="buttons mobile">
-            <button class= "btn delete" type="button" name="delete" onclick="deleteTicket()">Delete Ticket</button>
-            <!-- <a href="#"></a> -->
-            <button class= "btn update" type="button" name="delete" onclick="updateTicket()">Modify Ticket</button>
+            <button class= "btn delete" type="button" name="delete" >Delete Ticket</button>
+            <button class= "btn update" type="button" name="update" >Modify Ticket</button>
         </div>
-        <!-- <button type = "submit" class="btn continue-mobile no-continue" onclick="confirmBooking()">Continue</button> -->
 
     </div>
     <div class="column summary">
@@ -68,9 +67,9 @@
             <span class = "location arrivalLocation"></span>
         </div>
         <div class="buttons">
-            <button class= "btn delete" type="button" name="delete" onclick="deleteTicket()">Delete Ticket</button>
+            <button class= "btn delete" type="button" name="delete" >Delete Ticket</button>
             <!-- <a href="#"></a> -->
-            <button class= "btn update" type="button" name="delete" onclick="updateTicket()">Modify Ticket</button>
+            <button class= "btn update" type="button" name="update" >Modify Ticket</button>
         </div>
     </div>
     <div class="row">

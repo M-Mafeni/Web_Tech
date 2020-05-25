@@ -4,6 +4,9 @@ $(document).ready(start);
 
 function start() {
     $("div.ticket-card").click(selected);
+    $("#filter_btn").click(filterTicket);
+    $(".delete").click(deleteTicket);
+    $(".update").click(updateTicket);
     // $('#filter_form').click(filterTicket);
     // var now = new Date();
     //

@@ -7,6 +7,9 @@ function start(){
     $(window).resize(setLoginPos);
     $("#mobile-nav-bg").click(closeNav);
     $("#about_nav_link").click(closeNav);
+    $(".icon").click(makeBarResponsive);
+    $("#login_link").click(openForm);
+    $("#login_close").click(closeForm);
 
     // close the login form by clicking outside of it
     var modal = document.getElementById("loginForm");

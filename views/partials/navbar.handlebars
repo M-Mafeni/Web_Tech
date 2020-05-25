@@ -13,13 +13,13 @@
         <a href="/" class="brand-favicon"><img class="nav_favicon" src="/assets/favicon_white.png"></img></a>
     {{/if}}
 
-    <a class="icon" onclick="makeBarResponsive()"><i class="fa fa-bars"></i></a>
+    <a class="icon"><i class="fa fa-bars"></i></a>
     <div class="nav-wrapper" id = "mobile-nav">
         {{#if loggedin}}
             <a class="nav_links" href="/logout">Logout</a>
             <a class="nav_links" href="/account">My Account</a>
         {{else}}
-            <a class="nav_links" onclick="openForm()">Login/Register</a>
+            <a id = "login_link" class="nav_links">Login/Register</a>
         {{/if}}
         {{#if isAdmin}}
             <a class="nav_links" href="/admin">Add Tickets</a>
