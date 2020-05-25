@@ -2,10 +2,12 @@
 let express = require('express');
 let router = express.Router();
 const df = require('../format');
-const sqlite = require('sqlite3').verbose();
+// const sqlite = require('sqlite3').verbose();
 const xhtml = 'application/xhtml+xml';
 const bcrypt = require('bcrypt');
-let db = new sqlite.Database('./astra.db');
+// let db = new sqlite.Database('./astra.db');
+const database = require('../database');
+let db = database.db;
 
 router.get('/',function (req,res) {
     res.type(xhtml);

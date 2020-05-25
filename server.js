@@ -7,7 +7,7 @@ const bodyParser = require('body-parser');
 const session = require('express-session');
 const port = 8080;
 const secure_port = 3000;
-const sqlite = require('sqlite3').verbose();
+
 const bcrypt = require('bcrypt');
 const fs = require('fs');
 const http = require('http');
@@ -15,10 +15,14 @@ const https = require('https');
 const df = require('./format');
 const xhtml = 'application/xhtml+xml';
 const validator = require("email-validator");
-
+const account = require('./controllers/account.js');
+const admin = require('./controllers/admin.js');
+const database = require('./database');
 
 //connect to astra.db database
-let db = new sqlite.Database('./astra.db');
+// const sqlite = require('sqlite3').verbose();
+// let db = new sqlite.Database('./astra.db');
+let db = database.db;
 let OK = 200, NotFound = 404, BadType = 415, Error = 500;
 
 //set views(html layouts) to be your local views directory
@@ -70,7 +74,6 @@ app.get('/',function (req,res) {
     });
 });
 
-const account = require('./controllers/account.js');
 app.use('/account',account);
 
 //register page
@@ -88,7 +91,6 @@ app.get('/register',function (req,res) {
         res.redirect("/");
     }
 });
-
 
 app.get('/bookings',function (req,res) {
     /*only go to the bookings page if the user is logged in and they have
@@ -299,11 +301,7 @@ app.post('/registered',function(req,res){
         res.redirect('/');
     }
 });
-/*
-Add way to update and delete tickets
-make pages responsive
-*/
-const admin = require('./controllers/admin.js');
+
 app.use('/admin',admin);
 
 app.get('/logout',function (req,res) {
