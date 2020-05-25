@@ -48,26 +48,28 @@ router.post('/addticket',function(req,res){
 
             // console.log(o_date_time);
             // console.log(o_time);
-            let insertTicketSQL = db.prepare("INSERT INTO Ticket(origin_date,origin_id,destination_date,destination_id,price) VALUES (datetime(?),?,datetime(?),?,?)");
+            let insertTicketSQL = "INSERT INTO Ticket(origin_date,origin_id,destination_date,destination_id,price) VALUES (datetime(?),?,datetime(?),?,?)";
             let id_sql = "SELECT t1.id AS o_id, t2.id AS d_id FROM  Destination as t1 INNER JOIN Destination as t2 WHERE t1.name = ? AND t2.name = ?"
             //get destination IDs
             db.get(id_sql, [origin,destination],(err,ids)=>{
                 if(ids!== undefined){
                     let o_id = ids.o_id;
                     let d_id = ids.d_id;
-                    // console.log(o_id);
-                    // console.log(d_id);
-                    insertTicketSQL.run(o_date_time,o_id,d_date_time,d_id,price);
-                    req.session.prompt = 'Ticket added.';
-                    req.session.result = 'prompt-success';
+                    db.run(insertTicketSQL,[o_date_time,o_id,d_date_time,d_id,price],function(err){
+                        if(err){
+                            req.session.prompt = 'Invalid Price';
+                            req.session.result = 'prompt-fail';
+                        }else{
+                            req.session.prompt = 'Ticket added.';
+                            req.session.result = 'prompt-success';
+                        }
+                        res.redirect('/admin');
+                    });
                 }else{
-                    req.session.prompt = 'Destination not valid.';
+                    req.session.prompt = 'Destination not valid';
                     req.session.result = 'prompt-fail';
+                    res.redirect('/admin');
                 }
-                res.redirect('/admin');
-
-                console.log(ids);
-
             });
         }else{
             res.status(401).send('not an admin.');
