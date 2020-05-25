@@ -10,12 +10,8 @@
     <a class="icon" onclick="makeBarResponsive()"><i class="fa fa-bars"></i></a>
     <div class="nav-wrapper" id = "mobile-nav">
         {{#if loggedin}}
-            <a class="nav_links" href="/logout">
-                Logout
-            </a>
-            <a class="nav_links" href="/account">
-                My Account
-            </a>
+            <a class="nav_links" href="/logout">Logout</a>
+            <a class="nav_links" href="/account">My Account</a>
         {{else}}
             <a class="nav_links" onclick="openForm()">Login/Register</a>
         {{/if}}

@@ -15,7 +15,6 @@ body {
     background: #000000;
     color: white;
     font-size: 150%;
-    /* min-width: 355px; */
 }
 
 .nav-items {
@@ -28,7 +27,6 @@ body {
     overflow: hidden;
     transition: background 0.3s;
     font-size: 80%;
-    /* min-width: 355px; */
 }
 
 .nav_links {
@@ -38,8 +36,8 @@ body {
 .nav-items a {
     float: right;
     display: inline-block;
-    padding-right: 4%;
-    padding-left: 4%;
+    padding-right: 2%;
+    padding-left: 2%;
     text-align: center;
     font-size: 100%;
     color: white;
@@ -431,15 +429,6 @@ footer svg:hover path {
     fill: #2cbcad !important;
 }
 
-footer svg:hover {
-    /* animation: spin 2s; */
-}
-
-@keyframes spin {
-   0% {
-      transform: rotate(360deg);
-   }
-}
 
 @media only screen and (max-width: 1400px) {
     .booking_button {
@@ -528,6 +517,11 @@ footer svg:hover {
     .header {
         width: 100%;
     }
+
+    .nav-items a.brand-logo {
+        padding-left: 2%;
+        padding-right: 0;
+    }
 }
 
 @media only screen and (max-width: 700px) {
@@ -543,9 +537,7 @@ footer svg:hover {
     .dest input {
         width: 13em;
     }
-}
 
-@media only screen and (max-width: 550px) {
     .nav-items a.icon {
         float: right;
         display: block;
@@ -571,16 +563,24 @@ footer svg:hover {
 	}
 
     .nav-wrapper.responsive {
-        max-height: 15em;
+        max-height: 20em;
     }
 
 	.nav_links {
 		padding: 0.8em;
-		/* border-bottom: 1px solid #808080; */
 	}
 
+    .nav-items a.brand-logo {
+        display: none;
+    }
+
+    .nav-items a.brand-favicon {
+        display: block;
+    }
+}
+
+@media only screen and (max-width: 550px) {
     .advert_text {
-        /* font-size: 50px; */
         margin-bottom: 15%;
     }
 
@@ -624,14 +624,6 @@ footer svg:hover {
     .right_col, .left_col, .about_logo {
         margin-top: 10%;
         margin-bottom: 10%;
-    }
-
-    .nav-items a.brand-logo {
-        display: none;
-    }
-
-    .nav-items a.brand-favicon {
-        display: block;
     }
 
     .login-title {

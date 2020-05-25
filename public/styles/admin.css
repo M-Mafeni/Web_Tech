@@ -12,6 +12,11 @@
     /* display: inline-block; */
     /* max-width:1800px; */
 }
+
+.title-header {
+    margin-left: 4%;
+    margin-right: 4%:
+}
 .dest_btn{
     width: 100%;
 }
