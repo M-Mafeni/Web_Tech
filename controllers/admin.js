@@ -57,7 +57,7 @@ router.post('/addticket',function(req,res){
                     let d_id = ids.d_id;
                     db.run(insertTicketSQL,[o_date_time,o_id,d_date_time,d_id,price],function(err){
                         if(err){
-                            req.session.prompt = 'Invalid Price';
+                            req.session.prompt = 'Invalid Price/Invalid Dates';
                             req.session.result = 'prompt-fail';
                         }else{
                             req.session.prompt = 'Ticket added.';

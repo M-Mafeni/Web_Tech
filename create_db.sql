@@ -36,7 +36,8 @@ CREATE TABLE Ticket(
     origin_id INTEGER,
     destination_date TEXT,
     destination_id INTEGER,
-    price REAL CHECK(price>0), 
+    price REAL CHECK(price>0),
+    CHECK (origin_date < destination_date),
     -- using the name as a key instead would lead to better queries
     -- but I saw something online saying that should only be done if the strings never goning to change
     FOREIGN KEY(origin_id) REFERENCES Destination(id),
