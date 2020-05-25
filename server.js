@@ -595,8 +595,8 @@ app.get('/admin',function(req,res){
             db.all(sql,[],(err,destinations)=>{
                     let prompt = req.session.prompt;
                     let result = req.session.result;
-                    // req.session.prompt = null;
-                    // req.session.result = null;
+                    req.session.prompt = null;
+                    req.session.result = null;
                     res.render('main',{layout:'admin/add_tickets',loggedin:req.session.loggedin,isAdmin:req.session.isAdmin,isAdminPage:true,destinations:destinations,prompt:prompt,result:result});
             });
         }else{
@@ -667,7 +667,7 @@ app.post('/admin/destination',function(req,res){
             let sql = "INSERT INTO Destination(name) VALUES(?)";
             db.run(sql,[name],function(err){
                 if(!err){
-                    req.session.prompt = 'New Destination added';
+                    req.session.prompt = 'New destination added.';
                     req.session.result = 'prompt-success';
                 }else{
                     req.session.prompt = 'Destination already exists.';

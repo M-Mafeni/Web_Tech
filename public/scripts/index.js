@@ -1,22 +1,18 @@
 "use strict";
 
+var svgOnScreen = false;
+var animated_rocket = new Image();
+animated_rocket.src = "assets/sideways_rocket_animated.svg";
+
 $(document).ready(start);
 
-function start(){
-    $(window).scroll(change_bar);
-    $(window).resize(setLoginPos);
-    $("#mobile-nav-bg").click(closeNav);
-    $("#about_nav_link").click(closeNav);
+function start() {
+    $(window).scroll(playSVG);
+    setOutboundDate();
+}
 
-    var modal = document.getElementById("loginForm");
-
-    window.onclick = function(event) {
-      if (event.target == modal) {
-        modal.style.display = "none";
-      }
-
-    }
-
+// set outbound date picker to today
+function setOutboundDate() {
     var now = new Date();
 
     var day = ("0" + now.getDate()).slice(-2);
@@ -26,43 +22,18 @@ function start(){
     $('#outbound_date').val(today);
 }
 
-function change_bar() {
-    if($(window).scrollTop()>630){
-        $('#topnav').addClass('bar_colour');
+// restarts the animated rocket svg when it comes on-screen
+function playSVG() {
+    let svg = $("#animated_rocket");
+    let svgTop = svg.offset().top - $(window).scrollTop();
+    let svgBottom = svgTop + svg.height();
+
+    if (!svgOnScreen && ((svgTop < $(window).height() && svgTop > 0) || svgBottom > $(window).height() && svgBottom < 0)) {
+        $("#animated_rocket").attr('src', animated_rocket.src);
+        svgOnScreen = true;
     }
-    else if (!$("#mobile-nav").hasClass("responsive")) {
-        $('#topnav').removeClass('bar_colour');
+
+    else if ((svgTop >= $(window).height() || svgTop <= 0) && (svgBottom <= $(window).height() || svgBottom >= 0)) {
+        svgOnScreen = false;
     }
-}
-
-function openForm() {
-    document.getElementById("loginForm").style.display = "block";
-    setLoginPos();
-}
-
-function closeForm() {
-    document.getElementById("loginForm").style.display = "none";
-}
-
-function makeBarResponsive() {
-    if(!$("#mobile-nav").hasClass("responsive")) {
-        $("#mobile-nav").addClass("responsive");
-        $("#topnav").addClass("bar_colour");
-        $("#mobile-nav-bg").show();
-    }
-    else {
-        closeNav();
-    }
-}
-
-function setLoginPos() {
-    var height = $(window).height();
-    var loginHeight = $("#loginFormContent").height();
-    $("#loginForm").css("padding-top", (height-loginHeight)/2);
-}
-
-function closeNav() {
-    $("#mobile-nav").removeClass("responsive");
-    change_bar();
-    $("#mobile-nav-bg").hide();
 }
