@@ -8,6 +8,7 @@ const session = require('express-session');
 const port = 8080;
 const secure_port = 3000;
 const xhtml = 'application/xhtml+xml';
+const html = 'text/html';
 const utf8 = 'utf-8';
 
 const bcrypt = require('bcrypt');
@@ -65,8 +66,8 @@ const httpsServer = https.createServer({
 
 //for the main page return main.handlebars with its layout being the index page
 app.get('/',function (req,res) {
-    res.type(xhtml);
-    res.charset = utf8;
+    res = setResponseHeader(req, res);
+
     let sql = "SELECT name FROM Destination";
     db.all(sql,[],(err,destinations)=>{
             let prompt = req.session.prompt;
@@ -81,8 +82,8 @@ app.use('/account',account);
 
 //register page
 app.get('/register',function (req,res) {
-    res.type(xhtml);
-    res.charset = utf8;
+    res = setResponseHeader(req, res);
+
     if (!req.session.loggedin) {
         let prompt = req.session.prompt;
         let result = req.session.result;
@@ -100,8 +101,8 @@ app.get('/bookings',function (req,res) {
     /*only go to the bookings page if the user is logged in and they have
      entered a query i.e localhost:8080/bookings.html wouldn't work on its own
     */
-    res.type(xhtml);
-    res.charset = utf8;
+    res = setResponseHeader(req, res);
+
     if(req.session.loggedin){
         if(!isEmpty(req.query)){
             let origin = req.query.origin;
@@ -158,8 +159,8 @@ app.get('/bookings',function (req,res) {
 });
 
 app.post('/confirmation',function (req,res) {
-    res.type(xhtml);
-    res.charset = utf8;
+    res = setResponseHeader(req, res);
+
     if (req.session.loggedin) {
         let outbound = {id:req.body.out_id, price:req.body.out_price.substring(1), o_date:req.body.out_o_date, d_date:req.body.out_d_date,
                         origin_place:req.body.out_o_loc, destination_place:req.body.out_d_loc,
@@ -323,4 +324,12 @@ app.get('/logout',function (req,res) {
 
 function isEmpty(obj){
     return Object.keys(obj).length === 0;
+}
+
+function setResponseHeader(req, res) {
+    var newRes = res;
+    newRes.charset = utf8;
+    if (req.accepts(xhtml)) newRes.type(xhtml);
+    else newRes.type(html);
+    return newRes;
 }

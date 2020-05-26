@@ -121,6 +121,10 @@ h1 {
     margin-top: 2%;
 }
 
+#inbound {
+    margin-top: 5%;
+}
+
 
 .summary {
     width: 23%;
@@ -249,7 +253,7 @@ h1 {
     }
 
     .tickets{
-        width: 100%
+        width: 100%;
     }
 
     .continue-mobile{

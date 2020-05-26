@@ -10,8 +10,8 @@ const database = require('../database');
 let db = database.db;
 
 router.get('/',function(req,res){
-    res.type(xhtml);
-    res.charset = utf8;
+    res = setResponseHeader(req, res);
+
     if(req.session.loggedin){
         if(req.session.isAdmin){
             let sql = "SELECT name FROM Destination";
@@ -113,8 +113,8 @@ router.post('/destination',function(req,res){
     }
 });
 router.get('/tickets',function(req,res){
-    res.type(xhtml);
-    res.charset = utf8;
+    res = setResponseHeader(req, res);
+
     if(req.session.loggedin){
         if(req.session.isAdmin){
             //get all tickets
@@ -144,8 +144,8 @@ router.get('/tickets',function(req,res){
     }
 });
 router.get('/tickets/:id',function(req,res){
-    res.type(xhtml);
-    res.charset = utf8;
+    res = setResponseHeader(req, res);
+
     if(req.session.loggedin){
         if(req.session.isAdmin){
             let id = req.params.id;
@@ -228,3 +228,11 @@ router.delete('/tickets/:id',function(req,res){
 });
 
 module.exports = router;
+
+function setResponseHeader(req, res) {
+    var newRes = res;
+    newRes.charset = utf8;
+    if (req.accepts(xhtml)) newRes.type(xhtml);
+    else newRes.type(html);
+    return newRes;
+}
