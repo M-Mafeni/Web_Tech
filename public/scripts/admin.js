@@ -7,20 +7,12 @@ function start() {
     $("#filter_btn").click(filterTicket);
     $(".delete").click(deleteTicket);
     $(".update").click(updateTicket);
-    // $('#filter_form').click(filterTicket);
-    // var now = new Date();
-    //
-    // var day = ("0" + now.getDate()).slice(-2);
-    // var month = ("0" + (now.getMonth() + 1)).slice(-2);
-    //
-    // var today = now.getFullYear()+"-"+(month)+"-"+(day) ;
-    // $('#outbound_date').val(today);
+
 }
 
 function selected(){
     $(".ticket-selected").removeClass("ticket-selected");
     $(this).addClass("ticket-selected");
-    // $('div.summary').text('Entered');
     var source = $(this).find(".source");
     var departureDate = source.find(".date").text();
     var departureTime = source.find(".time").text();
@@ -103,7 +95,7 @@ function deleteTicket() {
         url: '/admin/tickets/'+id,
         type: "DELETE",
         success: function(result){
-            window.location.href = result;
+            window.location.href = '/admin/tickets/';
         },
         error:function(error){
             console.log(`Error ${error}`);
@@ -114,15 +106,4 @@ function deleteTicket() {
 function updateTicket(){
     var id = $(".ticket-selected").find('.ticket_id').text();
     window.location.href = '/admin/tickets/'+id;
-    // $.ajax({
-    //     url: '/admin/tickets/'+id,
-    //     type: "GET",
-    //     success: function(result){
-    //         // console.log(result);
-    //         window.location.href = '/admin/tickets/'+id;
-    //     },
-    //     error:function(error){
-    //         console.log(`Error ${error}`);
-    //     }
-    // })
 }

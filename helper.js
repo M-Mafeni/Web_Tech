@@ -1,5 +1,8 @@
 "use strict";
 //gets the letters you put after a day (th,nd,st)
+const html = 'text/html';
+const xhtml = 'application/xhtml+xml';
+const utf8 = 'utf-8';
 function getDay(day){
     if (day.endsWith("1") && day !== "11"){
         return day + "st";
@@ -55,6 +58,24 @@ function formatTime(time){
     return time.substring(0, time.length-3);
 }
 
+function formatTickets(tickets){
+    tickets.forEach((ticket, i) => {
+        ticket.o_date = formatDate(ticket.o_date);
+        ticket.d_date = formatDate(ticket.d_date);
+        ticket.o_time = formatTime(ticket.o_time);
+        ticket.d_time = formatTime(ticket.d_time);
+    });
+    return tickets;
+}
+
+function setResponseHeader(req, res) {
+    var newRes = res;
+    newRes.charset = utf8;
+    if (req.accepts(xhtml)) newRes.type(xhtml);
+    else newRes.type(html);
+    return newRes;
+}
 module.exports.formatDate = formatDate;
 module.exports.formatTime = formatTime;
-// formatDate("2020-03-20");
+module.exports.formatTickets = formatTickets;
+module.exports.setResponseHeader = setResponseHeader;

@@ -1,16 +1,17 @@
 "use strict";
 let express = require('express');
 let router = express.Router();
-const df = require('../format');
+const df = require('../helper');
 // const sqlite = require('sqlite3').verbose();
 const xhtml = 'application/xhtml+xml';
 const utf8 = 'utf-8';
 // let db = new sqlite.Database('./astra.db');
 const database = require('../database');
 let db = database.db;
+let OK = 200, UNAUTHORISED = 401;
 
 router.get('/',function(req,res){
-    res = setResponseHeader(req, res);
+    res = df.setResponseHeader(req, res);
 
     if(req.session.loggedin){
         if(req.session.isAdmin){
@@ -23,10 +24,7 @@ router.get('/',function(req,res){
                     res.render('main',{layout:'admin/add_tickets',loggedin:req.session.loggedin,isAdmin:req.session.isAdmin,isAdminPage:true,destinations:destinations,prompt:prompt,result:result});
             });
         }else{
-            res.status(401).send('not an admin.');
-            // req.session.prompt = 'You are not an Admin.';
-            // req.session.result = 'prompt-fail';
-            // res.redirect('/');
+            res.status(UNAUTHORISED).send('Access Denied');
         }
     }else{
         req.session.prompt = 'You are not logged in.';
@@ -74,10 +72,7 @@ router.post('/addticket',function(req,res){
                 }
             });
         }else{
-            res.status(401).send('not an admin.');
-            // req.session.prompt = 'You are not an Admin.';
-            // req.session.result = 'prompt-fail';
-            // res.redirect('/');
+            res.status(UNAUTHORISED).send('Access Denied');
         }
     }else{
         req.session.prompt = 'You are not logged in.';
@@ -101,10 +96,7 @@ router.post('/destination',function(req,res){
                 res.redirect('/admin');
             });
         }else{
-            res.status(401).send('not an admin.');
-            // req.session.prompt = 'You are not an Admin.';
-            // req.session.result = 'prompt-fail';
-            // res.redirect('/');
+            res.status(UNAUTHORISED).send('Access Denied');
         }
     }else{
         req.session.prompt = 'You are not logged in.';
@@ -113,7 +105,7 @@ router.post('/destination',function(req,res){
     }
 });
 router.get('/tickets',function(req,res){
-    res = setResponseHeader(req, res);
+    res = df.setResponseHeader(req, res);
 
     if(req.session.loggedin){
         if(req.session.isAdmin){
@@ -123,19 +115,11 @@ router.get('/tickets',function(req,res){
             +   "date(destination_date) AS d_date,time(destination_date) as d_time,(SELECT name FROM Destination Where Destination.id = Ticket.destination_id) AS destination_place,price "
             +   "FROM Ticket ORDER BY origin_date DESC";
             db.all(sql,[],(err,tickets)=>{
-                tickets.forEach((ticket, i) => {
-                    ticket.o_date = df.formatDate(ticket.o_date);
-                    ticket.d_date = df.formatDate(ticket.d_date);
-                    ticket.o_time = df.formatTime(ticket.o_time);
-                    ticket.d_time = df.formatTime(ticket.d_time);
-                });
+                tickets = df.formatTickets(tickets);
                 res.render('main',{layout:'admin/edit_tickets',loggedin:req.session.loggedin,isAdmin:req.session.isAdmin,isAdminPage:true,tickets:tickets});
             });
         }else{
-            res.status(401).send('not an admin.');
-            // req.session.prompt = 'You are not an Admin.';
-            // req.session.result = 'prompt-fail';
-            // res.redirect('/');
+            res.status(UNAUTHORISED).send('Access Denied');
         }
     }else{
         req.session.prompt = 'You are not logged in.';
@@ -144,7 +128,7 @@ router.get('/tickets',function(req,res){
     }
 });
 router.get('/tickets/:id',function(req,res){
-    res = setResponseHeader(req, res);
+    res = df.setResponseHeader(req, res);
 
     if(req.session.loggedin){
         if(req.session.isAdmin){
@@ -156,11 +140,11 @@ router.get('/tickets/:id',function(req,res){
                 if(!err){
                     res.render('main',{layout:'admin/update_ticket',loggedin:req.session.loggedin,isAdmin:req.session.isAdmin,isAdminPage:true,ticket:ticket});
                 }else{
-                    console.log(err);
+                    throw err;
                 }
             });
         }else{
-            res.status(401).send('not an admin.');
+            res.status(UNAUTHORISED).send('Access Denied');
         }
     }else{
         req.session.prompt = 'You are not logged in.';
@@ -205,7 +189,7 @@ router.post('/tickets/:id',function(req,res){
         });
         // db.get(sql,[])
     }else{
-        res.status(401).send('You are not an Admin.');
+        res.status(UNAUTHORISED).send('Access Denied');
     }
 });
 router.delete('/tickets/:id',function(req,res){
@@ -214,25 +198,17 @@ router.delete('/tickets/:id',function(req,res){
         let sql = "DELETE FROM Ticket WHERE id = ?";
         db.run(sql ,[id],function(err){
             if(!err){
-                res.status(200);
+                res.status(OK);
                 //sending url redirection happens on client side
-                res.send('/admin/tickets');
+                res.send('Ticket Deleted');
             }else{
                 res.status(400);
                 res.send(err);
             }
         });
     }else{
-        res.status(401).send('You are not an Admin.');
+        res.status(UNAUTHORISED).send('Access Denied');
     }
 });
 
 module.exports = router;
-
-function setResponseHeader(req, res) {
-    var newRes = res;
-    newRes.charset = utf8;
-    if (req.accepts(xhtml)) newRes.type(xhtml);
-    else newRes.type(html);
-    return newRes;
-}

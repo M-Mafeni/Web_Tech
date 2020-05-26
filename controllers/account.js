@@ -1,17 +1,15 @@
 "use strict";
 let express = require('express');
 let router = express.Router();
-const df = require('../format');
-// const sqlite = require('sqlite3').verbose();
+const df = require('../helper');
 const xhtml = 'application/xhtml+xml';
 const utf8 = 'utf-8';
 const bcrypt = require('bcrypt');
-// let db = new sqlite.Database('./astra.db');
 const database = require('../database');
 let db = database.db;
 
 router.get('/',function (req,res) {
-    res = setResponseHeader(req, res);
+    res = df.setResponseHeader(req, res);
 
     if (req.session.loggedin) {
         let userSQL = "SELECT * FROM User WHERE email = ?";
@@ -46,13 +44,12 @@ router.get('/',function (req,res) {
         req.session.prompt = 'You are not logged in.';
         req.session.result = 'prompt-fail';
         res.redirect('/');
-        // res.render('main',{layout:'index',loggedin:req.session.loggedin,prompt:'You are not logged in.',result:'prompt-fail'});
     }
 
 });
 
 router.get('/edit',function (req,res) {
-    res = setResponseHeader(req, res);
+    res = df.setResponseHeader(req, res);
 
     if (req.session.loggedin) {
         let sql = "SELECT * FROM User WHERE email = ?";
@@ -126,7 +123,7 @@ router.post('/edit',function (req,res) {
 });
 
 router.get('/password', function (req,res) {
-    res = setResponseHeader(req, res);
+    res = df.setResponseHeader(req, res);
 
     if (req.session.loggedin) {
         let prompt = req.session.prompt;
@@ -185,7 +182,7 @@ router.post('/password', function (req,res) {
 });
 
 router.get('/delete',function (req,res) {
-    res = setResponseHeader(req, res);
+    res = df.setResponseHeader(req, res);
 
     if (req.session.loggedin) {
         let prompt = req.session.prompt;
@@ -237,7 +234,7 @@ router.post('/delete',function (req,res) {
 });
 
 router.get('/refund/:id', function (req,res) {
-    res = setResponseHeader(req, res);
+    res = df.setResponseHeader(req, res);
 
     if (req.session.loggedin) {
         let sql = "SELECT id, date(origin_date) AS o_date,time(origin_date) as o_time,(SELECT name FROM Destination Where Destination.id = Ticket.origin_id) AS origin_place,"
@@ -288,11 +285,3 @@ router.post('/refund/:id',function (req,res) {
 });
 
 module.exports = router;
-
-function setResponseHeader(req, res) {
-    var newRes = res;
-    newRes.charset = utf8;
-    if (req.accepts(xhtml)) newRes.type(xhtml);
-    else newRes.type(html);
-    return newRes;
-}

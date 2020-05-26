@@ -15,7 +15,7 @@ const bcrypt = require('bcrypt');
 const fs = require('fs');
 const http = require('http');
 const https = require('https');
-const df = require('./format');
+const df = require('./helper');
 const validator = require("email-validator");
 const account = require('./controllers/account.js');
 const admin = require('./controllers/admin.js');
@@ -62,11 +62,10 @@ const httpsServer = https.createServer({
     cert: fs.readFileSync('server.cert')
 },app)
 .listen(secure_port,() => console.log(`listening on port ${secure_port}! \n Go to https://localhost:3000`));
-// app.listen(port, () => console.log(`listening on port ${port}!`));
 
 //for the main page return main.handlebars with its layout being the index page
 app.get('/',function (req,res) {
-    res = setResponseHeader(req, res);
+    res = df.setResponseHeader(req, res);
 
     let sql = "SELECT name FROM Destination";
     db.all(sql,[],(err,destinations)=>{
@@ -82,7 +81,7 @@ app.use('/account',account);
 
 //register page
 app.get('/register',function (req,res) {
-    res = setResponseHeader(req, res);
+    res = df.setResponseHeader(req, res);
 
     if (!req.session.loggedin) {
         let prompt = req.session.prompt;
@@ -101,7 +100,7 @@ app.get('/bookings',function (req,res) {
     /*only go to the bookings page if the user is logged in and they have
      entered a query i.e localhost:8080/bookings.html wouldn't work on its own
     */
-    res = setResponseHeader(req, res);
+    res = df.setResponseHeader(req, res);
 
     if(req.session.loggedin){
         if(!isEmpty(req.query)){
@@ -119,22 +118,12 @@ app.get('/bookings',function (req,res) {
                 if(err){
                     throw err;
                 }
-                o_tickets.forEach((ticket, i) => {
-                    ticket.o_date = df.formatDate(ticket.o_date);
-                    ticket.d_date = df.formatDate(ticket.d_date);
-                    ticket.o_time = df.formatTime(ticket.o_time);
-                    ticket.d_time = df.formatTime(ticket.d_time);
-                });
+                o_tickets = df.formatTickets(o_tickets);
                 db.all(sql,[destination,origin,d_date], (err,d_tickets) => {
                     if(err){
                         throw err;
                     }
-                    d_tickets.forEach((ticket, i) => {
-                        ticket.o_date = df.formatDate(ticket.o_date);
-                        ticket.d_date = df.formatDate(ticket.d_date);
-                        ticket.o_time = df.formatTime(ticket.o_time);
-                        ticket.d_time = df.formatTime(ticket.d_time);
-                    });
+                    d_tickets = df.formatTickets(d_tickets);
                     //add tickets attribute to main (used for templating in bookings page)
                     res.render('main',{layout:'bookings',
                                o_tickets: o_tickets,
@@ -159,7 +148,7 @@ app.get('/bookings',function (req,res) {
 });
 
 app.post('/confirmation',function (req,res) {
-    res = setResponseHeader(req, res);
+    res = df.setResponseHeader(req, res);
 
     if (req.session.loggedin) {
         let outbound = {id:req.body.out_id, price:req.body.out_price.substring(1), o_date:req.body.out_o_date, d_date:req.body.out_d_date,
@@ -169,16 +158,12 @@ app.post('/confirmation',function (req,res) {
                         origin_place:req.body.in_o_loc, destination_place:req.body.in_d_loc,
                         o_time:req.body.in_o_time, d_time:req.body.in_d_time};
         let finalTickets = {outbound, inbound};
-        console.log("confirmation page");
-        console.log(req.body.out_id);
-        console.log(req.body.in_id);
         res.render('main',{layout:'confirmation',loggedin:req.session.loggedin, final_tickets:finalTickets});
     }
     else {
         req.session.prompt= 'You are not logged in.';
         req.session.result = 'prompt-fail';
         res.redirect('/');
-        // res.render('main',{layout:'index',loggedin:req.session.loggedin,prompt:'You are not logged in.',result:'prompt-fail'});
     }
 });
 
@@ -194,7 +179,6 @@ app.post('/confirmed', function(req,res) {
             req.session.result = 'prompt-success';
             res.redirect('/');
         });
-        // res.render('main',{layout:'index',loggedin:req.session.loggedin,prompt:'Ticket purchased.',result:'prompt-success'});
     }
     else {
         req.session.prompt = 'You are not logged in.';
@@ -214,7 +198,6 @@ app.post('/login',function(req,res){
             req.session.prompt = 'Email unregistered.';
             req.session.result = 'prompt-fail';
             res.redirect('/');
-            // res.render('main',{layout:'index',loggedin:req.session.loggedin,prompt:'Email unregistered.',result:'prompt-fail'});
         }
         else{
             //password is hashed using bcrypt so hashes need to be compared
@@ -225,16 +208,14 @@ app.post('/login',function(req,res){
                     req.session.loggedin = true;
                     req.session.username = email;
                     req.session.isAdmin = user.isAdmin;
+                    // setup prompt and render page
                     req.session.prompt = 'Logged in successfully.';
                     req.session.result = 'prompt-success';
 
-                    // setup prompt and render page
-                    // res.render('main',{layout:'index',loggedin:req.session.loggedin,prompt:'Logged in successfully.',result:'prompt-success'});
                     res.redirect('/');
                 }
                 else{
                     // setup prompt and render page
-                    // res.render('main',{layout:'index',loggedin:req.session.loggedin,prompt:'Password incorrect.',result:'prompt-fail'});
                     req.session.prompt = 'Password incorrect.';
                     req.session.result = 'prompt-fail';
                     res.redirect('/');
@@ -249,8 +230,7 @@ app.post('/registered',function(req,res){
     // 2. check that email not already registered
     // 3. check if passwords match
 
-    let sql = "SELECT * FROM User WHERE email = ?";
-    let insertSQL = db.prepare("INSERT INTO User(email,password,first_name,last_name,Address) VALUES (?,?,?,?,?);");
+    let insertSQL = "INSERT INTO User(email,password,first_name,last_name,Address) VALUES (?,?,?,?,?)";
     let email = req.body.email;
     let password = req.body.psw;
     let confirmPassword = req.body.confirm_psw;
@@ -260,39 +240,28 @@ app.post('/registered',function(req,res){
 
     if (!req.session.loggedin) {
         if (validator.validate(email)) {
-            db.get(sql,[email],(err,user) => {
-                if(user == undefined) {
-                    if (password == confirmPassword) {
-                        bcrypt.hash(password, 10, function(err, hash) {
-                            insertSQL.run(email,hash,first_name,last_name,address);
-                            // console.log("user " + email + " registered with password " + hash);
-
-                            // log the new user in
+            if(password === confirmPassword){
+                bcrypt.hash(password, 10, function(err, hash) {
+                    db.run(insertSQL,[email,hash,first_name,last_name,address],function (err){
+                        if(err){
+                            req.session.prompt = 'Email already registered.';
+                            req.session.result = 'prompt-fail';
+                            res.redirect('/register');
+                        }else{
                             req.session.loggedin = true;
                             req.session.username = email;
                             req.session.prompt = 'Registered and logged in successfully.';
                             req.session.result = 'prompt-success';
-                            // setup prompt and render page
-                            // res.render('main',{layout:'index',loggedin:req.session.loggedin,prompt:'Registered and logged in successfully.',result:'prompt-success'});
                             res.redirect('/');
-                        });
-                    }
-                    else {
-                        // setup prompt and render page
-                        req.session.prompt = 'Passwords do not match.';
-                        req.session.result = 'prompt-fail';
-                        // res.render('main',{layout:'register',prompt:'Passwords do not match.',result:'prompt-fail'})
-                        res.redirect('/register');
-                    }
-                }
-                else {
-                    // setup prompt and render page
-                    req.session.prompt = 'Email already registered.';
-                    req.session.result = 'prompt-fail';
-                    res.redirect('/register');
-                    // res.render('main',{layout:'register',prompt:'Email already registered.',result:'prompt-fail'})
-                }
-            });
+                        }
+                    });
+                });
+            }else{
+                req.session.prompt = 'Passwords do not match.';
+                req.session.result = 'prompt-fail';
+                // res.render('main',{layout:'register',prompt:'Passwords do not match.',result:'prompt-fail'})
+                res.redirect('/register');
+            }
         }
         else {
             req.session.prompt = 'Email not valid.';
@@ -316,23 +285,10 @@ app.get('/logout',function (req,res) {
         // setup prompt and render page
         req.session.prompt = 'Logged out successfully.';
         req.session.result='prompt-success';
-        // res.redirect('/');
-        // res.render('main',{layout:'index',loggedin:req.session.loggedin,prompt:'Logged out successfully.',result:'prompt-success'});
     }
     res.redirect('/');
 });
 
 function isEmpty(obj){
     return Object.keys(obj).length === 0;
-}
-
-function setResponseHeader(req, res) {
-    var newRes = res;
-    newRes.charset = utf8;
-
-    // content negotiation
-    if (req.accepts(xhtml)) newRes.type(xhtml);
-    else newRes.type(html);
-
-    return newRes;
 }
