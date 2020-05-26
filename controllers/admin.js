@@ -210,5 +210,49 @@ router.delete('/tickets/:id',function(req,res){
         res.status(UNAUTHORISED).send('Access Denied');
     }
 });
+router.get('/add_admins',function(req,res){
+    res = df.setResponseHeader(req, res);
+    if(req.session.loggedin){
+        if(req.session.isAdmin){
+            //get all users who aren't admins
+            let sql = "SELECT * FROM User WHERE isAdmin = 0";
+            db.all(sql,[],function (err,users) {
+                users.forEach((user, i) => {
+                    user.full_name = user.first_name + ' ' + user.last_name;
+                });
+                let prompt = req.session.prompt;
+                let result = req.session.result;
+                req.session.prompt = null;
+                req.session.result = null;
+                res.render('main',{layout:'admin/add_admins',loggedin:req.session.loggedin,users:users,prompt:prompt,result:result,isAdmin:req.session.isAdmin});
+            });
+        }else{
+            res.status(UNAUTHORISED).send('Access Denied');
+        }
+    }else{
+        req.session.prompt = 'You are not logged in.';
+        req.session.result = 'prompt-fail';
+        res.redirect('/');
+    }
 
+
+});
+router.post('/add_admins',function(req,res){
+    if(req.session.loggedin && req.session.isAdmin ){
+        let id = req.body.id;
+        let sql = "UPDATE User SET isAdmin = 1 WHERE id = ?";
+        db.run(sql,[id],function (err) {
+            if(err){
+                res.status(400).send(err);
+            }else{
+                req.session.prompt = 'New Admin added.';
+                req.session.result = 'prompt-success';
+                res.redirect('/admin/add_admins');
+            }
+        });
+    }else{
+        res.status(UNAUTHORISED).send('Access Denied');
+    }
+
+});
 module.exports = router;

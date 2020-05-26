@@ -12,6 +12,9 @@
     /* display: inline-block; */
     /* max-width:1800px; */
 }
+.list{
+    display: block;
+}
 
 .title-header {
     margin-left: 4%;
