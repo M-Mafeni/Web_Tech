@@ -329,7 +329,10 @@ function isEmpty(obj){
 function setResponseHeader(req, res) {
     var newRes = res;
     newRes.charset = utf8;
+
+    // content negotiation
     if (req.accepts(xhtml)) newRes.type(xhtml);
     else newRes.type(html);
+    
     return newRes;
 }

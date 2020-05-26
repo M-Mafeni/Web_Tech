@@ -79,7 +79,8 @@
             We have used the express-session add-on to save the user's session so that they remain logged in when they next visit our website. Sessions also keep track of whether the user is an administrator or not.
             Our server uses Express' routers when handling sub-pages of the Account and Admin sections of our website. The server (server.js) delegates requests to these sections to account.js and admin.js respectively, which then process these requests.
             We have also made the server handle case-sensitive URLs. Our server also does URL validation in a separate file called get.js.
-            For each request made to the server, we are specifying the response's content-type as XHTML and the character set as UTF-8 before delivering the page.
+            For each request made to the server, we are specifying the character set as UTF-8 before delivering the page. 
+            Our server also specifies the content-type using content negotiation. The content-type is set to XHTMl if the browser understands it, and to HTML otherwise.
 
         <h1>Database - A</h1>
             For our website we created an SQLite database, embedded in astra.db. The database has the following tables:
