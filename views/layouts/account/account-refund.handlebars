@@ -20,7 +20,7 @@
 
             {{> tickets heading="Refund Your Ticket" ticketData = refund_ticket}}
 
-            Are you sure you want to refund this ticket?
+            <p>Are you sure you want to refund this ticket?</p>
 
         {{#each refund_ticket}}
             <form action="/account/refund/{{id}}" id = "refund" method="post" />

@@ -112,6 +112,9 @@ body {
     background: var(--main-bg-colour);
 }
 
+.login-form-container h1 {
+}
+
 .login-btns {
     margin-top: 25px;
     text-align: center;

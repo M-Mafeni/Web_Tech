@@ -41,10 +41,14 @@
         All of our styling was done using stylesheets and we made sure to make our design consistent throughout.
         We made our own stylesheets and also made use of a stylesheet from <a href="https://materializecss.com/getting-started.html">materialize</a>.
         We used various SVG icons from <a href="https://fontawesome.com/v4.7.0/">fontawesome.com</a>, especially in the tickets.
+        For the fonts, we used two Google Fonts, <a href="https://fonts.google.com/specimen/Righteous">Righteous</a> for the logo and some headers,
+        and <a href="https://fonts.google.com/specimen/Rubik">Rubik</a> as the main font.
         Media Queries were used to make the web pages responsive and using the tools offered by our browser, our website renders well on most mobile devices.
         We also added simple animation using transitions to several elements such as the mobile navigation bar and the booking summary.
+        We used vendor prefixes for these transitions to ensure that they function cross-browser.
 
         <h1>Javascript - A</h1>
+        We used strict Javascript on both the client and server side.
         JQuery was used to help produce client-side scripts.
         Javascript was used to trigger our animations as well as change the styling and content of an HTML block when necessary.
         Ajax was used to make client-side http requests to the server.
@@ -59,12 +63,12 @@
         Another <a href="public/assets/landscape_blur.png">terrain image</a> was created but not used. This was created by changing the colours of the grass and sky of this<a href="https://unsplash.com/photos/-SO3JtE3gZo">landscape</a> to blue and purple respectively.
         A <a href="public/assets/space_probe.jpeg">satelite</a> (Source: <a href="https://africangeospace.com/">africangeospace</a>) was then cropped out, blurred, scaled and pasted onto another layer to form the image.
         <h1>SVG - A</h1>
-            We utilised an SVG rocket image from <a href="https://iconmonstr.com/rocket-19-svg/">iconmonstr.com</a> which we used as Astra's icon (<a href="public/assets/favicon_black.png">This is a PNG version</a>).
-            We used Inkscape to combine this rocket with the Google Font Righteous to create the <a href="public/assets/logo_black_embedded.svg">logo</a>.
+            We utilised an SVG rocket image from <a href="https://iconmonstr.com/rocket-19-svg/">iconmonstr.com</a> which we used as Astra's icon (favicon_black.png).
+            We used Inkscape to combine this rocket with the Google Font Righteous to create the logo (logo_white_embedded.svg).
             To do this we edited the rocket's path using Inkscape's path-editing tool to wrap its trail around the text.
             We decided to embed the font inside the SVG file so that it can be used as a standalone image.
-            We also used this tool to create a horizontal rocket with a straight trail used in the tickets.
-            Furthermore, we animated this horizontal rocket, making it fly from left to right. The rocket body
+            We also used this tool to create a horizontal rocket with a straight trail used in the tickets (sideways_rocket.svg).
+            Furthermore, we animated this horizontal rocket, making it fly from left to right (sideways_rocket_animated.svg). The rocket body
             was animated using a translation transformation, whereas the trail was animated using by shifting
             nodes in the path. To make animating easier, we edited the trail's path to remove bezier curves that
             were present as they were not necessary for the horizontal trail.

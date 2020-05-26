@@ -4,6 +4,8 @@ body {
     margin-left: 4%;
     margin-right: 4%;
     margin-top: 8%;
+    margin-bottom: 5%;
+    /* margin-top: 100px; */
     min-height: 0;
 }
 
@@ -40,6 +42,7 @@ select {
 @media only screen and (max-width: 850px) {
     body {
         margin-top: 12%;
+        margin-bottom: 8%;
     }
 }
 
