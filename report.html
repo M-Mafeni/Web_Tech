@@ -9,8 +9,8 @@
         <ul>
             <li>Origin Base = USA</li>
             <li>Destination Base = Mars Colony One</li>
-            <li>Leaving Date = 22nd March 2020</li>
-            <li>Return Date = 26th March 2020</li>
+            <li>Leaving Date = 22nd June 2020</li>
+            <li>Return Date = 26th June 2020</li>
         </ul>
         Below are what we feel are the estimates for our grades:
         <ul>
@@ -56,7 +56,7 @@
         <h1>PNG - A</h1>
         GIMP was used to produce images. The space image was gotten from <a href="https://wallpaperaccess.com/stars">wallpaperaccess.com</a> while the rocket pictures (<a href="public/assets/spaceX_ship.png">1</a> and <a href="public/assets/spaceX_ship_moon.png">2</a>) were downloaded from the SpaceX website.
         The <a href="public/assets/mars.png">Martian landscape</a> used in the About Us section was made using GIMP and a combination of tools. A picture of a <a href="https://unsplash.com/photos/pZ-XFIrJMtE">desert</a> served as the basis.
-        First the sky was removed and replaced with a <a href="public/assets/cloudless_sky.jpg">cloudless sky</a>(source: <a href="https://jooinn.com/">jooinn.command</a>) whose colour was changed by adding a layer of brown onto it.
+        First the sky was removed and replaced with a <a href="public/assets/cloudless_sky.jpg">cloudless sky</a> (source: <a href="https://jooinn.com/">jooinn.com</a>) whose colour was changed by adding a layer of brown onto it.
         The <a href="public/assets/rover.jpg">mars rover</a> (source: <a href="https://mars.nasa.gov/msl/home/">NASA</a>) was cut, placed in another layer and scaled down.
         Finally the erase and paintbrush tools were used to smoothen rough edges.
 
@@ -74,19 +74,21 @@
             were present as they were not necessary for the horizontal trail.
 
         <h1>Server - A</h1>
-            We used the ExpressJS framework, with several add-ons for our server. We are utilising two ports, port 3000 for HTTPS requests and port 8080 for HTTP requests. All HTTP requests are redirected to the equivalent HTTPS request.
-            For the HTTPS port, we are using a self-signed certificate (server.cert and server.key).
+            We used the ExpressJS framework, with several add-ons for our server. We are utilising two ports: port 3000 for HTTPS requests and port 8080 for HTTP requests.
+            All HTTP requests are redirected to the equivalent HTTPS request.
+            For the HTTPS server, we are using a self-signed certificate (server.cert and server.key).
             We have used the express-session add-on to save the user's session so that they remain logged in when they next visit our website. Sessions also keep track of whether the user is an administrator or not.
             Our server uses Express' routers when handling sub-pages of the Account and Admin sections of our website. The server (server.js) delegates requests to these sections to account.js and admin.js respectively, which then process these requests.
-            We have also made the server handle case-sensitive URLs. Our server also does URL validation in a separate file called get.js.
-            For each request made to the server, we are specifying the character set as UTF-8 before delivering the page. 
+            We have also made the server handle case-sensitive URLs.
+            URL Validation was done and tested in a separate file called get.js.
+            For each request made to the server, we are specifying the character set as UTF-8 before delivering the page.
             Our server also specifies the content-type using content negotiation. The content-type is set to XHTMl if the browser understands it, and to HTML otherwise.
 
         <h1>Database - A</h1>
             For our website we created an SQLite database, embedded in astra.db. The database has the following tables:
             <ol>
-                <li>User: Stores the details of every user. Passwords are stored using bcrypt</li>
-                <li>Ticket: Stores the details of every ticket</li>
+                <li>User: Stores the details of every user. Passwords are encrypted using bcrypt</li>
+                <li>Ticket: Stores the details of every ticket </li>
                 <li>User_Ticket: Stores every User-Ticket pair that exists, that is when a user has a particular ticket</li>
                 <li>Destination: Stores every possible destination a ticket can have</li>
             </ol>

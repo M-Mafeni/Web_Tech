@@ -11,8 +11,7 @@ CREATE TABLE User(
     -- (1 = true, 0 = false)
     isAdmin Integer
 );
---passwords stored unencrypted as a test
---will change later
+
 INSERT INTO User(email,password,first_name,last_name,Address,isAdmin) VALUES
     ("JohnS@hotmail.co.uk","$2b$10$bk/1afHVab43.J941yYsjeovFhGQBcf6O5.dhaCxGVTO1jD1ELFua","John","Smith","33 Cross Drive, London, W5D14",1),
     ("AshleyA@gmail.com","$2b$10$JqGO/7vannEgyeMQL3eJXucXHrWtow8EusU8KP4rUnYjKonbCG1FO","Ashley","Axel","11 Grimms Way, Leeds, LS11ED",0),
@@ -46,11 +45,40 @@ CREATE TABLE Ticket(
 
 INSERT INTO Ticket(origin_date,origin_id,destination_date,destination_id,price)
 VALUES
-(datetime("2020-03-22 19:30:00"),1,datetime("2020-03-23 08:00:00"),4,400),
-(datetime("2020-04-11 10:00:00"),2,datetime("2020-04-24 01:00:00"),3,250),
-(datetime("2020-03-23 12:30:00"),3,datetime("2020-03-24 18:00:00"),5,200),
-(datetime("2020-03-22 19:30:00"),4,datetime("2020-03-23 08:00:00"),2,350),
-(datetime("2020-03-26 11:30:00"),4,datetime("2020-03-27 08:00:00"),1,350);
+(datetime("2020-06-22 19:30:00"),1,datetime("2020-06-23 08:00:00"),4,800),
+(datetime("2020-06-22 10:30:00"),1,datetime("2020-06-23 23:00:00"),4,500),
+(datetime("2020-06-22 22:30:00"),1,datetime("2020-06-23 11:00:00"),4,800),
+
+(datetime("2020-06-26 11:30:00"),4,datetime("2020-06-27 08:00:00"),1,700),
+(datetime("2020-06-26 14:00:00"),4,datetime("2020-06-27 10:30:00"),1,700),
+(datetime("2020-06-26 18:30:00"),4,datetime("2020-06-27 14:30:00"),1,700),
+
+(datetime("2020-07-11 10:00:00"),2,datetime("2020-07-12 01:00:00"),3,500),
+(datetime("2020-07-11 07:00:00"),2,datetime("2020-07-11 22:00:00"),3,650),
+(datetime("2020-07-11 17:00:00"),2,datetime("2020-07-12 08:00:00"),3,750),
+
+(datetime("2020-07-19 17:00:00"),3,datetime("2020-07-20 08:00:00"),2,750),
+(datetime("2020-07-19 12:30:00"),3,datetime("2020-07-20 03:00:00"),2,500),
+(datetime("2020-07-19 20:00:00"),3,datetime("2020-07-20 11:00:00"),2,750),
+
+(datetime("2020-06-23 12:30:00"),3,datetime("2020-06-24 18:00:00"),5,600),
+(datetime("2020-06-23 08:15:00"),3,datetime("2020-06-24 13:45:00"),5,550),
+(datetime("2020-06-23 22:30:00"),3,datetime("2020-06-26 04:00:00"),5,700),
+
+(datetime("2020-07-01 09:00:00"),5,datetime("2020-07-02 09:00:00"),3,400),
+(datetime("2020-07-01 14:00:00"),5,datetime("2020-07-02 14:00:00"),3,500),
+(datetime("2020-07-01 18:00:00"),5,datetime("2020-07-02 18:00:00"),3,550),
+
+(datetime("2020-06-22 19:30:00"),4,datetime("2020-06-23 08:00:00"),2,550),
+(datetime("2020-06-22 10:30:00"),4,datetime("2020-06-22 23:00:00"),2,600),
+(datetime("2020-06-22 06:15:00"),4,datetime("2020-06-22 18:45:00"),2,850),
+
+(datetime("2020-06-29 19:30:00"),2,datetime("2020-06-30 08:00:00"),4,700),
+(datetime("2020-06-29 10:30:00"),2,datetime("2020-06-30 23:00:00"),4,500),
+(datetime("2020-06-29 06:15:00"),2,datetime("2020-06-30 18:45:00"),4,900);
+
+
+
 
 
 DROP TABLE IF EXISTS User_Ticket;
