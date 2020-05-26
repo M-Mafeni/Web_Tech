@@ -4,6 +4,7 @@ let router = express.Router();
 const df = require('../format');
 // const sqlite = require('sqlite3').verbose();
 const xhtml = 'application/xhtml+xml';
+const utf8 = 'utf-8';
 const bcrypt = require('bcrypt');
 // let db = new sqlite.Database('./astra.db');
 const database = require('../database');
@@ -11,6 +12,7 @@ let db = database.db;
 
 router.get('/',function (req,res) {
     res.type(xhtml);
+    res.charset = utf8;
     if (req.session.loggedin) {
         let userSQL = "SELECT * FROM User WHERE email = ?";
         let ticketSQL = "SELECT id, date(origin_date) AS o_date,time(origin_date) AS o_time,(SELECT name FROM Destination Where Destination.id = Ticket.origin_id) AS origin_place,"
@@ -51,6 +53,7 @@ router.get('/',function (req,res) {
 
 router.get('/edit',function (req,res) {
     res.type(xhtml);
+    res.charset = utf8;
     if (req.session.loggedin) {
         let sql = "SELECT * FROM User WHERE email = ?";
 
@@ -74,7 +77,6 @@ router.get('/edit',function (req,res) {
 });
 
 router.post('/edit',function (req,res) {
-    res.type(xhtml);
     if (req.session.loggedin) {
         if(req.body.email != null){
             let passwordSQL = "SELECT password FROM User WHERE email = ?";
@@ -125,6 +127,7 @@ router.post('/edit',function (req,res) {
 
 router.get('/password', function (req,res) {
     res.type(xhtml);
+    res.charset = utf8;
     if (req.session.loggedin) {
         let prompt = req.session.prompt;
         let result = req.session.result;
@@ -141,7 +144,6 @@ router.get('/password', function (req,res) {
 });
 
 router.post('/password', function (req,res) {
-    res.type(xhtml);
     if (req.session.loggedin) {
         if(req.body.old_password != null) {
             let getPasswordSQL = "SELECT password FROM User WHERE email = ?";
@@ -184,6 +186,7 @@ router.post('/password', function (req,res) {
 
 router.get('/delete',function (req,res) {
     res.type(xhtml);
+    res.charset = utf8;
     if (req.session.loggedin) {
         let prompt = req.session.prompt;
         let result = req.session.result;
@@ -199,7 +202,6 @@ router.get('/delete',function (req,res) {
 });
 
 router.post('/delete',function (req,res) {
-    res.type(xhtml);
     if (req.session.loggedin) {
         let idPasswordSQL = "SELECT id, password FROM User WHERE email = ?";
         let userSQL = "DELETE FROM User WHERE id = ?";
@@ -236,6 +238,7 @@ router.post('/delete',function (req,res) {
 
 router.get('/refund/:id', function (req,res) {
     res.type(xhtml);
+    res.charset = utf8;
     if (req.session.loggedin) {
         let sql = "SELECT id, date(origin_date) AS o_date,time(origin_date) as o_time,(SELECT name FROM Destination Where Destination.id = Ticket.origin_id) AS origin_place,"
         +   "date(destination_date) AS d_date,time(destination_date) as d_time,(SELECT name FROM Destination Where Destination.id = Ticket.destination_id) AS destination_place,price "
@@ -266,7 +269,6 @@ router.get('/refund/:id', function (req,res) {
 });
 
 router.post('/refund/:id',function (req,res) {
-    res.type(xhtml);
     if (req.session.loggedin) {
         let ticketSQL = "DELETE FROM User_Ticket WHERE id = (SELECT id FROM User_Ticket "
                       + "WHERE user_id = (SELECT id FROM User WHERE email = ?) "

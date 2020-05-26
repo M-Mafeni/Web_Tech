@@ -3,9 +3,9 @@
     <body>
         The group members are Michael Mafeni (mm17291) and Ainesh Sevellaraja (as17284). Our site is a booking site for futuristic space travel.
         The login for the site is JohnS@hotmail.co.uk with password H3LL0W0RLD. This also serves as an administrator account.
-        A non admin login for the site is AshleyA@gmail.com with password Duck15.
-        To run simply enter "node server.js" in your terminal and it will run on localhost on both port 8080 (http) and port 3000 (https).
-        There is also a register page if you do not wish to use it. A valid ticket combination is as follows:
+        A non-administrator login for the site is AshleyA@gmail.com with password Duck15. There is also a register page if you do not wish to use these login credentials.
+        To run simply enter "node server.js" in your terminal and it will run on localhost on both port 3000 (HTTPS), and port 8080 (HTTP) (which gets redirected to the HTTPS port).
+        A valid ticket combination is as follows:
         <ul>
             <li>Origin Base = USA</li>
             <li>Destination Base = Mars Colony One</li>
@@ -50,8 +50,8 @@
         Ajax was used to make client-side http requests to the server.
 
         <h1>PNG - A</h1>
-        Gimp was used to produce images. The space image was gotten from <a href="https://wallpaperaccess.com/stars">wallpaperaccess.com</a> while the rocket pictures (<a href="public/assets/spaceX_ship.png">1</a> and <a href="public/assets/spaceX_ship_moon.png">2</a>) were downloaded from the SpaceX website.
-        The <a href="public/assets/mars.png">Martian landscape</a> used in the About Us section was made using Gimp and a combination of tools. A picture of a <a href="https://unsplash.com/photos/pZ-XFIrJMtE">desert</a> served as the basis.
+        GIMP was used to produce images. The space image was gotten from <a href="https://wallpaperaccess.com/stars">wallpaperaccess.com</a> while the rocket pictures (<a href="public/assets/spaceX_ship.png">1</a> and <a href="public/assets/spaceX_ship_moon.png">2</a>) were downloaded from the SpaceX website.
+        The <a href="public/assets/mars.png">Martian landscape</a> used in the About Us section was made using GIMP and a combination of tools. A picture of a <a href="https://unsplash.com/photos/pZ-XFIrJMtE">desert</a> served as the basis.
         First the sky was removed and replaced with a <a href="public/assets/cloudless_sky.jpg">cloudless sky</a>(source: <a href="https://jooinn.com/">jooinn.command</a>) whose colour was changed by adding a layer of brown onto it.
         The <a href="public/assets/rover.jpg">mars rover</a> (source: <a href="https://mars.nasa.gov/msl/home/">NASA</a>) was cut, placed in another layer and scaled down.
         Finally the erase and paintbrush tools were used to smoothen rough edges.
@@ -70,7 +70,12 @@
             were present as they were not necessary for the horizontal trail.
 
         <h1>Server - A</h1>
-            We used the Express framework for our server.
+            We used the ExpressJS framework, with several add-ons for our server. We are utilising two ports, port 3000 for HTTPS requests and port 8080 for HTTP requests. All HTTP requests are redirected to the equivalent HTTPS request.
+            For the HTTPS port, we are using a self-signed certificate (server.cert and server.key).
+            We have used the express-session add-on to save the user's session so that they remain logged in when they next visit our website. Sessions also keep track of whether the user is an administrator or not.
+            Our server uses Express' routers when handling sub-pages of the Account and Admin sections of our website. The server (server.js) delegates requests to these sections to account.js and admin.js respectively, which then process these requests.
+            We have also made the server handle case-sensitive URLs. Our server also does URL validation in a separate file called get.js.
+            For each request made to the server, we are specifying the response's content-type as XHTML and the character set as UTF-8 before delivering the page.
 
         <h1>Database - A</h1>
             For our website we created an SQLite database, embedded in astra.db. The database has the following tables:
@@ -86,7 +91,7 @@
         <h1>Dynamic pages - A</h1>
             We implemented multiple dynamic pages in our website. For these pages, the server obtains relevant data from the database and inserts them into page templates before delivering.
             We also used booleans to change contents of elements, such as changing the navigation bar when the user is logged in.
-
+            Furthermore, we incorporated prompts to indicate whether a user's action was successful or not, by displaying a banner at the top of the page containing a message regarding the outcome. This message changes according on the user's action.
 
     </body>
 </html>

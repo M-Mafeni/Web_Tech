@@ -7,13 +7,14 @@ const bodyParser = require('body-parser');
 const session = require('express-session');
 const port = 8080;
 const secure_port = 3000;
+const xhtml = 'application/xhtml+xml';
+const utf8 = 'utf-8';
 
 const bcrypt = require('bcrypt');
 const fs = require('fs');
 const http = require('http');
 const https = require('https');
 const df = require('./format');
-const xhtml = 'application/xhtml+xml';
 const validator = require("email-validator");
 const account = require('./controllers/account.js');
 const admin = require('./controllers/admin.js');
@@ -54,6 +55,7 @@ const httpServer = http.createServer(app1).listen(port,() => console.log(`listen
 app1.all('*',function(req,res){
     res.redirect('https://localhost:3000'+req.url);
 });
+
 const httpsServer = https.createServer({
     key: fs.readFileSync('server.key'),
     cert: fs.readFileSync('server.cert')
@@ -64,6 +66,7 @@ const httpsServer = https.createServer({
 //for the main page return main.handlebars with its layout being the index page
 app.get('/',function (req,res) {
     res.type(xhtml);
+    res.charset = utf8;
     let sql = "SELECT name FROM Destination";
     db.all(sql,[],(err,destinations)=>{
             let prompt = req.session.prompt;
@@ -78,8 +81,9 @@ app.use('/account',account);
 
 //register page
 app.get('/register',function (req,res) {
+    res.type(xhtml);
+    res.charset = utf8;
     if (!req.session.loggedin) {
-        res.type(xhtml);
         let prompt = req.session.prompt;
         let result = req.session.result;
         req.session.prompt = null;
@@ -97,6 +101,7 @@ app.get('/bookings',function (req,res) {
      entered a query i.e localhost:8080/bookings.html wouldn't work on its own
     */
     res.type(xhtml);
+    res.charset = utf8;
     if(req.session.loggedin){
         if(!isEmpty(req.query)){
             let origin = req.query.origin;
@@ -154,6 +159,7 @@ app.get('/bookings',function (req,res) {
 
 app.post('/confirmation',function (req,res) {
     res.type(xhtml);
+    res.charset = utf8;
     if (req.session.loggedin) {
         let outbound = {id:req.body.out_id, price:req.body.out_price.substring(1), o_date:req.body.out_o_date, d_date:req.body.out_d_date,
                         origin_place:req.body.out_o_loc, destination_place:req.body.out_d_loc,
@@ -174,7 +180,6 @@ app.post('/confirmation',function (req,res) {
 });
 
 app.post('/confirmed', function(req,res) {
-    res.type(xhtml);
     if (req.session.loggedin) {
         let idSQL = "SELECT id FROM USER WHERE email = ?";
         let sql = db.prepare("INSERT INTO User_Ticket(user_id, ticket_id) VALUES (?, ?)");
@@ -199,7 +204,6 @@ app.post('/confirmed', function(req,res) {
 });
 
 app.post('/login',function(req,res){
-    res.type(xhtml);
     let sql = "SELECT * FROM User WHERE email = ?";
     let email =req.body.email;
     let password = req.body.psw;
@@ -244,7 +248,6 @@ app.post('/registered',function(req,res){
     // 2. check that email not already registered
     // 3. check if passwords match
 
-    res.type(xhtml);
     let sql = "SELECT * FROM User WHERE email = ?";
     let insertSQL = db.prepare("INSERT INTO User(email,password,first_name,last_name,Address) VALUES (?,?,?,?,?);");
     let email = req.body.email;
@@ -310,7 +313,6 @@ app.get('/logout',function (req,res) {
         req.session.username = null;
         req.session.isAdmin = false;
         // setup prompt and render page
-        res.type(xhtml);
         req.session.prompt = 'Logged out successfully.';
         req.session.result='prompt-success';
         // res.redirect('/');

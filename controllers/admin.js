@@ -4,14 +4,16 @@ let router = express.Router();
 const df = require('../format');
 // const sqlite = require('sqlite3').verbose();
 const xhtml = 'application/xhtml+xml';
+const utf8 = 'utf-8';
 // let db = new sqlite.Database('./astra.db');
 const database = require('../database');
 let db = database.db;
 
 router.get('/',function(req,res){
+    res.type(xhtml);
+    res.charset = utf8;
     if(req.session.loggedin){
         if(req.session.isAdmin){
-            res.type(xhtml);
             let sql = "SELECT name FROM Destination";
             db.all(sql,[],(err,destinations)=>{
                     let prompt = req.session.prompt;
@@ -112,6 +114,7 @@ router.post('/destination',function(req,res){
 });
 router.get('/tickets',function(req,res){
     res.type(xhtml);
+    res.charset = utf8;
     if(req.session.loggedin){
         if(req.session.isAdmin){
             //get all tickets
@@ -142,6 +145,7 @@ router.get('/tickets',function(req,res){
 });
 router.get('/tickets/:id',function(req,res){
     res.type(xhtml);
+    res.charset = utf8;
     if(req.session.loggedin){
         if(req.session.isAdmin){
             let id = req.params.id;
