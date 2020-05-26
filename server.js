@@ -169,7 +169,9 @@ app.post('/confirmation',function (req,res) {
                         origin_place:req.body.in_o_loc, destination_place:req.body.in_d_loc,
                         o_time:req.body.in_o_time, d_time:req.body.in_d_time};
         let finalTickets = {outbound, inbound};
-
+        console.log("confirmation page");
+        console.log(req.body.out_id);
+        console.log(req.body.in_id);
         res.render('main',{layout:'confirmation',loggedin:req.session.loggedin, final_tickets:finalTickets});
     }
     else {
@@ -186,14 +188,12 @@ app.post('/confirmed', function(req,res) {
         let sql = db.prepare("INSERT INTO User_Ticket(user_id, ticket_id) VALUES (?, ?)");
 
         db.get(idSQL,[req.session.username],(err,user) => {
-            sql.run(user.id, req.body.out_id);
-            sql.run(user.id, req.body.in_id);
+            sql.run(user.id, req.body.source_id);
+            sql.run(user.id, req.body.dest_id);
+            req.session.prompt= 'Tickets purchased.';
+            req.session.result = 'prompt-success';
+            res.redirect('/');
         });
-
-        console.log("user purchased tickets with IDs " + req.body.out_id + " and " + req.body.in_id);
-        req.session.prompt= 'Tickets purchased.';
-        req.session.result = 'prompt-success';
-        res.redirect('/');
         // res.render('main',{layout:'index',loggedin:req.session.loggedin,prompt:'Ticket purchased.',result:'prompt-success'});
     }
     else {
@@ -333,6 +333,6 @@ function setResponseHeader(req, res) {
     // content negotiation
     if (req.accepts(xhtml)) newRes.type(xhtml);
     else newRes.type(html);
-    
+
     return newRes;
 }

@@ -30,8 +30,16 @@
             </select>
 
             <div class = "hidden-form">
-                <input type="text" name="out_id"></input>
-                <input type="text" name="in_id"></input
+                {{#each final_tickets}}
+                {{#if @first}}
+                    <input type="number" name="source_id" value= "{{id}}"></input>
+                {{/if}}
+                {{#if @last}}
+                    <input type="number" name="dest_id" value= "{{id}}"></input>
+                {{/if}}
+                    <!-- {{id}} -->
+                {{/each}}
+                <!-- <input type="text" name="in_id"></input> -->
             </div>
             <input type="submit" id ="payButton" class="btn pay-now" value="Pay now"></input>
         </form>
