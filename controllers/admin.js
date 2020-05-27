@@ -228,8 +228,9 @@ router.post('/tickets/:id',function(req,res){
                                 console.log(err);
                                 req.session.prompt = 'Invalid Price/Dates.';
                                 req.session.result = 'prompt-fail';
-                                res.redirect('/admin/tickets/:id');
-                            }else{
+                                res.redirect('/admin/tickets/' + id);
+                            }
+                            else{
                                 req.session.prompt = 'Ticket successfully updated.';
                                 req.session.result = 'prompt-success';
                                 res.redirect('/admin/tickets');

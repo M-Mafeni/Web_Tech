@@ -239,23 +239,29 @@ router.get('/refund/:id', function (req,res) {
     if (req.session.loggedin) {
         let sql = "SELECT id, date(origin_date) AS o_date,time(origin_date) as o_time,(SELECT name FROM Destination Where Destination.id = Ticket.origin_id) AS origin_place,"
         +   "date(destination_date) AS d_date,time(destination_date) as d_time,(SELECT name FROM Destination Where Destination.id = Ticket.destination_id) AS destination_place,price "
-        +   "FROM Ticket WHERE id = ?";
+        +   "FROM Ticket WHERE id = ? AND id IN (SELECT ticket_id FROM User_Ticket WHERE user_id = (SELECT id FROM User WHERE email = ?))";
 
-        db.all(sql, [req.params.id], (err, tickets) => {
-            tickets.forEach((ticket, i) => {
-                ticket.o_date = df.formatDate(ticket.o_date);
-                ticket.d_date = df.formatDate(ticket.d_date);
-                ticket.o_time = df.formatTime(ticket.o_time);
-                ticket.d_time = df.formatTime(ticket.d_time);
-            });
+        db.all(sql, [req.params.id, req.session.username], (err, tickets) => {
+            console.log(tickets.length);
+            if (tickets.length == 0) {
+                res.redirect("/account");
+            }
+            else {
+                tickets.forEach((ticket, i) => {
+                    ticket.o_date = df.formatDate(ticket.o_date);
+                    ticket.d_date = df.formatDate(ticket.d_date);
+                    ticket.o_time = df.formatTime(ticket.o_time);
+                    ticket.d_time = df.formatTime(ticket.d_time);
+                });
 
-            let prompt = req.session.prompt;
-            let result = req.session.result;
-            req.session.prompt = null;
-            req.session.result = null;
+                let prompt = req.session.prompt;
+                let result = req.session.result;
+                req.session.prompt = null;
+                req.session.result = null;
 
-            res.render('main',{layout:'account/account-refund', loggedin:req.session.loggedin, prompt:prompt,result:result,
-                               isAdmin:req.session.isAdmin, refund_ticket: tickets});
+                res.render('main',{layout:'account/account-refund', loggedin:req.session.loggedin, prompt:prompt,result:result,
+                                   isAdmin:req.session.isAdmin, refund_ticket: tickets});
+            }
         });
     }
     else {
