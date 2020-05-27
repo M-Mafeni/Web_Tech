@@ -114,10 +114,10 @@ function updateTicket(){
 
 function showButton() {
     if ($("#users").val() != "Select user") {
-        $("#adminButton").css("visibility", "visible");
+        $("#addAdminButton").css("visibility", "visible");
     }
     else {
-        $("#adminButton").css("visibility", "hidden");
+        $("#addAdminButton").css("visibility", "hidden");
 
     }
 }

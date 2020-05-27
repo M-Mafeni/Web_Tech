@@ -23,70 +23,81 @@
     <div class = "account-wrapper">
         <h1 class="title-header">Update Ticket</h1>
 
-        <!-- <form class="admin_bar booking_bar booking_form" action="/admin/tickets/{{ticket.id}}" method="POST">
-            <label class= "email-label" for="origin">Origin</label>
-            <input list = "places" type="text" name="origin" value="{{ticket.origin_place}}" placeholder="Enter Origin Base" required=""></input>
-            <label class= "email-label" for="destination">Destination</label>
-            <input list = "places" type="text" name="destination" value="{{ticket.destination_place}}" placeholder="Enter Destination Base" required="" class="dest"></input>
-            <datalist id="places">
-                {{#each destinations}}
-                    <option value="{{name}}"></option>
-                {{/each}}
-            </datalist>
-            <label class= "email-label" for="outbound_date">Outbound Date</label>
-            <input id="outbound_date" type="date" name="outbound_date" value="{{ticket.o_date}}" required=""></input>
-            <label class= "email-label" for="outbound_time">Outbound Time</label>
-            <input id="outbound_time" type="time" name="outbound_time" value="{{ticket.o_time}}" required=""></input>
-            <label class= "email-label" for="inbound_date">Inbound Date</label>
-            <input type="date" name="inbound_date" value="{{ticket.d_date}}" required=""></input>
-            <label class= "email-label" for="inbound_time">Inbound Time</label>
-            <input id="inbound_time" type="time" name="inbound_time" value="{{ticket.d_time}}" required=""></input>
-            <label class= "email-label" for="price">Price</label>
-            <input id="price" type="number" name="price" value="{{ticket.price}}" required=""></input>
+        <div class="admin_bar booking_bar booking_form">
+            <form  action="/admin/tickets/{{ticket.id}}" method="POST">
+                <label class= "email-label" for="origin">Origin</label>
+                <input list = "places" type="text" name="origin" value="{{ticket.origin_place}}" placeholder="Enter Origin Base" required=""></input>
+                <label class= "email-label" for="destination">Destination</label>
+                <input list = "places" type="text" name="destination" value="{{ticket.destination_place}}" placeholder="Enter Destination Base" required="" class="dest"></input>
+                <datalist id="places">
+                    {{#each destinations}}
+                        <option value="{{name}}"></option>
+                    {{/each}}
+                </datalist>
+                <label class= "email-label" for="outbound_date">Outbound Date</label>
+                <input id="outbound_date" type="date" name="outbound_date" value="{{ticket.o_date}}" required=""></input>
+                <label class= "email-label" for="outbound_time">Outbound Time</label>
+                <input id="outbound_time" type="time" name="outbound_time" value="{{ticket.o_time}}" required=""></input>
+                <label class= "email-label" for="inbound_date">Inbound Date</label>
+                <input type="date" name="inbound_date" value="{{ticket.d_date}}" required=""></input>
+                <label class= "email-label" for="inbound_time">Inbound Time</label>
+                <input id="inbound_time" type="time" name="inbound_time" value="{{ticket.d_time}}" required=""></input>
+                <label class= "email-label" for="price">Price</label>
+                <input id="price" type="number" name="price" value="{{ticket.price}}" required=""></input>
 
-            <div class="booking_button">
-                <input class="btn" type="submit" value ="Update Ticket"></input>
-            </div>
-        </form> -->
 
-        <div class="booking_bar">
-            <form class="booking_form" action="/admin/tickets/{{ticket.id}}" method="POST" >
+                <div class="login-btns">
+                    <button class="btn" form="update_ticket" type="submit">Update Ticket</button>
+                    <a href="/admin/tickets"><button class="btn" type="submit">Back</button></a>
+                </div>
+
+            </form>
+        </div>
+
+
+
+        <!-- <div class="booking_bar">
+            <form class="booking_form" id = "update_ticket" action="/admin/tickets/{{ticket.id}}" method="POST" >
+                <datalist id="places">
+                    {{#each destinations}}
+                        <option value="{{name}}"></option>
+                    {{/each}}
+                </datalist>
                 <span class = "booking_left">
                     <div class="form_item">
                         <input list = "places" type="text" name="origin" value="{{ticket.origin_place}}" placeholder="Enter Origin Base" required="">
                         </input>
                     </div>
                     <div class="form_item">
-                        <input list = "places" type="text" name="destination" value="{{ticket.destination_place}}" placeholder="Enter Destination Base" required="" class="dest"></input>
-                    </div>
-                    <datalist id="places">
-                        {{#each destinations}}
-                            <option value="{{name}}"></option>
-                        {{/each}}
-                    </datalist>
-                </span>
-                <span class = "booking_right">
-                    <div class="form_item">
                         <input id="outbound_date" type="date" name="outbound_date" value="{{ticket.o_date}}" required=""></input>
                     </div>
                     <div class="form_item">
                         <input id="outbound_time" type="time" name="outbound_time" value="{{ticket.o_time}}" required=""></input>
                     </div>
+
+                </span>
+                <span class = "booking_right">
+                    <div class="form_item">
+                        <input list = "places" type="text" name="destination" value="{{ticket.destination_place}}" placeholder="Enter Destination Base" required="" class="dest"></input>
+                    </div>
+
                     <div class="form_item">
                         <input type="date" name="inbound_date" value="{{ticket.d_date}}" required=""></input>
                     </div>
                     <div class="form_item">
                         <input id="inbound_time" type="time" name="inbound_time" value="{{ticket.d_time}}" required=""></input>
                     </div>
-                    <div class="form_item">
-                        <input id="price" type="number" name="price" value="{{ticket.price}}" required=""></input>
-                    </div>
+
                 </span>
-                <div class="booking_button">
-                    <input class="btn" type="submit" value ="Update Ticket"></input>
+                <div class="form_item">
+                    <input id="price" type="number" name="price" value="{{ticket.price}}" required=""></input>
                 </div>
             </form>
-        </div>
+            <div class="login-btns">
+                <input class="btn" form="update_ticket" type="submit" value ="Update Ticket"></input>
+                <a href="/admin/tickets"><input class="btn" type="submit" value ="Back"></input></a>
+            </div>
+        </div> -->
     </div>
 </body>
 {{> footer}}

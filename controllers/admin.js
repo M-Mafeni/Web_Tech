@@ -154,12 +154,15 @@ router.get('/tickets/:id',function(req,res){
     if(req.session.loggedin){
         if(req.session.isAdmin){
             let id = req.params.id;
+            let destSQL = "SELECT name FROM Destination";
             let sql = "SELECT id, date(origin_date) AS o_date,time(origin_date) as o_time,(SELECT name FROM Destination Where Destination.id = Ticket.origin_id) AS origin_place,"
             +   "date(destination_date) AS d_date,time(destination_date) as d_time,(SELECT name FROM Destination Where Destination.id = Ticket.destination_id) AS destination_place,price "
             +   "FROM Ticket WHERE id = ?";
             db.get(sql,[id],function(err,ticket){
                 if(!err){
-                    res.render('main',{layout:'admin/update_ticket',loggedin:req.session.loggedin,isAdmin:req.session.isAdmin,isAdminPage:true,ticket:ticket});
+                    db.all(destSQL, [], (err, destinations) => {
+                        res.render('main',{layout:'admin/update_ticket',loggedin:req.session.loggedin,isAdmin:req.session.isAdmin,isAdminPage:true,ticket:ticket,destinations:destinations});
+                    });
                 }else{
                     throw err;
                 }

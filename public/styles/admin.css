@@ -2,15 +2,20 @@
     margin-bottom: 30px;
 }
 
-#adminButton {
-    visibility: hidden;
-    margin-top: 10px;
-}
-
-#users, #adminButton {
-    width: 80%;
+#users, #addAdminButton {
+    width: 100%;
     margin: auto;
 }
+
+#addAdminButton {
+    visibility: hidden;
+    margin-top: 20px;
+}
+
+#add_admin_form {
+    text-align: center;
+}
+
 
 .admin-buttons {
     text-align: center;
@@ -21,11 +26,11 @@
     margin-right: 1%;
 }
 
-.admin_bar {
+#add-dest {
     margin-bottom: 50px;
 }
 
-.admin_bar input {
+.admin_bar input[type="text"], .admin_bar input[type="date"] {
     width: 100% !important;
 }
 

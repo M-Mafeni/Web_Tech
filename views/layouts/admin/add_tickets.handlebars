@@ -19,6 +19,16 @@
     {{> prompt }}
 
     <div class = "account-wrapper">
+        <h1 class="title-header">Add New Destination</h1>
+
+        <form id = "add-dest" class="booking_form booking_bar" action="/admin/destination" method="post">
+            <input type="text" name="destination" value="" placeholder="Enter New Destination" required=""></input>
+
+            <div class="booking_button dest_btn">
+                <input class="btn" type="submit" value ="Add Destination"></input>
+            </div>
+        </form>
+
         <h1 class="title-header">Add New Ticket</h1>
 
         <form class="admin_bar booking_bar booking_form" action="/admin/addticket" method="post">
@@ -44,16 +54,6 @@
 
             <div class="booking_button">
                 <input class="btn" type="submit" value ="Add Ticket"></input>
-            </div>
-        </form>
-
-        <h1 class="title-header">Add New Destination</h1>
-
-        <form class="booking_form booking_bar" action="/admin/destination" method="post">
-            <input type="text" name="destination" value="" placeholder="Enter New Destination" required=""></input>
-
-            <div class="booking_button dest_btn">
-                <input class="btn" type="submit" value ="Add Destination"></input>
             </div>
         </form>
     </div>
