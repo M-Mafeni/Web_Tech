@@ -7,7 +7,7 @@ function start() {
     $("#filter_btn").click(filterTicket);
     $(".delete").click(deleteTicket);
     $(".update").click(updateTicket);
-
+    $("#users").change(showButton);
 }
 
 function selected(){
@@ -29,7 +29,9 @@ function selected(){
     //set summary details
     $("#o_unselected").remove();
     $("#summary_details").show();
+    // $(".dest_details").show();
     $("#summary_details").addClass("change_height");
+    // $(".dest_details").addClass("change_height");
     $("#summary_details .departureDate").text(departureDate);
     $("#summary_details .departureTime").text(departureTime);
     $("#summary_details .departureLocation").text(departureLoc);
@@ -40,7 +42,7 @@ function selected(){
 
     $("#mobile_summary").show();
     $("#summary-title-mobile").text("Summary");
-    $("#d_summary_price_mobile").text(price);
+    $("#summary_price_mobile").text(price);
     $("#d_mobile_summary .departureDate").text(departureDate);
     $("#d_mobile_summary .departureTime").text(departureTime);
     $("#d_mobile_summary .departureLocation").text(departureLoc);
@@ -54,6 +56,8 @@ function selected(){
 }
 
 function showContinueButtons() {
+    $(".buttons").show();
+
     // display arrows
     if ($(".fa-angle-double-down").hasClass("disable-fa")) $(".fa-angle-double-up").removeClass("disable-fa");
 }
@@ -106,4 +110,14 @@ function deleteTicket() {
 function updateTicket(){
     var id = $(".ticket-selected").find('.ticket_id').text();
     window.location.href = '/admin/tickets/'+id;
+}
+
+function showButton() {
+    if ($("#users").val() != "Select user") {
+        $("#adminButton").css("visibility", "visible");
+    }
+    else {
+        $("#adminButton").css("visibility", "hidden");
+
+    }
 }

@@ -3,10 +3,13 @@
 body {
     margin-left: 4%;
     margin-right: 4%;
-    margin-top: 8%;
-    margin-bottom: 5%;
-    /* margin-top: 100px; */
+    margin-top: 100px;
+    margin-bottom: 70px;
     min-height: 0;
+}
+
+.confirmed_tickets {
+    margin-bottom: 40px;
 }
 
 .btn .pay-now {
@@ -18,18 +21,18 @@ body {
 }
 
 .pay-header {
-    margin-top: 5%;
     margin-left: 2%;
     font-size: 130%;
 }
 
 select {
     display: block;
-    margin-bottom: 4%;
+    margin-bottom: 15px;
+
 }
 
 .confirm-form {
-    margin-top: 2%;
+    margin-top: 15px;
     padding-left: 2%;
     padding-right: 2%;
     width: 70%;
@@ -39,13 +42,6 @@ select {
     visibility: hidden;
 }
 
-@media only screen and (max-width: 850px) {
-    body {
-        margin-top: 12%;
-        margin-bottom: 8%;
-    }
-}
-
 @media only screen and (max-width: 700px) {
     #payButton, .confirm-form {
         width: 100%;
@@ -53,8 +49,12 @@ select {
 }
 
 @media only screen and (max-width: 550px) {
-    select {
-        margin-top: 6%;
-        margin-bottom: 6%;
+    body {
+        margin-top: 60px;
     }
+
+    p {
+        text-align: center;
+    }
+
 }

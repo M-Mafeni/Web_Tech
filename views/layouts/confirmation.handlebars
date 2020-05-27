@@ -19,7 +19,9 @@
         {{> navbar}}
         {{> login}}
 
-        {{> tickets heading = "Confirm your booking" ticketData = final_tickets}}
+        <div class = "confirmed_tickets">
+            {{> tickets heading = "Confirm your booking" ticketData = final_tickets}}
+        </div>
 
         <div class="pay-header">Payment Details</div>
 

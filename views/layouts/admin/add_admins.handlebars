@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"></link>
 <link rel="stylesheet" href="/styles/styles.css"></link>
 <link rel="stylesheet" href="/styles/bookings.css"></link>
+<link rel="stylesheet" href="/styles/account.css"></link>
 <link rel="stylesheet" href="/styles/admin.css"></link>
 <script src="/scripts/navbar.js"></script>
 <script src="/scripts/admin.js"></script>
@@ -16,22 +17,24 @@
 <body>
     {{> navbar }}
     {{> prompt }}
-    <h1 class="title-header">Add Administrators</h1>
-    <div class="booking_bar">
-        <form id = "add_admin_form" class="" action="" method="POST">
-            <select class="list" id = "users" name = "id" form = "add_admin_form">
-            {{#each users}}
-                <option value="{{id}}">{{full_name}}</option>
-            {{/each}}
-            </select>
 
-            <input type="submit" name="" class="btn" value="Give Admin Privileges"></input>
-        </form>
+    <div class = "account-wrapper">
+        <h1 class="title-header">Add Administrators</h1>
+        <div class="booking_bar">
+            <form id = "add_admin_form" class="" action="" method="POST">
+                <select class="list" id = "users" name = "id" form = "add_admin_form">
+                    <option>Select user</option>
+                {{#each users}}
+                    <option value="{{id}}">{{full_name}}</option>
+                {{/each}}
+                </select>
+
+                <input type="submit" name="" id = "adminButton" class="btn" value="Give Admin Privileges"></input>
+            </form>
+        </div>
     </div>
 
-
-
-
-
 </body>
+
+{{> footer}}
 </html>

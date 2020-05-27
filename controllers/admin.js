@@ -10,7 +10,28 @@ const database = require('../database');
 let db = database.db;
 let OK = 200, UNAUTHORISED = 401;
 
-router.get('/',function(req,res){
+
+router.get('/',function(req,res) {
+    res = df.setResponseHeader(req, res);
+
+    if(req.session.loggedin){
+        if(req.session.isAdmin){
+            res.render('main',{layout:'admin/admin',loggedin:req.session.loggedin,isAdmin:req.session.isAdmin,isAdminPage:true});
+        }
+        else {
+            req.session.prompt = 'Access denied.';
+            req.session.result = 'prompt-fail';
+            res.redirect('/');
+        }
+    }
+    else {
+        req.session.prompt = 'You are not logged in.';
+        req.session.result = 'prompt-fail';
+        res.redirect('/');
+    }
+});
+
+router.get('/add_ticket',function(req,res){
     res = df.setResponseHeader(req, res);
 
     if(req.session.loggedin){
@@ -63,12 +84,12 @@ router.post('/addticket',function(req,res){
                             req.session.prompt = 'Ticket added.';
                             req.session.result = 'prompt-success';
                         }
-                        res.redirect('/admin');
+                        res.redirect('/admin/add_ticket');
                     });
                 }else{
                     req.session.prompt = 'Destination not valid';
                     req.session.result = 'prompt-fail';
-                    res.redirect('/admin');
+                    res.redirect('/admin/add_ticket');
                 }
             });
         }else{
@@ -93,7 +114,7 @@ router.post('/destination',function(req,res){
                     req.session.prompt = 'Destination already exists.';
                     req.session.result = 'prompt-fail';
                 }
-                res.redirect('/admin');
+                res.redirect('/admin/add_ticket');
             });
         }else{
             res.status(UNAUTHORISED).send('Access Denied');

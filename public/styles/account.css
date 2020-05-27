@@ -2,7 +2,8 @@ body {
     margin-left: 0;
     margin-right: 0;
     min-height: 0;
-    margin-bottom: 5%;
+    margin-top: 100px;
+    margin-bottom: 70px;
 }
 
 .account-wrapper {
@@ -85,7 +86,7 @@ strong {
 
 @media only screen and (max-width: 750px) {
     body {
-        margin-top: 12%;
+        /* margin-top: 12%; */
     }
 }
 
@@ -107,14 +108,16 @@ strong {
     .ticket-card button {
         width: 100%;
     }
+}
 
-
+@media only screen and (max-width: 550px) {
+    body {
+        margin-top: 60px;
+    }
 }
 
 @media only screen and (max-width: 400px) {
-    body {
-        margin-top: 15%;
-    }
+
 
     .account-btns button, .ticket-card button {
         font-size: 80%;

@@ -8,51 +8,86 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"></link>
 <link rel="stylesheet" href="/styles/styles.css"></link>
 <link rel="stylesheet" href="/styles/bookings.css"></link>
+<link rel="stylesheet" href="/styles/account.css"></link>
+<link rel="stylesheet" href="/styles/admin.css"></link>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Righteous"></link>
 <link href="https://fonts.googleapis.com/css2?family=Rubik" rel="stylesheet"></link>
 <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300" rel="stylesheet"></link>
 
-{{> header title = "Astra | Modify Ticket"}}
+{{> header title = "Astra | Update Ticket"}}
 
 <body>
     {{> navbar }}
-    <div class="booking_bar">
-        <form class="booking_form" action="/admin/tickets/{{ticket.id}}" method="POST" >
-            <span class = "booking_left">
-                <div class="form_item">
-                    <input list = "places" type="text" name="origin" value="{{ticket.origin_place}}" placeholder="Enter Origin Base" required="">
-                    </input>
-                </div>
-                <div class="form_item">
-                    <input list = "places" type="text" name="destination" value="{{ticket.destination_place}}" placeholder="Enter Destination Base" required="" class="dest"></input>
-                </div>
-                <datalist id="places">
-                    {{#each destinations}}
-                        <option value="{{name}}"></option>
-                    {{/each}}
-                </datalist>
-            </span>
-            <span class = "booking_right">
-                <div class="form_item">
-                    <input id="outbound_date" type="date" name="outbound_date" value="{{ticket.o_date}}" required=""></input>
-                </div>
-                <div class="form_item">
-                    <input id="outbound_time" type="time" name="outbound_time" value="{{ticket.o_time}}" required=""></input>
-                </div>
-                <div class="form_item">
-                    <input type="date" name="inbound_date" value="{{ticket.d_date}}" required=""></input>
-                </div>
-                <div class="form_item">
-                    <input id="inbound_time" type="time" name="inbound_time" value="{{ticket.d_time}}" required=""></input>
-                </div>
-                <div class="form_item">
-                    <input id="price" type="number" name="price" value="{{ticket.price}}" required=""></input>
-                </div>
-            </span>
+    {{> prompt}}
+
+    <div class = "account-wrapper">
+        <h1 class="title-header">Update Ticket</h1>
+
+        <!-- <form class="admin_bar booking_bar booking_form" action="/admin/tickets/{{ticket.id}}" method="POST">
+            <label class= "email-label" for="origin">Origin</label>
+            <input list = "places" type="text" name="origin" value="{{ticket.origin_place}}" placeholder="Enter Origin Base" required=""></input>
+            <label class= "email-label" for="destination">Destination</label>
+            <input list = "places" type="text" name="destination" value="{{ticket.destination_place}}" placeholder="Enter Destination Base" required="" class="dest"></input>
+            <datalist id="places">
+                {{#each destinations}}
+                    <option value="{{name}}"></option>
+                {{/each}}
+            </datalist>
+            <label class= "email-label" for="outbound_date">Outbound Date</label>
+            <input id="outbound_date" type="date" name="outbound_date" value="{{ticket.o_date}}" required=""></input>
+            <label class= "email-label" for="outbound_time">Outbound Time</label>
+            <input id="outbound_time" type="time" name="outbound_time" value="{{ticket.o_time}}" required=""></input>
+            <label class= "email-label" for="inbound_date">Inbound Date</label>
+            <input type="date" name="inbound_date" value="{{ticket.d_date}}" required=""></input>
+            <label class= "email-label" for="inbound_time">Inbound Time</label>
+            <input id="inbound_time" type="time" name="inbound_time" value="{{ticket.d_time}}" required=""></input>
+            <label class= "email-label" for="price">Price</label>
+            <input id="price" type="number" name="price" value="{{ticket.price}}" required=""></input>
+
             <div class="booking_button">
                 <input class="btn" type="submit" value ="Update Ticket"></input>
             </div>
-        </form>
+        </form> -->
+
+        <div class="booking_bar">
+            <form class="booking_form" action="/admin/tickets/{{ticket.id}}" method="POST" >
+                <span class = "booking_left">
+                    <div class="form_item">
+                        <input list = "places" type="text" name="origin" value="{{ticket.origin_place}}" placeholder="Enter Origin Base" required="">
+                        </input>
+                    </div>
+                    <div class="form_item">
+                        <input list = "places" type="text" name="destination" value="{{ticket.destination_place}}" placeholder="Enter Destination Base" required="" class="dest"></input>
+                    </div>
+                    <datalist id="places">
+                        {{#each destinations}}
+                            <option value="{{name}}"></option>
+                        {{/each}}
+                    </datalist>
+                </span>
+                <span class = "booking_right">
+                    <div class="form_item">
+                        <input id="outbound_date" type="date" name="outbound_date" value="{{ticket.o_date}}" required=""></input>
+                    </div>
+                    <div class="form_item">
+                        <input id="outbound_time" type="time" name="outbound_time" value="{{ticket.o_time}}" required=""></input>
+                    </div>
+                    <div class="form_item">
+                        <input type="date" name="inbound_date" value="{{ticket.d_date}}" required=""></input>
+                    </div>
+                    <div class="form_item">
+                        <input id="inbound_time" type="time" name="inbound_time" value="{{ticket.d_time}}" required=""></input>
+                    </div>
+                    <div class="form_item">
+                        <input id="price" type="number" name="price" value="{{ticket.price}}" required=""></input>
+                    </div>
+                </span>
+                <div class="booking_button">
+                    <input class="btn" type="submit" value ="Update Ticket"></input>
+                </div>
+            </form>
+        </div>
     </div>
 </body>
+{{> footer}}
 </html>

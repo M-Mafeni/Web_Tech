@@ -10,23 +10,23 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"></link>
 <link rel="stylesheet" href="/styles/styles.css"></link>
 <link rel="stylesheet" href="/styles/bookings.css"></link>
+<link rel="stylesheet" href="/styles/admin.css"></link>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Righteous"></link>
 <link href="https://fonts.googleapis.com/css2?family=Rubik" rel="stylesheet"></link>
 <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300" rel="stylesheet"></link>
-<link rel="stylesheet" href="/styles/admin.css"></link>
 
 {{> header title = "Astra | Edit Tickets"}}
 
 <body>
     {{> navbar }}
+    {{> prompt}}
+
     <div class = "summary-icon">
         <span id="summary-title-mobile">No ticket selected</span>
         <i class="fa fa-angle-double-down disable-fa"></i>
         <i class="fa fa-angle-double-up disable-fa" ></i>
         <div id = "summary_price_mobile" class = "summary_price_mobile"></div>
 
-
-        <div id = "d_summary_price_mobile" class = "summary_price_mobile"></div>
         <div class = "summary-mobile" id="d_mobile_summary">
             <p class = "summary_details_mobile_source">
                 <div class = "date departureDate"></div>
@@ -40,13 +40,14 @@
             </p>
         </div>
         <div class="buttons mobile">
-            <button class= "btn delete" type="button" name="delete" >Delete Ticket</button>
             <button class= "btn update" type="button" name="update" >Modify Ticket</button>
+            <button class= "btn delete" type="button" name="delete" >Delete Ticket</button>
         </div>
 
     </div>
     <div class="column summary">
         <p id = "o_unselected">No ticket selected</p>
+        <div id = "summary_price" class = "summary_price"></div>
         <div id = "summary_details" class = "summary_details">
             <div class = "date departureDate"></div>
             <span class = "time departureTime"></span>
@@ -55,9 +56,10 @@
             <span class = "time arrivalTime"></span>
             <span class = "location arrivalLocation"></span>
         </div>
+        
         <div class="buttons">
-            <button class= "btn delete" type="button" name="delete" >Delete Ticket</button>
             <button class= "btn update" type="button" name="update" >Modify Ticket</button>
+            <button class= "btn delete" type="button" name="delete" >Delete Ticket</button>
         </div>
     </div>
     <div class="row">
@@ -67,5 +69,7 @@
     </div>
 
 </body>
+
+{{> footer}}
 
 </html>

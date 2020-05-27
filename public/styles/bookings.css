@@ -6,9 +6,10 @@
 body {
     box-sizing: border-box;
     margin: 2%;
-    margin-top: 7%;
+    /* margin-top: 7%; */
     min-height: 800px;
-
+    margin-top: 80px;
+    margin-bottom: 100px;
 }
 
 .column{
@@ -281,13 +282,14 @@ h1 {
 
 @media only screen and (max-width: 520px) {
     body {
+        margin-top: 40px;
         font-size: 130%;
     }
 }
 
 @media only screen and (max-width: 450px) {
     body {
-        margin-top: 10%;
+        /* margin-top: 10%; */
         font-size: 110%;
     }
 
@@ -309,7 +311,7 @@ h1 {
 
 @media only screen and (max-width: 350px) {
     body {
-        margin-top: 15%;
+        /* margin-top: 15%; */
     }
 }
 

@@ -6,33 +6,30 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"></link>
 <link rel="stylesheet" href="/styles/styles.css"></link>
 <link rel="stylesheet" href="/styles/bookings.css"></link>
-<link rel="stylesheet" href="/styles/ticket-confirmation.css"></link>
+<link rel="stylesheet" href="/styles/account.css"></link>
+<link rel="stylesheet" href="/styles/admin.css"></link>
 <script src="/scripts/navbar.js"></script>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Righteous"></link>
 <link href="https://fonts.googleapis.com/css2?family=Rubik" rel="stylesheet"></link>
 <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300" rel="stylesheet"></link>
 
-{{> header title = "Astra | Ticket Refund"}}
+{{> header title = "Astra | Admin"}}
 
     <body>
-        {{> navbar}}
-        {{> login}}
+        {{> navbar }}
 
-        <div class = "confirmed_tickets">
-            {{> tickets heading="Refund Your Ticket" ticketData = refund_ticket}}
+        <div class="account-wrapper">
+            <h1 class="title-header">Admin Actions</h1>
+                <div class = "admin-buttons">
+                    <a href="/admin/add_admins"><input type="submit" name="" class="btn" value="Add An Admin Account"></input></a>
+                    <a href="/admin/add_ticket"><input type="submit" name="" class="btn" value="Add Tickets or Destinations"></input></a>
+                    <a href="/admin/tickets"><input type="submit" name="" class="btn" value="Edit Existing Tickets"></input></a>
+                </div>
         </div>
 
-        <p>Are you sure you want to refund this ticket?</p>
 
-        {{#each refund_ticket}}
-            <form action="/account/refund/{{id}}" id = "refund" method="post">
-                <div class="login-btns">
-                    <button form = "refund" type="submit" class="btn">Refund</button>
-                    <a href="/account"><button type="submit" class = "btn">Back</button></a>
-                </div>
-            </form>
-        {{/each}}
 
     </body>
-    {{> footer}}
+
+{{> footer}}
 </html>

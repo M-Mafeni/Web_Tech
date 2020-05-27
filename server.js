@@ -158,7 +158,8 @@ app.post('/confirmation',function (req,res) {
                         origin_place:req.body.in_o_loc, destination_place:req.body.in_d_loc,
                         o_time:req.body.in_o_time, d_time:req.body.in_d_time};
         let finalTickets = {outbound, inbound};
-        res.render('main',{layout:'confirmation',loggedin:req.session.loggedin, final_tickets:finalTickets});
+        res.render('main',{layout:'confirmation',loggedin:req.session.loggedin, final_tickets:finalTickets,                                isAdmin:req.session.isAdmin
+});
     }
     else {
         req.session.prompt= 'You are not logged in.';
