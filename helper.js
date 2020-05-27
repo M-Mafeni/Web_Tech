@@ -5,13 +5,13 @@ const xhtml = 'application/xhtml+xml';
 const utf8 = 'utf-8';
 function getDay(day){
     if (day.endsWith("1") && day !== "11"){
-        return day + "st";
-    }else if(day.endsWith("2")){
-        return day + "nd";
-    }else if(day.endsWith("3")){
-        return day + "rd";
+        return Number(day).toString() + "st";
+    }else if(day.endsWith("2") && day !== "12"){
+        return Number(day).toString() + "nd";
+    }else if(day.endsWith("3") && day !== "13"){
+        return Number(day).toString() + "rd";
     }else{
-        return day + "th";
+        return Number(day).toString() + "th";
     }
 }
 function getMonth(month){
