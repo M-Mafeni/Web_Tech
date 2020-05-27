@@ -158,8 +158,9 @@ app.post('/confirmation',function (req,res) {
                         origin_place:req.body.in_o_loc, destination_place:req.body.in_d_loc,
                         o_time:req.body.in_o_time, d_time:req.body.in_d_time};
         let finalTickets = {outbound, inbound};
-        res.render('main',{layout:'confirmation',loggedin:req.session.loggedin, final_tickets:finalTickets,                                isAdmin:req.session.isAdmin
-});
+        let total = Number(req.body.out_price.substring(1)) + Number(req.body.in_price.substring(1));
+        console.log(total);
+        res.render('main',{layout:'confirmation',loggedin:req.session.loggedin, final_tickets:finalTickets,isAdmin:req.session.isAdmin,total:total});
     }
     else {
         req.session.prompt= 'You are not logged in.';

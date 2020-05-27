@@ -8,6 +8,17 @@ body {
     min-height: 0;
 }
 
+#total-price {
+    margin-left: 2%;
+    font-size: 150%;
+}
+
+#amount {
+    margin-left: 5%;
+    font-size: 165%;
+    text-decoration: underline;
+}
+
 .confirmed_tickets {
     margin-bottom: 40px;
 }

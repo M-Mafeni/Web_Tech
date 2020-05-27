@@ -23,6 +23,8 @@
             {{> tickets heading = "Confirm your booking" ticketData = final_tickets}}
         </div>
 
+        <p id = "total-price">Total: <span id = "amount">£{{total}}</span></p>
+
         <div class="pay-header">Payment Details</div>
 
         <form action="/confirmed" method="post" class="confirm-form">
