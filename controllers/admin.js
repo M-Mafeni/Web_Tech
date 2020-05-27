@@ -44,8 +44,12 @@ router.get('/add_ticket',function(req,res){
                     req.session.result = null;
                     res.render('main',{layout:'admin/add_tickets',loggedin:req.session.loggedin,isAdmin:req.session.isAdmin,isAdminPage:true,destinations:destinations,prompt:prompt,result:result});
             });
-        }else{
-            res.status(UNAUTHORISED).send('Access Denied');
+        }
+        else{
+            // res.status(UNAUTHORISED).send('Access Denied');
+            req.session.prompt = 'Access denied.';
+            req.session.result = 'prompt-fail';
+            res.redirect('/');
         }
     }else{
         req.session.prompt = 'You are not logged in.';
@@ -54,7 +58,7 @@ router.get('/add_ticket',function(req,res){
     }
 
 });
-router.post('/addticket',function(req,res){
+router.post('/add_ticket',function(req,res){
     if(req.session.loggedin){
         if(req.session.isAdmin){
             let origin = req.body.origin;
@@ -78,7 +82,7 @@ router.post('/addticket',function(req,res){
                     let d_id = ids.d_id;
                     db.run(insertTicketSQL,[o_date_time,o_id,d_date_time,d_id,price],function(err){
                         if(err){
-                            req.session.prompt = 'Invalid Price/Invalid Dates';
+                            req.session.prompt = 'Invalid Price/Dates.';
                             req.session.result = 'prompt-fail';
                         }else{
                             req.session.prompt = 'Ticket added.';
@@ -87,13 +91,16 @@ router.post('/addticket',function(req,res){
                         res.redirect('/admin/add_ticket');
                     });
                 }else{
-                    req.session.prompt = 'Destination not valid';
+                    req.session.prompt = 'Destination not found.';
                     req.session.result = 'prompt-fail';
                     res.redirect('/admin/add_ticket');
                 }
             });
         }else{
-            res.status(UNAUTHORISED).send('Access Denied');
+            // res.status(UNAUTHORISED).send('Access Denied');
+            req.session.prompt = 'Access denied.';
+            req.session.result = 'prompt-fail';
+            res.redirect('/');
         }
     }else{
         req.session.prompt = 'You are not logged in.';
@@ -117,7 +124,10 @@ router.post('/destination',function(req,res){
                 res.redirect('/admin/add_ticket');
             });
         }else{
-            res.status(UNAUTHORISED).send('Access Denied');
+            // res.status(UNAUTHORISED).send('Access Denied');
+            req.session.prompt = 'Access denied.';
+            req.session.result = 'prompt-fail';
+            res.redirect('/');
         }
     }else{
         req.session.prompt = 'You are not logged in.';
@@ -137,10 +147,17 @@ router.get('/tickets',function(req,res){
             +   "FROM Ticket ORDER BY origin_date DESC";
             db.all(sql,[],(err,tickets)=>{
                 tickets = df.formatTickets(tickets);
-                res.render('main',{layout:'admin/edit_tickets',loggedin:req.session.loggedin,isAdmin:req.session.isAdmin,isAdminPage:true,tickets:tickets});
+                let prompt = req.session.prompt;
+                let result = req.session.result;
+                req.session.prompt = null;
+                req.session.result = null;
+                res.render('main',{layout:'admin/edit_tickets',loggedin:req.session.loggedin,isAdmin:req.session.isAdmin,isAdminPage:true,tickets:tickets,prompt:prompt,result:result});
             });
         }else{
-            res.status(UNAUTHORISED).send('Access Denied');
+            // res.status(UNAUTHORISED).send('Access Denied');
+            req.session.prompt = 'Access denied.';
+            req.session.result = 'prompt-fail';
+            res.redirect('/');
         }
     }else{
         req.session.prompt = 'You are not logged in.';
@@ -161,14 +178,22 @@ router.get('/tickets/:id',function(req,res){
             db.get(sql,[id],function(err,ticket){
                 if(!err){
                     db.all(destSQL, [], (err, destinations) => {
-                        res.render('main',{layout:'admin/update_ticket',loggedin:req.session.loggedin,isAdmin:req.session.isAdmin,isAdminPage:true,ticket:ticket,destinations:destinations});
+                        let prompt = req.session.prompt;
+                        let result = req.session.result;
+                        req.session.prompt = null;
+                        req.session.result = null;
+                        res.render('main',{layout:'admin/update_ticket',loggedin:req.session.loggedin,isAdmin:req.session.isAdmin,isAdminPage:true,ticket:ticket,destinations:destinations,
+                                           prompt:prompt, result:result});
                     });
                 }else{
                     throw err;
                 }
             });
         }else{
-            res.status(UNAUTHORISED).send('Access Denied');
+            // res.status(UNAUTHORISED).send('Access Denied');
+            req.session.prompt = 'Access denied.';
+            req.session.result = 'prompt-fail';
+            res.redirect('/');
         }
     }else{
         req.session.prompt = 'You are not logged in.';
@@ -177,63 +202,98 @@ router.get('/tickets/:id',function(req,res){
     }
 });
 router.post('/tickets/:id',function(req,res){
-    if(req.session.loggedin && req.session.isAdmin){
-        let id = req.params.id;
-        let origin = req.body.origin;
-        let destination = req.body.destination;
-        let o_date = req.body.outbound_date;
-        let o_time = req.body.outbound_time;
-        let o_date_time = o_date + " " + o_time;
-        let d_date = req.body.inbound_date;
-        let d_time = req.body.inbound_time;
-        let d_date_time = d_date + " " + d_time;
-        let price = req.body.price;
-        let id_sql = "SELECT t1.id AS o_id, t2.id AS d_id FROM  Destination as t1 INNER JOIN Destination as t2 WHERE t1.name = ? AND t2.name = ?"
-        let sql = "UPDATE Ticket SET origin_date = datetime(?), origin_id = ?, "
-                  + "destination_date = datetime(?), destination_id = ?, price = ? "
-                  + "WHERE id = ?";
-        db.get(id_sql, [origin,destination],(err,ids)=>{
-            if(!err){
-                if(ids !== undefined){
-                    let o_id = ids.o_id;
-                    let d_id = ids.d_id;
-                    db.run(sql,[o_date_time,o_id,d_date_time,d_id,price,id],function(err){
-                        if(err){
-                            console.log(err);
-                        }else{
-                            res.redirect('/admin/tickets');
-                        }
-                    });
-                }else{
-                    console.log('names not defined');
+    if(req.session.loggedin) {
+        if(req.session.isAdmin){
+            let id = req.params.id;
+            let origin = req.body.origin;
+            let destination = req.body.destination;
+            let o_date = req.body.outbound_date;
+            let o_time = req.body.outbound_time;
+            let o_date_time = o_date + " " + o_time;
+            let d_date = req.body.inbound_date;
+            let d_time = req.body.inbound_time;
+            let d_date_time = d_date + " " + d_time;
+            let price = req.body.price;
+            let id_sql = "SELECT t1.id AS o_id, t2.id AS d_id FROM  Destination as t1 INNER JOIN Destination as t2 WHERE t1.name = ? AND t2.name = ?"
+            let sql = "UPDATE Ticket SET origin_date = datetime(?), origin_id = ?, "
+                      + "destination_date = datetime(?), destination_id = ?, price = ? "
+                      + "WHERE id = ?";
+            db.get(id_sql, [origin,destination],(err,ids)=>{
+                if(!err){
+                    if(ids !== undefined){
+                        let o_id = ids.o_id;
+                        let d_id = ids.d_id;
+                        db.run(sql,[o_date_time,o_id,d_date_time,d_id,price,id],function(err){
+                            if(err){
+                                console.log(err);
+                                req.session.prompt = 'Invalid Price/Dates.';
+                                req.session.result = 'prompt-fail';
+                                res.redirect('/admin/tickets/:id');
+                            }else{
+                                req.session.prompt = 'Ticket successfully updated.';
+                                req.session.result = 'prompt-success';
+                                res.redirect('/admin/tickets');
+                            }
+                        });
+                    }
+                    else{
+                        console.log('names not defined');
+                        req.session.prompt = 'Destination not found.';
+                        req.session.result = 'prompt-fail';
+                        res.redirect('/admin/tickets/' + req.params.id);
+                    }
                 }
-            }else{
-                console.log(err);
-            }
-        });
-        // db.get(sql,[])
-    }else{
-        res.status(UNAUTHORISED).send('Access Denied');
+                else{
+                    console.log(err);
+                    // req.session.prompt = 'Something went wrong.';
+                    // req.session.result = 'prompt-fail';
+                    // res.redirect('/admin/tickets');
+                }
+            });
+        }
+        else{
+            // res.status(UNAUTHORISED).send('Access Denied');
+            req.session.prompt = 'Access denied.';
+            req.session.result = 'prompt-fail';
+            res.redirect('/');
+        }
+    }
+    else {
+        req.session.prompt = 'You are not logged in.';
+        req.session.result = 'prompt-fail';
+        res.redirect('/');
     }
 });
+
 router.delete('/tickets/:id',function(req,res){
-    if(req.session.loggedin && req.session.isAdmin){
-        let id = req.params.id;
-        let sql = "DELETE FROM Ticket WHERE id = ?";
-        db.run(sql ,[id],function(err){
-            if(!err){
-                res.status(OK);
-                //sending url redirection happens on client side
-                res.send('Ticket Deleted');
-            }else{
-                res.status(400);
-                res.send(err);
-            }
-        });
-    }else{
-        res.status(UNAUTHORISED).send('Access Denied');
+    if(req.session.loggedin) {
+        if(req.session.isAdmin){
+            let id = req.params.id;
+            let sql = "DELETE FROM Ticket WHERE id = ?";
+            db.run(sql ,[id],function(err){
+                if(!err){
+                    res.status(OK);
+                    //sending url redirection happens on client side
+                    res.send("'Ticket successfully deleted.'");
+                }else{
+                    res.status(400);
+                    res.send(err);
+                }
+            });
+        }else{
+            // res.status(UNAUTHORISED).send('Access Denied');
+            req.session.prompt = 'Access denied.';
+            req.session.result = 'prompt-fail';
+            res.redirect('/');
+        }
+    }
+    else {
+        req.session.prompt = 'You are not logged in.';
+        req.session.result = 'prompt-fail';
+        res.redirect('/');
     }
 });
+
 router.get('/add_admins',function(req,res){
     res = df.setResponseHeader(req, res);
     if(req.session.loggedin){
@@ -251,7 +311,10 @@ router.get('/add_admins',function(req,res){
                 res.render('main',{layout:'admin/add_admins',loggedin:req.session.loggedin,users:users,prompt:prompt,result:result,isAdmin:req.session.isAdmin});
             });
         }else{
-            res.status(UNAUTHORISED).send('Access Denied');
+            // res.status(UNAUTHORISED).send('Access Denied');
+            req.session.prompt = 'Access denied.';
+            req.session.result = 'prompt-fail';
+            res.redirect('/');
         }
     }else{
         req.session.prompt = 'You are not logged in.';
@@ -262,20 +325,30 @@ router.get('/add_admins',function(req,res){
 
 });
 router.post('/add_admins',function(req,res){
-    if(req.session.loggedin && req.session.isAdmin ){
-        let id = req.body.id;
-        let sql = "UPDATE User SET isAdmin = 1 WHERE id = ?";
-        db.run(sql,[id],function (err) {
-            if(err){
-                res.status(400).send(err);
-            }else{
-                req.session.prompt = 'New Admin added.';
-                req.session.result = 'prompt-success';
-                res.redirect('/admin/add_admins');
-            }
-        });
-    }else{
-        res.status(UNAUTHORISED).send('Access Denied');
+    if(req.session.loggedin) {
+        if(req.session.isAdmin ){
+            let id = req.body.id;
+            let sql = "UPDATE User SET isAdmin = 1 WHERE id = ?";
+            db.run(sql,[id],function (err) {
+                if(err){
+                    res.status(400).send(err);
+                }else{
+                    req.session.prompt = 'New Admin added.';
+                    req.session.result = 'prompt-success';
+                    res.redirect('/admin/add_admins');
+                }
+            });
+        }else{
+            // res.status(UNAUTHORISED).send('Access Denied');
+            req.session.prompt = 'Access denied.';
+            req.session.result = 'prompt-fail';
+            res.redirect('/');
+        }
+    }
+    else {
+        req.session.prompt = 'You are not logged in.';
+        req.session.result = 'prompt-fail';
+        res.redirect('/');
     }
 
 });

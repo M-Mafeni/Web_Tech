@@ -24,7 +24,7 @@
         <h1 class="title-header">Update Ticket</h1>
 
         <div class="admin_bar booking_bar booking_form">
-            <form  action="/admin/tickets/{{ticket.id}}" method="POST">
+            <form id = "update_ticket" action="/admin/tickets/{{ticket.id}}" method="POST">
                 <label class= "email-label" for="origin">Origin</label>
                 <input list = "places" type="text" name="origin" value="{{ticket.origin_place}}" placeholder="Enter Origin Base" required=""></input>
                 <label class= "email-label" for="destination">Destination</label>
@@ -44,14 +44,13 @@
                 <input id="inbound_time" type="time" name="inbound_time" value="{{ticket.d_time}}" required=""></input>
                 <label class= "email-label" for="price">Price</label>
                 <input id="price" type="number" name="price" value="{{ticket.price}}" required=""></input>
-
-
-                <div class="login-btns">
-                    <button class="btn" form="update_ticket" type="submit">Update Ticket</button>
-                    <a href="/admin/tickets"><button class="btn" type="submit">Back</button></a>
-                </div>
-
             </form>
+
+            <div class="login-btns">
+                <button class="btn" form="update_ticket" type="submit">Update Ticket</button>
+                <a href="/admin/tickets"><button class="btn" type="submit">Back</button></a>
+            </div>
+            
         </div>
 
 
