@@ -87,21 +87,18 @@ body {
 
 .date {
     font-size: 80%;
-    /* font-weight: lighter; */
     border-bottom-style: solid;
     border-width: 1px;
     padding-right: 5%;
 }
 
 .time {
-    /* font-size: 100%; */
     font-weight: bold;
     font-size: 90%;
 }
 
 .location {
     font-size: 90%;
-    /* font-weight: bolder; */
 }
 
 #arrivalDate {
@@ -159,8 +156,14 @@ h1 {
 }
 
 .summary_price {
+    font-size: 150%;
+    margin-bottom: 10%;
+}
+
+#summary_price_final {
     font-size: 180%;
     margin-bottom: 10%;
+    text-decoration: underline;
 }
 
 .summary-icon {
@@ -205,6 +208,7 @@ h1 {
     -ms-transition: max-height 0.3s ease-out;
     -o-transition: max-height 0.3s ease-out;
     transition: max-height 0.3s ease-out;
+    display: block;
 }
 
 .change_height_mobile {
@@ -212,15 +216,21 @@ h1 {
 }
 
 .summary_price_mobile {
+    font-size: 80%;
+    margin-right: 5%;
+    margin-bottom: 15px;;
+}
+
+#summary_price_mobile_final {
+    float: right;
     font-size: 100%;
-    float:right;
     margin-right: 5%;
 }
 
 .summary_details_mobile_source {
     font-size: 60%;
     width: 40%;
-    display: inline-block;
+    display: none;
     float: left;
     margin-right: 15%;
     margin-top: 1%;
@@ -229,7 +239,7 @@ h1 {
 .summary_details_mobile_destination {
     font-size: 60%;
     width: 40%;
-    display: inline-block;
+    display: none;
     float: right;
     margin-top: 1%;
 }
@@ -289,7 +299,6 @@ h1 {
 
 @media only screen and (max-width: 450px) {
     body {
-        /* margin-top: 10%; */
         font-size: 110%;
     }
 
@@ -307,17 +316,4 @@ h1 {
     .source, .destination {
         width: 38%;
     }
-}
-
-@media only screen and (max-width: 350px) {
-    body {
-        /* margin-top: 15%; */
-    }
-}
-
-#d_summary_price_mobile {
-    position: relative;
-    left: 75%;
-    float:none;
-
 }

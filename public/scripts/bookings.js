@@ -13,8 +13,14 @@ function start(){
 }
 
 function inbound_selected(){
+    var oldTotalPrice = Number($("#summary_price_mobile_final").text().substring(1));
+    var oldTicketPrice = Number($(".d_ticket-selected .price").text().substring(1));
+
     $(".d_ticket-selected").removeClass("d_ticket-selected");
     $(this).addClass("d_ticket-selected");
+
+    $(".summary_inbound").css("display", "inline-block");
+
 
     var source = $(this).find(".source");
     var departureDate = source.find(".date").text();
@@ -39,6 +45,17 @@ function inbound_selected(){
     $("#d_mobile_summary .arrivalTime").text(arrivalTime);
     $("#d_mobile_summary .arrivalLocation").text(arrivalLoc);
 
+    let priceNum = Number(price.substring(1));
+    if (oldTotalPrice == 0) {
+        $("#summary_price_mobile_final").text(price);
+        $("#summary_price_final").text(price);
+    }
+    else {
+        $("#summary_price_mobile_final").text("£" + (oldTotalPrice - oldTicketPrice + priceNum).toString());
+        $("#summary_price_final").text("£" + (oldTotalPrice - oldTicketPrice + priceNum).toString());
+    }
+
+
     // code for large viewports
     $("#d_unselected").remove();
     $("#d_summary_details").show();
@@ -62,11 +79,19 @@ function inbound_selected(){
     $('input[name="in_d_loc"]').val(arrivalLoc);
 
     if ($("#summary_price").text().length > 0) showContinueButtons();
+
+    // display arrows
+    if ($(".fa-angle-double-down").hasClass("disable-fa")) $(".fa-angle-double-up").removeClass("disable-fa");
 }
 
 function outbound_selected() {
+    var oldTotalPrice = Number($("#summary_price_mobile_final").text().substring(1));
+    var oldTicketPrice = Number($(".ticket-selected .price").text().substring(1));
+
     $(".ticket-selected").removeClass("ticket-selected");
     $(this).addClass("ticket-selected");
+
+    $(".summary_outbound").css("display", "inline-block");
 
     var source = $(this).find(".source");
     var departureDate = source.find(".date").text();
@@ -92,6 +117,16 @@ function outbound_selected() {
     $("#mobile_summary .arrivalTime").text(arrivalTime);
     $("#mobile_summary .arrivalLocation").text(arrivalLoc);
 
+    let priceNum = Number(price.substring(1));
+    if (oldTotalPrice == 0) {
+        $("#summary_price_mobile_final").text(price);
+        $("#summary_price_final").text(price);
+    }
+    else {
+        $("#summary_price_mobile_final").text("£" + (oldTotalPrice - oldTicketPrice + priceNum).toString());
+        $("#summary_price_final").text("£" + (oldTotalPrice - oldTicketPrice + priceNum).toString());
+    }
+
     // code for large viewports
     $("#o_unselected").remove();
     $("#summary_details").show();
@@ -115,14 +150,15 @@ function outbound_selected() {
     $('input[name="out_d_loc"]').val(arrivalLoc);
 
     if ($("#d_summary_price").text().length > 0) showContinueButtons();
+
+
+    // display arrows
+    if ($(".fa-angle-double-down").hasClass("disable-fa")) $(".fa-angle-double-up").removeClass("disable-fa");
 }
 
 function showContinueButtons() {
     // display continue buttons
     $(".no-continue").removeClass("no-continue");
-
-    // display arrows
-    if ($(".fa-angle-double-down").hasClass("disable-fa")) $(".fa-angle-double-up").removeClass("disable-fa");
 }
 
 function showSummary() {

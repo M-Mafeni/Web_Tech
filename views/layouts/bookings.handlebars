@@ -22,29 +22,31 @@
             <span id="summary-title-mobile">No ticket selected</span>
             <i class="fa fa-angle-double-down disable-fa" ></i>
             <i class="fa fa-angle-double-up disable-fa" ></i>
-            <div id = "summary_price_mobile" class = "summary_price_mobile"></div>
+
+            <div id = "summary_price_mobile_final"></div>
 
             <div class = "summary-mobile" id="mobile_summary">
-                <p class = "summary_details_mobile_source">
+                <div id = "summary_price_mobile" class = "summary_price_mobile">No outbound ticket selected</div>
+                <p class = "summary_details_mobile_source summary_outbound">
                     <div class = "date departureDate"></div>
                     <span class = "time departureTime"></span>
                     <span class = "location departureLocation"></span>
                 </p>
-                <p class = "summary_details_mobile_destination">
+                <p class = "summary_details_mobile_destination summary_outbound">
                     <div class = "date arrivalDate"></div>
                     <span class = "time arrivalTime"></span>
                     <span class = "location arrivalLocation"></span>
                 </p>
             </div>
 
-            <div id = "d_summary_price_mobile" class = "summary_price_mobile"></div>
             <div class = "summary-mobile" id="d_mobile_summary">
-                <p class = "summary_details_mobile_source">
+                <div id = "d_summary_price_mobile" class = "summary_price_mobile">No inbound ticket selected</div>
+                <p class = "summary_details_mobile_source summary_inbound">
                     <div class = "date departureDate"></div>
                     <span class = "time departureTime"></span>
                     <span class = "location departureLocation"></span>
                 </p>
-                <p class = "summary_details_mobile_destination">
+                <p class = "summary_details_mobile_destination summary_inbound">
                     <div class = "date arrivalDate"></div>
                     <span class = "time arrivalTime"></span>
                     <span class = "location arrivalLocation"></span>
@@ -74,6 +76,7 @@
                 <div class="column summary" id = "summary">
                 <h1>Summary</h1>
                     <p id = "o_unselected">No outbound ticket selected</p>
+                    <div id = "summary_price_final"></div>
                     <div id = "summary_price" class = "summary_price"></div>
                     <div id = "summary_details" class = "summary_details">
                         <div class = "date departureDate"></div>
