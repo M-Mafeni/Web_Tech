@@ -7,11 +7,11 @@ This was our submission for the Web Technologies unit. Our website is a booking 
 ## Website functionality
 Our website consists of a total of four main pages:
 - Home page - consists of a booking form and a section describing Astra
-- Bookings page - lists all tickets that meet the user's input into the booking form
-- Confirmation page - lists the final two tickets selected by the user as confirmation
+- Bookings page - lists all tickets that meet the user's input into the booking form. The user has to be logged in for this
+- Confirmation page - lists the final two tickets selected by the user as confirmation. The user also has to be logged in for this
 - Registering page - gives the user an opportunity to create a new account
 
-We also have an Account section on the website where users can view and modify their personal details and previously purchased tickets. For Admin accounts, there are extra pages where Admins can add, modify or remove tickets in the database, as well as grant admin privileges to other accounts.
+We also have an Account section on the website where logged-in users can view and modify their personal details and previously purchased tickets. For Admin accounts, there are extra pages where Admins can add, modify or remove tickets in the database, as well as grant admin privileges to other accounts.
 
 ## Technologies used
 We used [ExpressJS](https://expressjs.com/) for the server, and [Handlebars](https://handlebarsjs.com/) for templating the HTML. We also used [Materialize.css](https://materializecss.com/getting-started.html) as the basis of our website's styling, along with [JQuery](https://jquery.com/) for the front-end scripting. For the database, we used an embedded [SQLite](https://www.sqlite.org/index.html) database.
