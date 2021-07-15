@@ -1,5 +1,5 @@
 {
-    "name": "Astra",
+    "name": "astra",
     "description": "Space Travel Booking Site",
     "scripts": {
         "start": "node server.js",
