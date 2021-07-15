@@ -23,7 +23,7 @@ module.exports = {
   mode: "development",
 
   devServer: {
-    contentBase: path.resolve(__dirname, 'dist'),
+    contentBase: path.resolve(__dirname, '../public'),
     port: 4008,
     stats: 'errors-only'
   },
@@ -31,8 +31,8 @@ module.exports = {
   entry: './src/index.js',
 
   output: {
-    path: path.resolve(__dirname, 'dist'),
-    filename: 'bundle.js'
+    path: path.resolve(__dirname, '../public'),
+    filename: 'dist/bundle.js'
   },
 
   module: {
@@ -75,11 +75,6 @@ module.exports = {
   plugins: [
     new webpack.LoaderOptionsPlugin({
       debug: true
-    }),
-    new HtmlWebpackPlugin({
-      title: 'purescript-webpack-example',
-      template: '../public/index.html',
-      inject: false  // See stackoverflow.com/a/38292765/3067181
     })
   ].concat(plugins)
 };
