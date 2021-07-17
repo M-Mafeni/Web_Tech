@@ -2,6 +2,8 @@ module Main where
 
 import Prelude
 
+import Components.Footer (mkFooterComponent)
+import Components.Navbar (mkNavBarComponent)
 import Data.Maybe (Maybe(..))
 import Effect (Effect)
 import Effect.Exception (throw)
@@ -11,7 +13,6 @@ import Web.DOM.NonElementParentNode (getElementById)
 import Web.HTML (window)
 import Web.HTML.HTMLDocument (toDocument)
 import Web.HTML.Window (document)
-import Components.Footer (mkFooterComponent)
 
 
 main :: Effect Unit
@@ -21,5 +22,6 @@ main = do
   case val of
     Nothing -> throw "Could not find element with id = app."
     Just app -> do
+      navbar <- mkNavBarComponent
       footer <- mkFooterComponent 
-      ReactDom.render (footer unit) app
+      ReactDom.render (navbar {isLoggedIn: false, isAdmin: true, isMainPage: true} <> ReactDom.text "Hello World" <> footer unit) app
