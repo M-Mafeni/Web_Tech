@@ -2,7 +2,6 @@ module Components.HomePage (mkHomePageComponent, HomePageProps) where
 
 import Prelude
 
-import CSS (putStyleSheet)
 import Components.LoginForm (loginForm)
 import Components.Navbar (mkNavBarComponent)
 import Components.Page.HomePageStyle (homePageStyleSheet)
@@ -11,6 +10,7 @@ import Data.Maybe (Maybe(..), fromMaybe, isJust)
 import Data.Monoid (guard)
 import React.Basic.DOM as DOM
 import React.Basic.Hooks as R
+import Style (addStyletoHead)
 
 type HomePageProps = {
   isLoggedIn :: Boolean,
@@ -180,9 +180,9 @@ mkHomePageComponent :: R.Component HomePageProps
 mkHomePageComponent = do
   navbar <- mkNavBarComponent
   prompt <- mkPromptComponent
+  addStyletoHead homePageStyleSheet
   R.component "HomePage" $ \props -> pure $ R.fragment 
       [
-        homePageStyleSheet,
         navbar {isAdmin: props.isAdmin, isLoggedIn: props.isLoggedIn, isMainPage: true},
         loginForm,
         DOM.div {

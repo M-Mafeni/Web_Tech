@@ -8,8 +8,6 @@ import CSS.TextAlign (center, textAlign)
 import Data.Maybe (Maybe(..))
 import Data.NonEmpty (NonEmpty(..))
 import Data.These (These, these)
-import React.Basic (JSX)
-import React.Basic.DOM as DOM
 
 aboutUsHeaderStyle :: CSS
 aboutUsHeaderStyle = star & (byClass "header") ? do
@@ -28,7 +26,7 @@ homePageStyle = aboutUsHeaderStyle
 getStyleSheet :: These Inline Sheet -> String
 getStyleSheet = these getInline getSheet (\x y -> getInline x <> getSheet y)
 
-homePageStyleSheet :: JSX
+homePageStyleSheet :: String
 homePageStyleSheet = case render homePageStyle of
   Nothing -> mempty
-  Just value -> DOM.style_ [DOM.text $ getStyleSheet value]
+  Just value -> getStyleSheet value
