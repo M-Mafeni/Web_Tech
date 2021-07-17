@@ -4,6 +4,7 @@ import Prelude
 
 import Components.Footer (mkFooterComponent)
 import Components.Navbar (mkNavBarComponent)
+import Components.Prompt (mkPromptComponent, promptSuccess)
 import Data.Maybe (Maybe(..))
 import Effect (Effect)
 import Effect.Exception (throw)
@@ -23,5 +24,6 @@ main = do
     Nothing -> throw "Could not find element with id = app."
     Just app -> do
       navbar <- mkNavBarComponent
-      footer <- mkFooterComponent 
-      ReactDom.render (navbar {isLoggedIn: false, isAdmin: true, isMainPage: true} <> ReactDom.text "Hello World" <> footer unit) app
+      footer <- mkFooterComponent
+      prompt <- mkPromptComponent
+      ReactDom.render (prompt {result: Just promptSuccess, prompt: Just "Logged In Successfully!" } <> footer unit) app
