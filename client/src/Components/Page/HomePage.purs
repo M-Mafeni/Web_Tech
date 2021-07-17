@@ -2,8 +2,10 @@ module Components.HomePage (mkHomePageComponent, HomePageProps) where
 
 import Prelude
 
+import CSS (putStyleSheet)
 import Components.LoginForm (loginForm)
 import Components.Navbar (mkNavBarComponent)
+import Components.Page.HomePageStyle (homePageStyleSheet)
 import Components.Prompt (mkPromptComponent)
 import Data.Maybe (Maybe(..), fromMaybe, isJust)
 import Data.Monoid (guard)
@@ -120,6 +122,16 @@ getAboutUsSection loggedIn = R.fragment [
     children: [
       DOM.div {
         className: "header",
+        -- style: DOM.css {
+        --   background: "#007cbf",
+        --   fontFamily:"'Righteous', sans-serif",
+        --   fontSize: "60px",
+        --   textAlign: "center",
+        --   width: "50%",
+        --   margin: "0 auto",
+        --   marginBottom: "8%",
+        --   borderRadius: "15px"
+        -- },
         children: [DOM.text "About Us"]
       },
       DOM.div {
@@ -165,11 +177,12 @@ getAboutUsSection loggedIn = R.fragment [
 ] 
 
 mkHomePageComponent :: R.Component HomePageProps
-mkHomePageComponent = do 
+mkHomePageComponent = do
   navbar <- mkNavBarComponent
   prompt <- mkPromptComponent
   R.component "HomePage" $ \props -> pure $ R.fragment 
       [
+        homePageStyleSheet,
         navbar {isAdmin: props.isAdmin, isLoggedIn: props.isLoggedIn, isMainPage: true},
         loginForm,
         DOM.div {

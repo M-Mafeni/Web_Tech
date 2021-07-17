@@ -323,17 +323,6 @@ input[type="date"]:hover::-webkit-calendar-picker-indicator:hover {
     margin-bottom: 3%;
 }
 
-.header {
-    background: #007cbf;
-    font-family: 'Righteous', sans-serif;
-    font-size: 60px;
-    text-align: center;
-    width: 50%;
-    margin: 0 auto;
-    margin-bottom: 8%;
-    border-radius: 15px;
-}
-
 .about_logo {
     float:left;
     height: 130px;
