@@ -1,4 +1,4 @@
-module Components.Footer (mkFooterComponent) where
+module Components.Footer (mkFooterComponent, footer) where
 
 import Prelude
 
@@ -6,9 +6,8 @@ import React.Basic.DOM as DOM
 import React.Basic.Hooks as R
 import React.Basic.DOM.SVG as SVG
 
-
-mkFooterComponent :: R.Component Unit
-mkFooterComponent = R.component "Footer"  $ \_ -> pure $ DOM.footer_ [footerText, footerIcons] where
+footer :: R.JSX
+footer = DOM.footer_ [footerText, footerIcons] where
   footerText :: R.JSX
   footerText = DOM.div 
     { className: "footer_text"
@@ -58,3 +57,6 @@ mkFooterComponent = R.component "Footer"  $ \_ -> pure $ DOM.footer_ [footerText
         }
       ]
     }
+  
+mkFooterComponent :: R.Component Unit
+mkFooterComponent = R.component "Footer"  $ \_ -> pure footer
