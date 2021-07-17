@@ -2,10 +2,7 @@ module Main where
 
 import Prelude
 
-import Components.Footer (mkFooterComponent)
-import Components.LoginForm (loginForm)
-import Components.Navbar (mkNavBarComponent)
-import Components.Prompt (mkPromptComponent, promptSuccess)
+import Components.HomePage (mkHomePageComponent)
 import Data.Maybe (Maybe(..))
 import Effect (Effect)
 import Effect.Exception (throw)
@@ -24,7 +21,5 @@ main = do
   case val of
     Nothing -> throw "Could not find element with id = app."
     Just app -> do
-      navbar <- mkNavBarComponent
-      footer <- mkFooterComponent
-      prompt <- mkPromptComponent
-      ReactDom.render ( loginForm <> prompt {result: Just promptSuccess, prompt: Just "Logged In Successfully!" } <> footer unit) app
+      homepage <- mkHomePageComponent
+      ReactDom.render (homepage {isLoggedIn: false, isAdmin: false}) app
