@@ -3,6 +3,7 @@ module Main where
 import Prelude
 
 import Components.Footer (mkFooterComponent)
+import Components.LoginForm (loginForm)
 import Components.Navbar (mkNavBarComponent)
 import Components.Prompt (mkPromptComponent, promptSuccess)
 import Data.Maybe (Maybe(..))
@@ -26,4 +27,4 @@ main = do
       navbar <- mkNavBarComponent
       footer <- mkFooterComponent
       prompt <- mkPromptComponent
-      ReactDom.render (prompt {result: Just promptSuccess, prompt: Just "Logged In Successfully!" } <> footer unit) app
+      ReactDom.render ( loginForm <> prompt {result: Just promptSuccess, prompt: Just "Logged In Successfully!" } <> footer unit) app
