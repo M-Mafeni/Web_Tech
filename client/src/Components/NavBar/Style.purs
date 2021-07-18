@@ -1,8 +1,9 @@
 module Components.NavBar.Style (navBarStyleSheet) where
 
-import Prelude
+import Prelude hiding (top)
 
-import CSS (CSS, Float(..), Selector, a, background, block, byClass, clear, clearBoth, color, display, displayNone, ease, easeOut, em, fixed, float, floatLeft, floatRight, fontSize, height, hover, margin, marginLeft, maxHeight, nil, padding, paddingBottom, paddingLeft, paddingRight, paddingTop, pct, position, px, rgba, right, sec, star, transition, white, width, zIndex, (&), (?), (|*))
+import CSS (CSS, Float(..), Selector, a, background, block, byClass, byId, clear, clearBoth, color, display, displayNone, ease, easeOut, em, fixed, float, floatLeft, floatRight, fontSize, height, hover, left, margin, marginLeft, marginTop, maxHeight, nil, padding, paddingBottom, paddingLeft, paddingRight, paddingTop, pct, position, px, rgba, right, sec, star, top, transition, white, width, zIndex, (&), (?), (|*))
+import CSS.Common (auto)
 import CSS.Overflow (hidden, overflow)
 import CSS.TextAlign (center, textAlign)
 import Data.Tuple (Tuple(..), uncurry)
@@ -52,6 +53,7 @@ navMobileQueries =  concatCSS $ map (uncurry makeMediaQueryScreenMaxWidth) [Tupl
     navWrapper
     navWrapperA
     navWrapperResponsive
+    (star & byClass "nav_links") ? padding (em 0.8) (em 0.8) (em 0.8) (em 0.8)
 
 navItems :: CSS
 navItems = navItemsSelector ? do
@@ -92,11 +94,30 @@ navWrapperA = (navWrapperSelector |* a) ? do
 navWrapperResponsive :: CSS
 navWrapperResponsive = (navWrapperSelector & byClass "responsive") ? do
   maxHeight $ em 20.0
+
+navFavicon :: CSS
+navFavicon = (star & byClass "nav_favicon") ? do
+  width $ pct 10.0
+  height auto
+  marginTop $ pct 3.0
+
+mobileNavBackground :: CSS
+mobileNavBackground = (star & byId "mobile-nav-bg") ? do
+  display displayNone
+  position fixed
+  height (pct 100.0)
+  width (pct 100.0)
+  left nil
+  top nil
+  zIndex 1
+
 navBarStyleSheet :: CSS
 navBarStyleSheet = do
   navItems
   navLinks
   navChildItems
   navLogo
+  navFavicon
+  mobileNavBackground
   navMobileQueries
 
