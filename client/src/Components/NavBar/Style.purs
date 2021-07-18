@@ -88,7 +88,7 @@ navWrapper = navWrapperSelector ? do
 navWrapperA :: CSS
 navWrapperA = (navWrapperSelector |* a) ? do
   float FloatNone
-  display displayNone
+  display block
   clear clearBoth
 
 navWrapperResponsive :: CSS
@@ -116,12 +116,12 @@ navBarColour = (star & byClass "bar_colour") ? background (fromInt 0x00304a)
 
 navBarStyleSheet :: CSS
 navBarStyleSheet = do
-  navBarColour
   navItems
   navLinks
   navChildItems
   navLogo
   navFavicon
+  navBarColour
   mobileNavBackground
   navMobileQueries
 
