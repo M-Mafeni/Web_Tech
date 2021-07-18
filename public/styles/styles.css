@@ -11,15 +11,6 @@ html {
   font-family: 'Rubik', sans-serif;
 }
 
-.page-container {
-    display: flex;
-    flex-direction: column;
-}
-
-#app {
-    padding-bottom: 150px;
-}
-
 body {
     background: #000000;
     color: white;

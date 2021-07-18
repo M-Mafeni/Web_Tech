@@ -108,15 +108,6 @@ makeAboutSubSection imgClass imgSrc text maybeSubHeader = DOM.div {
 }
 getAboutUsSection :: Boolean -> R.JSX
 getAboutUsSection loggedIn = R.fragment [
-  DOM.a {
-    name: "about_us",
-    id: "about_link",
-    children: [DOM.text "about"]
-  },
-  DOM.img {
-    src: "assets/sideways_rocket_animated.svg",
-    id: "animated_rocket"
-  },
   DOM.section {
     className: "about_us",
     children: [
@@ -181,7 +172,16 @@ mkHomePageComponent = do
             prompt {prompt: Nothing, result: Nothing},
             advertText,
             bookingBar,
-            getAboutUsSection props.isLoggedIn
+            DOM.a {
+              name: "about_us",
+              id: "about_link",
+              children: [DOM.text "about"]
+            },
+            DOM.img {
+              src: "assets/sideways_rocket_animated.svg",
+              id: "animated_rocket"
+            }
           ]
-        }
+        },
+        getAboutUsSection props.isLoggedIn
       ]
