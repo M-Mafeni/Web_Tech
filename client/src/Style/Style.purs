@@ -4,14 +4,18 @@ module Style (
   mainBackgroundColor,
   combineCSSWithSelector,
   combineCSSWithRefinement,
-  concatCSS
+  concatCSS,
+  makeMediaQueryScreenMaxWidth,
+  combineCSS
   ) where
 
 import Prelude
 
-import CSS (CSS, Color, Inline, Refinement, Selector, Sheet, fromInt, getInline, getSheet, render, (?))
+import CSS (CSS, Color, Inline, Refinement, Selector, Sheet, fromInt, getInline, getSheet, px, query, render, (?))
+import CSS.Media (maxWidth, screen) as Media
 import Data.Bifunctor (lmap)
 import Data.Maybe (Maybe(..))
+import Data.NonEmpty (NonEmpty(..))
 import Data.These (These, these)
 import Data.Traversable (sequence)
 import Data.Tuple (Tuple, uncurry)
@@ -38,13 +42,18 @@ renderStyleSheet stylesheet = case render stylesheet of
   Just value -> getStyleSheet value
 
 combineCSSWithSelector :: (Selector -> Selector) -> Array (Tuple Selector CSS) -> CSS
-combineCSSWithSelector selFn = (void <<< sequence <<< map (uncurry (?) <<< lmap selFn))
-
+combineCSSWithSelector = combineCSS
 combineCSSWithRefinement :: (Refinement -> Selector) -> Array (Tuple Refinement CSS) -> CSS
-combineCSSWithRefinement selFn = (void <<< sequence <<< map (uncurry (?) <<< lmap selFn))
+combineCSSWithRefinement = combineCSS
+
+combineCSS :: forall a. (a -> Selector) -> Array (Tuple a CSS) -> CSS
+combineCSS selFn = (void <<< sequence <<< map (uncurry (?) <<< lmap selFn))
 
 concatCSS :: Array CSS -> CSS
 concatCSS = void <<< sequence
+
+makeMediaQueryScreenMaxWidth :: Number -> CSS -> CSS
+makeMediaQueryScreenMaxWidth val = query Media.screen (NonEmpty (Media.maxWidth $ px val) []) 
 
 addStyletoHead :: CSS -> Effect Unit
 addStyletoHead style = do

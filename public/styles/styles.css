@@ -26,58 +26,10 @@ body {
     font-size: 150%;
 }
 
-.nav-items {
-    width: 100%;
-    position: fixed;
-    background: rgba(0,0, 0, 0.2);
-    right: 0%;
-    display: block;
-    z-index: 10;
-    overflow: hidden;
-    transition: background 0.3s;
-    font-size: 80%;
-}
-
-.nav_links {
-    padding: 15px 0;
-}
-
-.nav-items a {
-    float: right;
-    display: inline-block;
-    padding-right: 2%;
-    padding-left: 2%;
-    text-align: center;
-    font-size: 100%;
-    color: white;
-    transition: background 0.3s;
-}
-
-.nav-items a:hover {
-    background: var(--main-bg-colour);
-}
-
 .nav_favicon {
     width: 10%;
     height: auto;
     margin-top: 3%;
-}
-
-.nav-items a.brand-logo {
-    float: left;
-}
-
-.nav-items a.brand-favicon {
-    float: left;
-    padding: 0;
-    margin-left: -90px;
-    display: none;
-}
-
-.nav-items .icon {
-    display: none;
-    padding-top: 1%;
-    padding-bottom: 1%;
 }
 
 #mobile-nav-bg {
@@ -533,10 +485,6 @@ footer svg:hover path {
         width: 100%;
     }
 
-    .nav-items a.brand-logo {
-        padding-left: 2%;
-        padding-right: 0;
-    }
 }
 
 @media only screen and (max-width: 700px) {
@@ -579,11 +527,6 @@ footer svg:hover path {
         margin-bottom: 2%;
     }
 
-    .nav-items a.icon {
-        float: right;
-        display: block;
-    }
-
     .nav-wrapper a {
         float: none;
 		display: block;
@@ -610,14 +553,6 @@ footer svg:hover path {
 	.nav_links {
 		padding: 0.8em;
 	}
-
-    .nav-items a.brand-logo {
-        display: none;
-    }
-
-    .nav-items a.brand-favicon {
-        display: block;
-    }
 
     div.header {
         font-size: 40px;
