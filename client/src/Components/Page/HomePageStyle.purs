@@ -2,12 +2,10 @@ module Components.Page.HomePageStyle (homePageStyleSheet) where
 
 import Prelude
 
-import CSS (CSS, Inline, Sheet, backgroundColor, borderRadius, byClass, fontFamily, fontSize, fromInt, getInline, getSheet, margin, marginBottom, pct, px, render, sansSerif, star, width, (&), (?))
+import CSS (CSS, backgroundColor, borderRadius, byClass, fontFamily, fontSize, fromInt, margin, marginBottom, pct, px, sansSerif, star, width, (&), (?))
 import CSS.Common (auto)
 import CSS.TextAlign (center, textAlign)
-import Data.Maybe (Maybe(..))
 import Data.NonEmpty (NonEmpty(..))
-import Data.These (These, these)
 
 aboutUsHeaderStyle :: CSS
 aboutUsHeaderStyle = star & (byClass "header") ? do
@@ -20,13 +18,5 @@ aboutUsHeaderStyle = star & (byClass "header") ? do
   marginBottom (pct 8.0)
   borderRadius (px 15.0) (px 15.0) (px 15.0) (px 15.0)
 
-homePageStyle :: CSS
-homePageStyle = aboutUsHeaderStyle
-
-getStyleSheet :: These Inline Sheet -> String
-getStyleSheet = these getInline getSheet (\x y -> getInline x <> getSheet y)
-
-homePageStyleSheet :: String
-homePageStyleSheet = case render homePageStyle of
-  Nothing -> mempty
-  Just value -> getStyleSheet value
+homePageStyleSheet :: CSS
+homePageStyleSheet = aboutUsHeaderStyle

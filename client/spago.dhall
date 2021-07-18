@@ -12,10 +12,13 @@ to generate this file without the comments in this block.
 -}
 { name = "my-project"
 , dependencies =
-  [ "console"
+  [ "arrays"
+  , "bifunctors"
+  , "console"
   , "css"
   , "effect"
   , "exceptions"
+  , "foldable-traversable"
   , "maybe"
   , "nonempty"
   , "prelude"
@@ -24,6 +27,7 @@ to generate this file without the comments in this block.
   , "react-basic-dom"
   , "react-basic-hooks"
   , "these"
+  , "tuples"
   , "web-dom"
   , "web-html"
   ]
