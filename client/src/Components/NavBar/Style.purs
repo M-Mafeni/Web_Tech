@@ -2,7 +2,7 @@ module Components.NavBar.Style (navBarStyleSheet) where
 
 import Prelude hiding (top)
 
-import CSS (CSS, Float(..), Selector, a, background, block, byClass, byId, clear, clearBoth, color, display, displayNone, ease, easeOut, em, fixed, float, floatLeft, floatRight, fontSize, height, hover, left, margin, marginLeft, marginTop, maxHeight, nil, padding, paddingBottom, paddingLeft, paddingRight, paddingTop, pct, position, px, rgba, right, sec, star, top, transition, white, width, zIndex, (&), (?), (|*))
+import CSS (CSS, Float(..), Selector, a, background, block, byClass, byId, clear, clearBoth, color, display, displayNone, ease, easeOut, em, fixed, float, floatLeft, floatRight, fontSize, fromInt, height, hover, left, margin, marginLeft, marginTop, maxHeight, nil, padding, paddingBottom, paddingLeft, paddingRight, paddingTop, pct, position, px, rgba, right, sec, star, top, transition, white, width, zIndex, (&), (?), (|*))
 import CSS.Common (auto)
 import CSS.Overflow (hidden, overflow)
 import CSS.TextAlign (center, textAlign)
@@ -111,8 +111,12 @@ mobileNavBackground = (star & byId "mobile-nav-bg") ? do
   top nil
   zIndex 1
 
+navBarColour :: CSS
+navBarColour = (star & byClass "bar_colour") ? background (fromInt 0x00304a)
+
 navBarStyleSheet :: CSS
 navBarStyleSheet = do
+  navBarColour
   navItems
   navLinks
   navChildItems
