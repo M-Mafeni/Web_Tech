@@ -122,16 +122,6 @@ getAboutUsSection loggedIn = R.fragment [
     children: [
       DOM.div {
         className: "header",
-        -- style: DOM.css {
-        --   background: "#007cbf",
-        --   fontFamily:"'Righteous', sans-serif",
-        --   fontSize: "60px",
-        --   textAlign: "center",
-        --   width: "50%",
-        --   margin: "0 auto",
-        --   marginBottom: "8%",
-        --   borderRadius: "15px"
-        -- },
         children: [DOM.text "About Us"]
       },
       DOM.div {
