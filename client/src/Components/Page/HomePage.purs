@@ -3,7 +3,7 @@ module Components.HomePage (mkHomePageComponent, HomePageProps) where
 import Prelude
 
 import Components.LoginForm (loginForm)
-import Components.Navbar (mkNavBarComponent)
+import Components.NavBar (mkNavBarComponent)
 import Components.Page.HomePageStyle (homePageStyleSheet)
 import Components.Prompt (mkPromptComponent)
 import Data.Maybe (Maybe(..), fromMaybe, isJust)
