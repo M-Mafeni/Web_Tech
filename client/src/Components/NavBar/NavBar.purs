@@ -64,7 +64,7 @@ mkNavBarComponent = do
         makeSimpleNavlink "/account" "My Account" Nothing
       ]
       else [
-        makeSimpleNavlink "" "Login/Register" (Just "login_link")
+        makeSimpleNavlink "#" "Login/Register" (Just "login_link")
       ]
     let admin = guard (props.isLoggedIn && props.isAdmin) $ makeSimpleNavlink "/admin" "Admin" Nothing
     let aboutUs = guard props.isMainPage $ makeSimpleNavlink "#about_us" "About Us" (Just "about_nav_link")
