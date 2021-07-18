@@ -15,6 +15,7 @@ makeRequiredInput type1 name placeholder className = DOM.input {
 loginForm :: JSX
 loginForm = DOM.div {
   className: "login-form",
+  id: "loginForm",
   children: [
     DOM.form {
       className: "login-form-container",
