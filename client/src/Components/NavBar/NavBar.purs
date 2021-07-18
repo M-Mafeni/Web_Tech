@@ -77,6 +77,6 @@ mkNavBarComponent = do
     let navItems = DOM.div {
       className: "nav-items",
       id: "topnav",
-      children: [styleSheet] <> navLogos <> [icon, navWrapper, mobileNavBackground]
+      children: [styleSheet] <> navLogos <> [icon, navWrapper]
     }
-    pure navItems
+    pure $ R.fragment [navItems, mobileNavBackground]
