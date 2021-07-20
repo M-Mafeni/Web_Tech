@@ -3,7 +3,7 @@ module Components.HomePage (mkHomePageComponent, HomePageProps) where
 import Prelude
 
 import Components.HomePage.Style (homePageStyleSheet)
-import Components.LoginForm (loginForm)
+import Components.LoginForm (mkLoginFormComponent)
 import Components.NavBar (mkNavBarComponent)
 import Components.Prompt (mkPromptComponent)
 import Data.Maybe (Maybe(..), fromMaybe, isJust)
@@ -161,11 +161,12 @@ mkHomePageComponent :: R.Component HomePageProps
 mkHomePageComponent = do
   navbar <- mkNavBarComponent
   prompt <- mkPromptComponent
+  loginForm <- mkLoginFormComponent
   addStyletoHead homePageStyleSheet
   R.component "HomePage" $ \props -> pure $ R.fragment 
       [
         navbar {isAdmin: props.isAdmin, isLoggedIn: props.isLoggedIn, isMainPage: true},
-        loginForm,
+        loginForm unit,
         DOM.div {
           className: "star_bg",
           children: [
