@@ -1,4 +1,4 @@
-module Components.Page.HomePageStyle (homePageStyleSheet) where
+module Components.HomePage.Style (homePageStyleSheet) where
 
 import Prelude
 
