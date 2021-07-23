@@ -21,32 +21,6 @@ label {
     color: #cccccc;
 }
 
-.registerText {
-    text-align: center;
-    margin: 5% 0;
-}
-
-.registerText p {
-    margin: 0;
-    display: inline-block;
-    padding-right: 10px;
-}
-
-.registerText a {
-    display: inline-block;
-    font-weight: bolder;
-    color: #dddddd;
-    transition: color 0.3s;
-}
-
-.registerText a:hover {
-    color: var(--light-green-colour);
-}
-
-.registerText a:focus {
-    color: var(--light-green-colour);
-}
-
 .star_bg {
     background-image: url(/assets/space.png);
     background-size: cover;

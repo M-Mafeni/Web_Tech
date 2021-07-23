@@ -6,7 +6,8 @@ module Style (
   combineCSSWithRefinement,
   concatCSS,
   makeMediaQueryScreenMaxWidth,
-  combineCSS
+  combineCSS,
+  lightGreenColor
   ) where
 
 import Prelude
@@ -32,6 +33,8 @@ import Web.HTML.Window (document)
 
 mainBackgroundColor :: Color
 mainBackgroundColor = fromInt 0x007cbf
+lightGreenColor :: Color
+lightGreenColor = fromInt 0x2cbbad
 
 getStyleSheet :: These Inline Sheet -> String
 getStyleSheet = these getInline getSheet (\x y -> getInline x <> getSheet y)
