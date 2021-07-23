@@ -19,7 +19,7 @@ type HomePageProps = {
 
 advertText :: R.JSX
 advertText = DOM.div {
-  className: "advert_text",
+  className: "t-minus-text",
   children: [DOM.text "In T-minus 9,8,7,...."]
 }
 
