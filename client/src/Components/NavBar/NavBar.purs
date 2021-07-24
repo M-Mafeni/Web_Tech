@@ -5,14 +5,18 @@ import Prelude
 import Components.NavBar.Style (navBarStyleSheet)
 import Data.Maybe (Maybe(..), fromMaybe)
 import Data.Monoid (guard)
+import Effect (Effect)
 import React.Basic.DOM as DOM
+import React.Basic.Events (handler_)
 import React.Basic.Hooks as R
 import Style (addStyletoHead)
 
+-- type SetStateFn = 
 type NavBarProps = {
   isLoggedIn :: Boolean,
   isAdmin :: Boolean,
-  isMainPage:: Boolean
+  isMainPage :: Boolean,
+  setLoginOpen :: (Boolean -> Boolean) -> Effect Unit
 }
 
 makeSimpleNavlink :: String -> String -> Maybe String -> R.JSX
@@ -27,7 +31,7 @@ mkNavBarComponent :: R.Component NavBarProps
 mkNavBarComponent = do
   -- addSty nav
   addStyletoHead navBarStyleSheet
-  R.component "Footer" $ \props -> do
+  R.component "NavBar" $ \props -> do
     let styleSheet = guard (not props.isMainPage) DOM.link {
       rel: "stylesheet",
       href: "styles/navbar.css"
@@ -58,13 +62,20 @@ mkNavBarComponent = do
       className: "icon",
       children: [DOM.i {className: "fa fa-bars"}]
     }
+    let loginLink = DOM.a {
+        className: "nav_links",
+        href: "#",
+        children: [DOM.text "Login/Register"],
+        id: "login_link",
+        onClick: handler_ (props.setLoginOpen (\_ -> true))
+      }
     let loginLinks = if props.isLoggedIn 
       then [
         makeSimpleNavlink "/logout" "Logout" Nothing,
         makeSimpleNavlink "/account" "My Account" Nothing
       ]
       else [
-        makeSimpleNavlink "#" "Login/Register" (Just "login_link")
+        loginLink
       ]
     let admin = guard (props.isLoggedIn && props.isAdmin) $ makeSimpleNavlink "/admin" "Admin" Nothing
     let aboutUs = guard props.isMainPage $ makeSimpleNavlink "#about_us" "About Us" (Just "about_nav_link")

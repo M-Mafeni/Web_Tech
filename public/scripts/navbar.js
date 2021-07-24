@@ -8,8 +8,6 @@ function start(){
     $("#mobile-nav-bg").click(closeNav);
     $("#about_nav_link").click(closeNav);
     $(".icon").click(makeBarResponsive);
-    $("#login_link").click(openForm);
-    $("#login_close").click(closeForm);
 
     // close the login form by clicking outside of it
     var modal = document.getElementById("loginForm");
@@ -25,15 +23,6 @@ function setLoginPos() {
     var height = $(window).height();
     var loginHeight = $("#loginFormContent").height();
     $("#loginForm").css("padding-top", (height-loginHeight)/2);
-}
-
-function openForm() {
-    document.getElementById("loginForm").style.display = "block";
-    setLoginPos();
-}
-
-function closeForm() {
-    document.getElementById("loginForm").style.display = "none";
 }
 
 // on the main page, change nav bar to be opaque in the about section

@@ -8,6 +8,7 @@ import Components.NavBar (mkNavBarComponent)
 import Components.Prompt (mkPromptComponent)
 import Data.Maybe (Maybe(..), fromMaybe, isJust)
 import Data.Monoid (guard)
+import Data.Tuple.Nested ((/\))
 import React.Basic.DOM as DOM
 import React.Basic.Hooks as R
 import Style (addStyletoHead)
@@ -163,10 +164,12 @@ mkHomePageComponent = do
   prompt <- mkPromptComponent
   loginForm <- mkLoginFormComponent
   addStyletoHead homePageStyleSheet
-  R.component "HomePage" $ \props -> pure $ R.fragment 
+  R.component "HomePage" $ \props -> R.do
+    (isLoginOpen /\ setIsLoginOpen) <- R.useState false
+    pure $ R.fragment 
       [
-        navbar {isAdmin: props.isAdmin, isLoggedIn: props.isLoggedIn, isMainPage: true},
-        loginForm unit,
+        navbar {isAdmin: props.isAdmin, isLoggedIn: props.isLoggedIn, isMainPage: true, setLoginOpen: setIsLoginOpen},
+        loginForm {isOpen: isLoginOpen, setIsLoginOpen: setIsLoginOpen},
         DOM.div {
           className: "star_bg",
           children: [

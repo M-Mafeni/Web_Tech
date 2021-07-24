@@ -18,7 +18,6 @@ loginTitleStyle = loginTitleSelector ? do
 
 loginFormStyle :: CSS
 loginFormStyle = star & byClass "login-form" ? do
-  display displayNone
   position fixed
   backgroundColor $ rgba 0 0 0 0.4
   width $ pct 100.0
