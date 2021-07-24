@@ -2,21 +2,20 @@ module Components.NavBar (mkNavBarComponent, NavBarProps) where
 
 import Prelude
 
+import Components.LoginForm (mkLoginFormComponent)
 import Components.NavBar.Style (navBarStyleSheet)
 import Data.Maybe (Maybe(..), fromMaybe)
 import Data.Monoid (guard)
-import Effect (Effect)
+import Data.Tuple.Nested ((/\))
 import React.Basic.DOM as DOM
 import React.Basic.Events (handler_)
 import React.Basic.Hooks as R
 import Style (addStyletoHead)
 
--- type SetStateFn = 
 type NavBarProps = {
   isLoggedIn :: Boolean,
   isAdmin :: Boolean,
-  isMainPage :: Boolean,
-  setLoginOpen :: (Boolean -> Boolean) -> Effect Unit
+  isMainPage :: Boolean
 }
 
 makeSimpleNavlink :: String -> String -> Maybe String -> R.JSX
@@ -29,9 +28,10 @@ makeSimpleNavlink href text id = DOM.a {
  
 mkNavBarComponent :: R.Component NavBarProps
 mkNavBarComponent = do
-  -- addSty nav
+  loginForm <- mkLoginFormComponent
   addStyletoHead navBarStyleSheet
-  R.component "NavBar" $ \props -> do
+  R.component "NavBar" $ \props -> R.do
+    (isLoginOpen /\ setIsLoginOpen) <- R.useState false
     let styleSheet = guard (not props.isMainPage) DOM.link {
       rel: "stylesheet",
       href: "styles/navbar.css"
@@ -67,7 +67,7 @@ mkNavBarComponent = do
         href: "#",
         children: [DOM.text "Login/Register"],
         id: "login_link",
-        onClick: handler_ (props.setLoginOpen (\_ -> true))
+        onClick: handler_ (setIsLoginOpen (\_ -> true))
       }
     let loginLinks = if props.isLoggedIn 
       then [
@@ -90,4 +90,7 @@ mkNavBarComponent = do
       id: "topnav",
       children: [styleSheet] <> navLogos <> [icon, navWrapper]
     }
-    pure $ R.fragment [navItems, mobileNavBackground]
+    pure $ R.fragment [
+      loginForm {isOpen: isLoginOpen, setIsLoginOpen: setIsLoginOpen}
+      , navItems
+      , mobileNavBackground]
