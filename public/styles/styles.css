@@ -6,6 +6,11 @@
     --fail-colour: #d1392e;
 }
 
+#app {
+    /* add padding so footer is always at the bottom */
+    padding-bottom: 83px;
+}
+
 html {
   scroll-behavior: smooth;
   font-family: 'Rubik', sans-serif;
