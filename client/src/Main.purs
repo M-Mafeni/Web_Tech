@@ -3,6 +3,7 @@ module Main where
 import Prelude
 
 import Components.HomePage (mkHomePageComponent)
+import Components.RegisterPage (mkRegisterPageComponent)
 import Data.Maybe (Maybe(..))
 import Effect (Effect)
 import Effect.Exception (throw)
@@ -22,4 +23,7 @@ main = do
     Nothing -> throw "Could not find element with id = app."
     Just app -> do
       homepage <- mkHomePageComponent
-      ReactDom.render (homepage {isLoggedIn: false, isAdmin: false}) app
+      registerpage <- mkRegisterPageComponent
+      -- ReactDom.render (homepage {isLoggedIn: false, isAdmin: false}) app
+      ReactDom.render (registerpage unit) app
+
