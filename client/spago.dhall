@@ -26,6 +26,7 @@ to generate this file without the comments in this block.
   , "react-basic"
   , "react-basic-dom"
   , "react-basic-hooks"
+  , "routing"
   , "these"
   , "tuples"
   , "web-dom"
