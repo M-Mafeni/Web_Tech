@@ -22,7 +22,7 @@ main = do
   case val of
     Nothing -> throw "Could not find element with id = app."
     Just app -> do
-      homepage <- mkHomePageComponent
+      -- homepage <- mkHomePageComponent
       registerpage <- mkRegisterPageComponent
       -- ReactDom.render (homepage {isLoggedIn: false, isAdmin: false}) app
       ReactDom.render (registerpage unit) app
