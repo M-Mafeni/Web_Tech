@@ -2,7 +2,7 @@ module Components.LoginForm.Style (loginFormStyleSheet) where
 
 import Prelude hiding (top)
 
-import CSS (CSS, Selector, a, background, backgroundColor, bolder, borderRadius, button, byClass, color, display, displayNone, ease, em, fixed, flex, fontSize, fontWeight, fromInt, height, hover, inlineBlock, justifyContent, left, margin, marginLeft, marginTop, maxWidth, minWidth, nil, p, padding, paddingRight, pct, position, pseudo, px, rgba, sec, spaceAround, star, top, transition, width, zIndex, (&), (?), (|*))
+import CSS (CSS, Selector, a, background, backgroundColor, bolder, borderRadius, button, byClass, color, display, ease, em, fixed, flex, fontSize, fontWeight, fromInt, height, hover, inlineBlock, justifyContent, left, margin, marginLeft, marginTop, maxWidth, minWidth, nil, p, padding, paddingRight, pct, position, pseudo, px, rgba, sec, spaceAround, star, top, transition, width, zIndex, (&), (?), (|*))
 import CSS.Common (auto)
 import CSS.TextAlign (center, textAlign)
 import Data.Tuple (Tuple(..))
