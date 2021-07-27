@@ -2,14 +2,14 @@ module Components.LoginForm (mkLoginFormComponent) where
 
 import Prelude
 
-import Components.LoginForm.Style (loginFormStyleSheet)
 import Data.Monoid (guard)
 import Effect (Effect)
+import Effect.Class (liftEffect)
 import React.Basic.DOM (css)
 import React.Basic.DOM as DOM
 import React.Basic.Events (handler_)
 import React.Basic.Hooks as R
-import Style (addStyletoHead)
+import Router as Router
 import Web.HTML (window)
 import Web.HTML.Window (innerHeight)
 
@@ -34,11 +34,11 @@ type LoginFormProps = {
   setIsLoginOpen :: (Boolean -> Boolean) -> Effect Unit
 }
 
-mkLoginFormComponent :: R.Component LoginFormProps
+mkLoginFormComponent :: Router.Component LoginFormProps
 mkLoginFormComponent = do
-  loginPos <- calcLoginPosition
-  addStyletoHead loginFormStyleSheet
-  R.component "LoginForm" $ \props -> R.do
+  loginPos <- liftEffect calcLoginPosition
+  --  pure $ addStyletoHead loginFormStyleSheet
+  Router.component "LoginForm" $ \props -> R.do
     pure $ guard props.isOpen $ DOM.div {
       className: "login-form",
       id: "loginForm",

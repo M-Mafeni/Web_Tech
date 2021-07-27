@@ -4,14 +4,11 @@ import Prelude
 
 import Components.NavBar (mkNavBarComponent)
 import Components.Prompt (mkPromptComponent)
-import Components.RegisterPage.Style (registerPageStyleSheet)
 import Data.Maybe (Maybe(..))
 import React.Basic.DOM as DOM
 import React.Basic.Hooks as R
-import Style (addStyletoHead)
-import Web.HTML.HTMLInputElement (placeholder)
+import Router as Router
 
--- import Web.DOM.Element (className)
 
 type RegisterPageProps = Unit
 
@@ -30,12 +27,11 @@ makeInputBox name text inputType placeholder = R.fragment [
     required: true
   }
 ]
-mkRegisterPageComponent :: R.Component RegisterPageProps
+mkRegisterPageComponent :: Router.Component RegisterPageProps
 mkRegisterPageComponent = do
-  addStyletoHead registerPageStyleSheet
   navbar <- mkNavBarComponent
   prompt <- mkPromptComponent
-  R.component "RegisterPage" $ \props -> do
+  Router.component "RegisterPage" $ \_ -> do
     let registerForm = DOM.form {
         className: "login-form-container form-container",
         action: "/registered",

@@ -5,7 +5,7 @@ import Prelude
 import Data.Maybe (Maybe, fromMaybe, isJust)
 import Data.Monoid (guard)
 import React.Basic.DOM as DOM
-import React.Basic.Hooks as R
+import Router as Router
 
 data PromptResult = Success | Failure
 
@@ -31,8 +31,8 @@ type PromptProps = {
   result:: Maybe PromptResult
 }
 
-mkPromptComponent :: R.Component PromptProps
-mkPromptComponent = R.component "Prompt" $ \props -> pure $ guard (isJust props.prompt) $
+mkPromptComponent :: Router.Component PromptProps
+mkPromptComponent = Router.component "Prompt" $ \props -> pure $ guard (isJust props.prompt) $
   DOM.div {
     className: "prompt " <> show (fromMaybe Failure props.result),
     children: [DOM.text $ fromMaybe "" props.prompt]
