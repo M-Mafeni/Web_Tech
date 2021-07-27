@@ -10,7 +10,7 @@ import Effect (Effect)
 import Effect.Exception (throw)
 import React.Basic.DOM as ReactDom
 import React.Basic.Hooks as R
-import Router (SpaceRoutes(..), spaceRoutes)
+import Router.Parser (SpaceRoutes(..), spaceRoutes)
 import Routing.Hash (matches)
 import Web.DOM.Document (toNonElementParentNode)
 import Web.DOM.NonElementParentNode (getElementById)

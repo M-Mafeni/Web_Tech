@@ -1,18 +1,18 @@
-module Router (spaceRoutes, SpaceRoutes(..)) where
+module Router.Parser (spaceRoutes, SpaceRoutes(..)) where
 
 import Prelude
 
 import Data.Foldable (oneOf)
-import Routing.Match (Match, end, lit, root)
+import Routing.Match (Match, end, lit)
 
 data SpaceRoutes = HomePage | RegisterPage
 
 instance showSpaceRoutes :: Show SpaceRoutes where
-  show (HomePage) = "HomePage"
-  show (RegisterPage) = "RegisterPage"
+  show (HomePage) = "/"
+  show (RegisterPage) = "/register"
 
 spaceRoutes :: Match SpaceRoutes
 spaceRoutes = oneOf [
   (RegisterPage <$ lit "register"),
-  HomePage <$ root
+  pure HomePage
 ] <* end
