@@ -12,15 +12,16 @@ to generate this file without the comments in this block.
 -}
 { name = "my-project"
 , dependencies =
-  [ "arrays"
-  , "bifunctors"
+  [ "bifunctors"
   , "console"
+  , "control"
   , "css"
   , "effect"
   , "exceptions"
   , "foldable-traversable"
   , "maybe"
   , "nonempty"
+  , "partial"
   , "prelude"
   , "psci-support"
   , "react-basic"
