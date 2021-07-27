@@ -62,7 +62,7 @@ mkLoginFormComponent = do
               children: [
                 DOM.p_ [DOM.text "New to Astra?"],
                 DOM.a {
-                  href: "#register",
+                  href: "/register",
                   children: [DOM.text "Create an account."]
                 }
               ]

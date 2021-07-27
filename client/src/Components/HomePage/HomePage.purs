@@ -146,7 +146,7 @@ getAboutUsSection loggedIn = R.fragment [
         className: "join_us",
         children: [
           DOM.a {
-            href: if loggedIn then "#" else "#register",
+            href: if loggedIn then "#" else "/register",
             children: [DOM.text $ if loggedIn then "Book your next flight today" else "Join us today"]
           },
           DOM.text " to embark on the journey of your dreams"
