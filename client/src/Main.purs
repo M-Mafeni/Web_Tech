@@ -23,12 +23,14 @@ mkApp = do
   registerpage <- mkRegisterPageComponent 
   homepage <- mkHomePageComponent
   R.component "App" \_ -> R.do
-    route /\ setRoute <- R.useState' (HomePage)
+    route /\ setRoute <- R.useState' (Just HomePage)
     R.useEffectOnce do
       matches spaceRoutes \_ newRoute -> setRoute newRoute
     pure $ case route of
-      HomePage -> homepage {isLoggedIn: false, isAdmin: false}
-      RegisterPage -> registerpage unit
+      Just HomePage -> homepage {isLoggedIn: false, isAdmin: false}
+      Just RegisterPage -> registerpage unit
+      Nothing -> ReactDom.text "404 not Found"
+
 
 main :: Effect Unit
 main = do
