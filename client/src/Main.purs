@@ -8,17 +8,15 @@ import Components.LoginForm.Style (loginFormStyleSheet)
 import Components.NavBar.Style (navBarStyleSheet)
 import Components.RegisterPage (mkRegisterPageComponent)
 import Components.RegisterPage.Style (registerPageStyleSheet)
-import Control.Monad.Reader (runReaderT)
+import Control.Monad.Reader (ask, runReaderT)
 import Data.Foldable (traverse_)
 import Data.Maybe (Maybe(..))
-import Data.Tuple.Nested ((/\))
 import Effect (Effect)
 import Effect.Exception (throw)
 import React.Basic.DOM as ReactDom
 import React.Basic.Hooks as R
 import Router as Router
-import Router.Parser (SpaceRoutes(..), spaceRoutes)
-import Routing.Hash (matches)
+import Router.Parser (SpaceRoutes(..))
 import Style (addStyletoHead)
 import Web.DOM.Document (toNonElementParentNode)
 import Web.DOM.NonElementParentNode (getElementById)
@@ -28,12 +26,14 @@ import Web.HTML.Window (document)
 
 mkApp :: Router.Component Unit
 mkApp = do
+  routerContext <- ask
   registerpage <- mkRegisterPageComponent 
   homepage <- mkHomePageComponent
   Router.component "App" \_ -> R.do
-    route /\ setRoute <- R.useState' (Just HomePage)
-    R.useEffectOnce do
-      matches spaceRoutes \_ newRoute -> setRoute newRoute
+    { route } <- Router.useRouterContext routerContext
+    -- route /\ setRoute <- R.useState' (Just HomePage)
+    -- R.useEffectOnce do
+    --   matches spaceRoutes \_ newRoute -> setRoute newRoute
     pure $ case route of
       Just HomePage -> homepage {isLoggedIn: false, isAdmin: false}
       Just RegisterPage -> registerpage unit
@@ -53,6 +53,7 @@ main = do
         navBarStyleSheet,
         registerPageStyleSheet]
       routerContext <- Router.mkRouterContext
+      routerProvider <- runReaderT Router.mkRouterProvider routerContext
       app <- runReaderT mkApp routerContext
-      ReactDom.render (app unit) appDiv
+      ReactDom.render (routerProvider [app unit]) appDiv
       pure unit

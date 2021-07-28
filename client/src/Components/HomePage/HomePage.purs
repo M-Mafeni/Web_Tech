@@ -4,11 +4,16 @@ import Prelude
 
 import Components.NavBar (mkNavBarComponent)
 import Components.Prompt (mkPromptComponent)
+import Control.Monad.Reader (ask)
 import Data.Maybe (Maybe(..), fromMaybe, isJust)
 import Data.Monoid (guard)
+import Foreign (unsafeToForeign)
 import React.Basic.DOM as DOM
+import React.Basic.DOM.Events (preventDefault)
+import React.Basic.Events (handler)
 import React.Basic.Hooks as R
 import Router as Router
+import Routing.PushState (PushStateInterface)
 
 type HomePageProps = {
   isLoggedIn :: Boolean,
@@ -104,8 +109,8 @@ makeAboutSubSection imgClass imgSrc text maybeSubHeader = DOM.div {
      DOM.p_ [DOM.text text]
   ]
 }
-getAboutUsSection :: Boolean -> R.JSX
-getAboutUsSection loggedIn = R.fragment [
+getAboutUsSection :: Boolean -> PushStateInterface -> R.JSX
+getAboutUsSection loggedIn nav = R.fragment [
   DOM.section {
     className: "about_us",
     children: [
@@ -146,7 +151,11 @@ getAboutUsSection loggedIn = R.fragment [
         children: [
           DOM.a {
             href: if loggedIn then "#" else "/register",
-            children: [DOM.text $ if loggedIn then "Book your next flight today" else "Join us today"]
+            children: [DOM.text $ if loggedIn then "Book your next flight today" else "Join us today"],
+            onClick: handler preventDefault \_ -> do
+              if loggedIn
+                then pure unit
+                else nav.pushState (unsafeToForeign unit) "/register"
           },
           DOM.text " to embark on the journey of your dreams"
         ]
@@ -159,8 +168,9 @@ mkHomePageComponent :: Router.Component HomePageProps
 mkHomePageComponent = do
   navbar <- mkNavBarComponent
   prompt <- mkPromptComponent
-  -- pure $ \_ -> addStyletoHead homePageStyleSheet
+  routerContext <- ask
   Router.component "HomePage" $ \props -> R.do
+    {nav} <- Router.useRouterContext routerContext
     pure $ R.fragment 
       [
         navbar {isAdmin: props.isAdmin, isLoggedIn: props.isLoggedIn, isMainPage: true},
@@ -181,5 +191,5 @@ mkHomePageComponent = do
             }
           ]
         },
-        getAboutUsSection props.isLoggedIn
+        getAboutUsSection props.isLoggedIn nav
       ]

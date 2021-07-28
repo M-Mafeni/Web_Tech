@@ -2,12 +2,15 @@ module Components.LoginForm (mkLoginFormComponent) where
 
 import Prelude
 
+import Control.Monad.Reader (ask)
 import Data.Monoid (guard)
 import Effect (Effect)
 import Effect.Class (liftEffect)
+import Foreign (unsafeToForeign)
 import React.Basic.DOM (css)
 import React.Basic.DOM as DOM
-import React.Basic.Events (handler_)
+import React.Basic.DOM.Events (preventDefault)
+import React.Basic.Events (handler, handler_)
 import React.Basic.Hooks as R
 import Router as Router
 import Web.HTML (window)
@@ -37,8 +40,9 @@ type LoginFormProps = {
 mkLoginFormComponent :: Router.Component LoginFormProps
 mkLoginFormComponent = do
   loginPos <- liftEffect calcLoginPosition
-  --  pure $ addStyletoHead loginFormStyleSheet
+  routerContext <- ask
   Router.component "LoginForm" $ \props -> R.do
+    {nav} <- Router.useRouterContext routerContext
     pure $ guard props.isOpen $ DOM.div {
       className: "login-form",
       id: "loginForm",
@@ -63,7 +67,9 @@ mkLoginFormComponent = do
                 DOM.p_ [DOM.text "New to Astra?"],
                 DOM.a {
                   href: "/register",
-                  children: [DOM.text "Create an account."]
+                  children: [DOM.text "Create an account."],
+                  onClick: handler preventDefault \_ -> do
+                    nav.pushState (unsafeToForeign unit) "/register"
                 }
               ]
             },
