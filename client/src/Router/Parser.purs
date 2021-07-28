@@ -5,7 +5,7 @@ import Prelude
 import Control.Alt ((<|>))
 import Data.Foldable (oneOf)
 import Data.Maybe (Maybe(..))
-import Routing.Match (Match, end, lit, root)
+import Routing.Match (Match, end, lit, optionalMatch, root)
 
 data SpaceRoutes = HomePage | RegisterPage
 
@@ -16,5 +16,5 @@ instance showSpaceRoutes :: Show SpaceRoutes where
 spaceRoutes :: Match (Maybe SpaceRoutes)
 spaceRoutes = Just <$> (root *> oneOf [
   (RegisterPage <$ lit "register"),
-  pure HomePage
+  HomePage <$ optionalMatch (lit "#about_us")
 ] <* end) <|> pure Nothing
