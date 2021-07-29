@@ -7,16 +7,6 @@ const webpack = require('webpack');
 const isWebpackDevServer = process.argv.some(a => path.basename(a) === 'webpack-dev-server');
 const isWatch = process.argv.some(a => a === '--watch');
 
-const plugins =
-  isWebpackDevServer || !isWatch ? [] : [
-    function(){
-      this.plugin('done', function(stats){
-        process.stderr.write(stats.toString('errors-only'));
-      });
-    }
-  ]
-;
-
 module.exports = {
   devtool: 'eval-source-map',
 
@@ -76,5 +66,5 @@ module.exports = {
     new webpack.LoaderOptionsPlugin({
       debug: true
     })
-  ].concat(plugins)
+  ]
 };

@@ -9,7 +9,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack build --progress --color",
-    "serve": "webpack serve --progress --inline --hot"
+    "serve": "webpack serve --progress --inline --hot",
+    "watch": "webpack build --watch --progress --color"
+
   },
   "repository": {
     "type": "git",
