@@ -69,11 +69,9 @@ app.get('/',function (req,res) {
 
     let sql = "SELECT name FROM Destination";
     db.all(sql,[],(err,destinations)=>{
-            let prompt = req.session.prompt;
-            let result = req.session.result;
             req.session.prompt = null;
             req.session.result = null;
-            res.render('main',{layout:'index',loggedin:req.session.loggedin,isAdmin:req.session.isAdmin,destinations:destinations,prompt:prompt,result:result});
+            res.render('main',{layout:'index', title: "Astra | Home"});
     });
 });
 
@@ -88,7 +86,7 @@ app.get('/register',function (req,res) {
         let result = req.session.result;
         req.session.prompt = null;
         req.session.result = null;
-        res.render('main',{layout:'register', prompt:prompt,result:result, isAdmin:req.session.isAdmin});
+        res.render('main',{layout:'index'});
     }
     else {
         // user shouldn't be able to register when already logged in
