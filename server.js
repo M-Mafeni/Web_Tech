@@ -88,7 +88,7 @@ app.get('/register',function (req,res) {
         let result = req.session.result;
         req.session.prompt = null;
         req.session.result = null;
-        res.render('main',{layout:'index'});
+        res.render('main',{layout:'index', title: "Astra | Register"});
     }
     else {
         // user shouldn't be able to register when already logged in
