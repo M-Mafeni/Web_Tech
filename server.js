@@ -41,7 +41,11 @@ app.set('case sensitive routing', true);
 //this gives express access to all files in public
 app.use(express.static('public'));
 //this allows you to parse request bodies
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.urlencoded({
+    extended: true
+}));
+
+app.use(express.json());
 //session is needed to save that a user is logged in
 app.use(session({
 	secret: 'secret',
@@ -68,9 +72,7 @@ app.get('/',function (req,res) {
     res = df.setResponseHeader(req, res);
 
     let sql = "SELECT name FROM Destination";
-    db.all(sql,[],(err,destinations)=>{
-            req.session.prompt = null;
-            req.session.result = null;
+    db.all(sql,[],(err,destinations)=> {
             res.render('main',{layout:'index', title: "Astra | Home"});
     });
 });
@@ -188,16 +190,16 @@ app.post('/confirmed', function(req,res) {
     }
 });
 
-app.post('/login',function(req,res){
+app.post('/login',function(req,res) {
     let sql = "SELECT * FROM User WHERE email = ?";
-    let email =req.body.email;
+    let email = req.body.email;
     let password = req.body.psw;
     db.get(sql,[email],(err,user) => {
-        if(user == undefined){
-            // setup prompt and render page
-            req.session.prompt = 'Email unregistered.';
-            req.session.result = 'prompt-fail';
-            res.redirect('/');
+        if(user == undefined) {
+            res.status(404);
+            res.send({
+                error: "Email unregistered"
+            })
         }
         else{
             //password is hashed using bcrypt so hashes need to be compared
@@ -208,17 +210,16 @@ app.post('/login',function(req,res){
                     req.session.loggedin = true;
                     req.session.username = email;
                     req.session.isAdmin = user.isAdmin;
-                    // setup prompt and render page
-                    req.session.prompt = 'Logged in successfully.';
-                    req.session.result = 'prompt-success';
-
-                    res.redirect('/');
+                    res.status(200);
+                    res.send({
+                        isLoggedIn: true,
+                        isAdmin: user.isAdmin === 1,
+                    });
                 }
                 else{
                     // setup prompt and render page
-                    req.session.prompt = 'Password incorrect.';
-                    req.session.result = 'prompt-fail';
-                    res.redirect('/');
+                    res.status(403);
+                    res.send({error: "Password Incorrect"});
                 }
             });
         }
