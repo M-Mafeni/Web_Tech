@@ -12,13 +12,18 @@ to generate this file without the comments in this block.
 -}
 { name = "my-project"
 , dependencies =
-  [ "bifunctors"
+  [ "aff"
+  , "affjax"
+  , "argonaut"
+  , "bifunctors"
   , "console"
   , "control"
   , "css"
   , "effect"
+  , "either"
   , "exceptions"
   , "foldable-traversable"
+  , "foreign"
   , "maybe"
   , "nonempty"
   , "partial"
@@ -29,9 +34,11 @@ to generate this file without the comments in this block.
   , "react-basic-hooks"
   , "routing"
   , "these"
+  , "transformers"
   , "tuples"
   , "web-dom"
   , "web-html"
+  , "web-xhr"
   ]
 , packages = ./packages.dhall
 , sources = [ "src/**/*.purs", "test/**/*.purs" ]
