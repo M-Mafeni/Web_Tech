@@ -226,6 +226,10 @@ app.post('/login',function(req,res) {
     });
 });
 
+app.get('/session', function(req, res) {
+    res.send({isLoggedIn: req.session.loggedin, isAdmin: req.session.isAdmin === 1});
+});
+
 app.post('/registered',function(req,res){
     // 1. check that email is valid
     // 2. check that email not already registered
