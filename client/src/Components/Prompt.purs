@@ -1,4 +1,4 @@
-module Components.Prompt (mkPromptComponent, PromptResult, promptFailure, promptSuccess) where
+module Components.Prompt (mkPromptComponent, PromptResult(..), promptFailure, promptSuccess) where
 
 import Prelude
 
@@ -24,7 +24,7 @@ isFailure = not <<< isSuccess
 
 instance showPromptResult :: Show PromptResult where
   show (Success) = "prompt-success"
-  show (Failure) = "prompt-failure"
+  show (Failure) = "prompt-fail"
 
 type PromptProps = {
   prompt:: Maybe String,
