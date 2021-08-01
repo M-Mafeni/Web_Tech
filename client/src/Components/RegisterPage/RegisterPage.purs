@@ -4,10 +4,10 @@ import Prelude
 
 import Components.NavBar (mkNavBarComponent)
 import Components.Prompt (mkPromptComponent)
+import Context as Context
 import Data.Maybe (Maybe(..))
 import React.Basic.DOM as DOM
 import React.Basic.Hooks as R
-import Router as Router
 
 
 type RegisterPageProps = Unit
@@ -27,11 +27,11 @@ makeInputBox name text inputType placeholder = R.fragment [
     required: true
   }
 ]
-mkRegisterPageComponent :: Router.Component RegisterPageProps
+mkRegisterPageComponent :: Context.Component RegisterPageProps
 mkRegisterPageComponent = do
   navbar <- mkNavBarComponent
   prompt <- mkPromptComponent
-  Router.component "RegisterPage" $ \_ -> do
+  Context.component "RegisterPage" $ \_ -> do
     let registerForm = DOM.form {
         className: "login-form-container form-container",
         action: "/registered",

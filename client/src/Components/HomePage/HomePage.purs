@@ -4,6 +4,7 @@ import Prelude
 
 import Components.NavBar (mkNavBarComponent)
 import Components.Prompt (mkPromptComponent)
+import Context as Context
 import Control.Monad.Reader (ask)
 import Data.Maybe (Maybe(..), fromMaybe, isJust)
 import Data.Monoid (guard)
@@ -164,12 +165,12 @@ getAboutUsSection loggedIn nav = R.fragment [
   }
 ] 
 
-mkHomePageComponent :: Router.Component HomePageProps
+mkHomePageComponent :: Context.Component HomePageProps
 mkHomePageComponent = do
   navbar <- mkNavBarComponent
   prompt <- mkPromptComponent
-  routerContext <- ask
-  Router.component "HomePage" $ \props -> R.do
+  {routerContext} <- ask
+  Context.component "HomePage" $ \props -> R.do
     {nav} <- Router.useRouterContext routerContext
     pure $ R.fragment 
       [

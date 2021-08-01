@@ -3,13 +3,13 @@ module Components.NavBar (mkNavBarComponent, NavBarProps) where
 import Prelude
 
 import Components.LoginForm (mkLoginFormComponent)
+import Context as Context
 import Data.Maybe (Maybe(..), fromMaybe)
 import Data.Monoid (guard)
 import Data.Tuple.Nested ((/\))
 import React.Basic.DOM as DOM
 import React.Basic.Events (handler_)
 import React.Basic.Hooks as R
-import Router as Router
 
 type NavBarProps = {
   isLoggedIn :: Boolean,
@@ -25,11 +25,10 @@ makeSimpleNavlink href text id = DOM.a {
   id: fromMaybe "" id
 }
  
-mkNavBarComponent :: Router.Component NavBarProps
+mkNavBarComponent :: Context.Component NavBarProps
 mkNavBarComponent = do
   loginForm <- mkLoginFormComponent
-  -- addStyletoHead navBarStyleSheet
-  Router.component "NavBar" $ \props -> R.do
+  Context.component "NavBar" $ \props -> R.do
     (isLoginOpen /\ setIsLoginOpen) <- R.useState false
     let styleSheet = guard (not props.isMainPage) DOM.link {
       rel: "stylesheet",

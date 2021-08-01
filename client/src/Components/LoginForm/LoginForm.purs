@@ -6,6 +6,7 @@ import Affjax as Ax
 import Affjax.RequestBody as RequestBody
 import Affjax.ResponseFormat as ResponseFormat
 import Components.Prompt (PromptResult(..), mkPromptComponent)
+import Context as Context
 import Data.Argonaut (Json, JsonDecodeError, decodeJson, encodeJson)
 import Data.Either (Either(..))
 import Data.Maybe (Maybe(..), fromMaybe, isJust)
@@ -20,7 +21,6 @@ import React.Basic.DOM as DOM
 import React.Basic.DOM.Events (preventDefault, targetValue)
 import React.Basic.Events (handler, handler_)
 import React.Basic.Hooks as R
-import Router as Router
 import Web.HTML (window)
 import Web.HTML.Location (reload)
 import Web.HTML.Window (innerHeight, location)
@@ -56,11 +56,11 @@ type LoginResponse = {
 loginResponseFromJson :: Json -> Either JsonDecodeError LoginResponse
 loginResponseFromJson = decodeJson
 
-mkLoginFormComponent :: Router.Component LoginFormProps
+mkLoginFormComponent :: Context.Component LoginFormProps
 mkLoginFormComponent = do
   loginPos <- liftEffect calcLoginPosition
   prompt <- mkPromptComponent
-  Router.component "LoginForm" $ \props -> R.do
+  Context.component "LoginForm" $ \props -> R.do
     email /\ setEmail <- R.useState' ""
     password /\ setPassword <- R.useState' ""
     promptMessage /\ setPromptMessage <- R.useState' Nothing

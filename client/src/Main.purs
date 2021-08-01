@@ -11,6 +11,7 @@ import Components.LoginForm.Style (loginFormStyleSheet)
 import Components.NavBar.Style (navBarStyleSheet)
 import Components.RegisterPage (mkRegisterPageComponent)
 import Components.RegisterPage.Style (registerPageStyleSheet)
+import Context as Context
 import Control.Monad.Reader (ask, runReaderT)
 import Data.Argonaut (decodeJson)
 import Data.Either (Either(..))
@@ -35,16 +36,13 @@ type Session = {
   isAdmin :: Maybe Boolean
 }
 
-mkApp :: Router.Component Session
+mkApp :: Context.Component Session
 mkApp = do
-  routerContext <- ask
+  {routerContext} <- ask
   registerpage <- mkRegisterPageComponent 
   homepage <- mkHomePageComponent
-  Router.component "App" \session -> R.do
+  Context.component "App" $ \session -> R.do
     { route } <- Router.useRouterContext routerContext
-    -- route /\ setRoute <- R.useState' (Just HomePage)
-    -- R.useEffectOnce do
-    --   matches spaceRoutes \_ newRoute -> setRoute newRoute
     pure $ case route of
       Just HomePage -> homepage {isLoggedIn: fromMaybe false session.isLoggedIn, isAdmin: fromMaybe false session.isAdmin}
       Just RegisterPage -> registerpage unit
@@ -87,7 +85,7 @@ main = do
             Left err -> throw $ show err
             Right session -> do
               routerContext <- Router.mkRouterContext
-              routerProvider <- runReaderT Router.mkRouterProvider routerContext
-              app <- runReaderT mkApp routerContext
+              routerProvider <- runReaderT Context.mkRouterProvider {routerContext}
+              app <- runReaderT mkApp {routerContext}
               ReactDom.render (routerProvider [app session]) appDiv
               pure unit
