@@ -11,7 +11,7 @@ import Components.RegisterPage.Style (registerPageStyleSheet)
 import Context as Context
 import Control.Monad.Reader (ask, runReaderT)
 import Data.Foldable (traverse_)
-import Data.Maybe (Maybe(..), fromMaybe)
+import Data.Maybe (Maybe(..))
 import Effect (Effect)
 import Effect.Exception (throw)
 import React.Basic.DOM as ReactDom
@@ -40,7 +40,7 @@ mkApp = do
     { route } <- Router.useRouterContext routerContext
     session <- Session.useSessionContext sessionContext
     pure $ case route of
-      Just HomePage -> homepage {isLoggedIn: fromMaybe false session.isLoggedIn, isAdmin: fromMaybe false session.isAdmin}
+      Just HomePage -> homepage {isLoggedIn: session.isLoggedIn, isAdmin: session.isAdmin}
       Just RegisterPage -> registerpage unit
       Nothing -> ReactDom.text "404 not Found"
 

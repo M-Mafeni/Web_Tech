@@ -21,7 +21,7 @@ import React.Basic.Hooks as React
 import Router (RouterContext)
 import Router.Parser (SpaceRoutes(..), spaceRoutes)
 import Routing.PushState (makeInterface, matches)
-import Session (SessionContext, getSession)
+import Session (SessionContext, getSession, toSession)
 
 -- | Note that we are not using `React.Basic.Hooks.Component` here, replacing it
 -- | instead with a very similar type, that has some extra "environment"
@@ -61,7 +61,7 @@ mkSessionProvider = do
   {sessionContext} <- ask
   component "Session" \children -> React.do
     let sessionProvider = React.provider sessionContext
-    session /\ setSession <- React.useState' {isLoggedIn: Nothing, isAdmin: Nothing}
+    session /\ setSession <- React.useState' {isLoggedIn: false, isAdmin: false}
     React.useEffectOnce do
       flip runAff_ getSession $ \possValue -> do
         case possValue of
@@ -69,6 +69,6 @@ mkSessionProvider = do
           Right eitherErrSession -> case eitherErrSession of
             Left err -> throw $ show err
             Right sessionVal -> do
-              setSession sessionVal
+              setSession $ toSession sessionVal
       pure mempty
     pure $ sessionProvider (Just session) children
