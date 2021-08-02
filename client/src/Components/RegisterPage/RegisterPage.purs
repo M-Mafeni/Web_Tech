@@ -52,7 +52,7 @@ mkRegisterPageComponent = do
     }
     pure $ R.fragment 
       [ 
-        navbar {isAdmin: false, isLoggedIn: false, isMainPage: false},
+        navbar {isMainPage: false},
         prompt {prompt: Nothing, result: Nothing},
         registerForm,
         registerBtn

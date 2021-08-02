@@ -33,14 +33,13 @@ type Session = {
 
 mkApp :: Context.Component Unit
 mkApp = do
-  {routerContext, sessionContext} <- ask
+  {routerContext} <- ask
   registerpage <- mkRegisterPageComponent 
   homepage <- mkHomePageComponent
   Context.component "App" $ \_ -> R.do
     { route } <- Router.useRouterContext routerContext
-    session <- Session.useSessionContext sessionContext
     pure $ case route of
-      Just HomePage -> homepage {isLoggedIn: session.isLoggedIn, isAdmin: session.isAdmin}
+      Just HomePage -> homepage unit
       Just RegisterPage -> registerpage unit
       Nothing -> ReactDom.text "404 not Found"
 

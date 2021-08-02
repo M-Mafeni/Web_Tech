@@ -15,11 +15,9 @@ import React.Basic.Events (handler)
 import React.Basic.Hooks as R
 import Router as Router
 import Routing.PushState (PushStateInterface)
+import Session as Session
 
-type HomePageProps = {
-  isLoggedIn :: Boolean,
-  isAdmin :: Boolean
-}
+type HomePageProps = Unit
 
 advertText :: R.JSX
 advertText = DOM.div {
@@ -169,12 +167,13 @@ mkHomePageComponent :: Context.Component HomePageProps
 mkHomePageComponent = do
   navbar <- mkNavBarComponent
   prompt <- mkPromptComponent
-  {routerContext} <- ask
-  Context.component "HomePage" $ \props -> R.do
+  {routerContext, sessionContext} <- ask
+  Context.component "HomePage" $ \_ -> R.do
     {nav} <- Router.useRouterContext routerContext
+    session <- Session.useSessionContext sessionContext
     pure $ R.fragment 
       [
-        navbar {isAdmin: props.isAdmin, isLoggedIn: props.isLoggedIn, isMainPage: true},
+        navbar {isMainPage: true},
         DOM.div {
           className: "star_bg",
           children: [
@@ -192,5 +191,5 @@ mkHomePageComponent = do
             }
           ]
         },
-        getAboutUsSection props.isLoggedIn nav
+        getAboutUsSection session.isLoggedIn nav
       ]

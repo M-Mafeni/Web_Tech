@@ -4,16 +4,16 @@ import Prelude
 
 import Components.LoginForm (mkLoginFormComponent)
 import Context as Context
+import Control.Monad.Reader (ask)
 import Data.Maybe (Maybe(..), fromMaybe)
 import Data.Monoid (guard)
 import Data.Tuple.Nested ((/\))
 import React.Basic.DOM as DOM
 import React.Basic.Events (handler_)
 import React.Basic.Hooks as R
+import Session as Session
 
 type NavBarProps = {
-  isLoggedIn :: Boolean,
-  isAdmin :: Boolean,
   isMainPage :: Boolean
 }
 
@@ -28,8 +28,10 @@ makeSimpleNavlink href text id = DOM.a {
 mkNavBarComponent :: Context.Component NavBarProps
 mkNavBarComponent = do
   loginForm <- mkLoginFormComponent
+  {sessionContext} <- ask
   Context.component "NavBar" $ \props -> R.do
     (isLoginOpen /\ setIsLoginOpen) <- R.useState false
+    session <- Session.useSessionContext sessionContext
     let styleSheet = guard (not props.isMainPage) DOM.link {
       rel: "stylesheet",
       href: "styles/navbar.css"
@@ -67,7 +69,7 @@ mkNavBarComponent = do
         id: "login_link",
         onClick: handler_ (setIsLoginOpen (\_ -> true))
       }
-    let loginLinks = if props.isLoggedIn 
+    let loginLinks = if session.isLoggedIn 
       then [
         makeSimpleNavlink "/logout" "Logout" Nothing,
         makeSimpleNavlink "/account" "My Account" Nothing
@@ -75,7 +77,7 @@ mkNavBarComponent = do
       else [
         loginLink
       ]
-    let admin = guard (props.isLoggedIn && props.isAdmin) $ makeSimpleNavlink "/admin" "Admin" Nothing
+    let admin = guard (session.isLoggedIn && session.isAdmin) $ makeSimpleNavlink "/admin" "Admin" Nothing
     let aboutUs = guard props.isMainPage $ makeSimpleNavlink "#about_us" "About Us" (Just "about_nav_link")
     let navWrapper = DOM.div {
       className: "nav-wrapper",
