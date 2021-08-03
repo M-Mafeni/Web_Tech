@@ -15,7 +15,13 @@ module.exports = {
   devServer: {
     contentBase: path.resolve(__dirname, '../public'),
     port: 4008,
-    stats: 'errors-only'
+    stats: 'errors-only',
+    proxy: {
+      '/': {
+        target: 'https://localhost:3000',
+        secure: false,
+      },
+    },
   },
 
   entry: './src/index.js',
