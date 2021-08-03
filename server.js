@@ -20,6 +20,7 @@ const validator = require("email-validator");
 const account = require('./controllers/account.js');
 const admin = require('./controllers/admin.js');
 const database = require('./database');
+const api = require("./api");
 
 //connect to astra.db database
 // const sqlite = require('sqlite3').verbose();
@@ -52,6 +53,8 @@ app.use(session({
 	resave: true,
 	saveUninitialized: true
 }));
+
+app.use("/api", api);
 
 
 //listen to both http and https ports
