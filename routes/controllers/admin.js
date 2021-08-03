@@ -1,12 +1,12 @@
 "use strict";
 let express = require('express');
 let router = express.Router();
-const df = require('../helper');
+const df = require('../../helper');
 // const sqlite = require('sqlite3').verbose();
 const xhtml = 'application/xhtml+xml';
 const utf8 = 'utf-8';
 // let db = new sqlite.Database('./astra.db');
-const database = require('../database');
+const database = require('../../database');
 let db = database.db;
 let OK = 200, UNAUTHORISED = 401;
 

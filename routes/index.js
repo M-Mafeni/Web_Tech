@@ -6,9 +6,9 @@ const df = require('../helper');
 const database = require('../database');
 const db = database.db;
 // Controllers
-const account = require('../controllers/account.js');
-const admin = require('../controllers/admin.js');
-const api = require("../api");
+const account = require('./controllers/account.js');
+const admin = require('./controllers/admin.js');
+const api = require("./api");
 
 
 router.use('/admin', admin);

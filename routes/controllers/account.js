@@ -1,11 +1,11 @@
 "use strict";
 let express = require('express');
 let router = express.Router();
-const df = require('../helper');
+const df = require('../../helper');
 const xhtml = 'application/xhtml+xml';
 const utf8 = 'utf-8';
 const bcrypt = require('bcrypt');
-const database = require('../database');
+const database = require('../../database');
 let db = database.db;
 
 router.get('/',function (req,res) {
