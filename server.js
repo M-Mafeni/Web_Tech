@@ -3,7 +3,6 @@ const express = require('express');
 const exphbs  = require('express-handlebars');
 const app = express();
 const app1 = express(); //for http server
-const bodyParser = require('body-parser');
 const session = require('express-session');
 const port = 8080;
 const secure_port = 3000;
@@ -23,10 +22,7 @@ const database = require('./database');
 const api = require("./api");
 
 //connect to astra.db database
-// const sqlite = require('sqlite3').verbose();
-// let db = new sqlite.Database('./astra.db');
 let db = database.db;
-let OK = 200, NotFound = 404, BadType = 415, Error = 500;
 
 //set views(html layouts) to be your local views directory
 app.set('views', './views');
@@ -54,17 +50,18 @@ app.use(session({
 	saveUninitialized: true
 }));
 
+app.use('/account',account);
 app.use("/api", api);
 
 
 //listen to both http and https ports
-const httpServer = http.createServer(app1).listen(port,() => console.log(`listening on port ${port}!`));
+http.createServer(app1).listen(port,() => console.log(`listening on port ${port}!`));
 // redirect all http requests to https server
 app1.all('*',function(req,res){
     res.redirect('https://localhost:3000'+req.url);
 });
 
-const httpsServer = https.createServer({
+https.createServer({
     key: fs.readFileSync('server.key'),
     cert: fs.readFileSync('server.cert')
 },app)
@@ -73,22 +70,14 @@ const httpsServer = https.createServer({
 //for the main page return main.handlebars with its layout being the index page
 app.get('/',function (req,res) {
     res = df.setResponseHeader(req, res);
-
-    let sql = "SELECT name FROM Destination";
-    db.all(sql,[],(err,destinations)=> {
-            res.render('main',{layout:'index', title: "Astra | Home"});
-    });
+    res.render('main',{layout:'index', title: "Astra | Home"});
 });
 
-app.use('/account',account);
 
 //register page
 app.get('/register',function (req,res) {
     res = df.setResponseHeader(req, res);
-
     if (!req.session.loggedin) {
-        let prompt = req.session.prompt;
-        let result = req.session.result;
         req.session.prompt = null;
         req.session.result = null;
         res.render('main',{layout:'index', title: "Astra | Register"});
@@ -111,9 +100,6 @@ app.get('/bookings',function (req,res) {
             let destination = req.query.destination;
             let o_date = req.query.outbound_date;
             let d_date = req.query.inbound_date;
-            // let sql = "SELECT id, date(origin_date) AS o_date,time(origin_date) as o_time,origin_place,"
-            //  + "date(destination_date) AS d_date,time(destination_date) as d_time,destination_place,price "
-            //   + "FROM Ticket WHERE origin_place = ? AND destination_place = ? AND o_date = ? ORDER BY price DESC";
             let sql = "SELECT id, date(origin_date) AS o_date,time(origin_date) as o_time,(SELECT name FROM Destination Where Destination.id = Ticket.origin_id) AS origin_place,"
             +   "date(destination_date) AS d_date,time(destination_date) as d_time,(SELECT name FROM Destination Where Destination.id = Ticket.destination_id) AS destination_place,price "
             +   "FROM Ticket WHERE origin_place = ? AND destination_place = ? AND o_date = ? ORDER BY price"
@@ -189,7 +175,6 @@ app.post('/confirmed', function(req,res) {
         req.session.prompt = 'You are not logged in.';
         req.session.result = 'prompt-fail';
         res.redirect('/');
-        // res.render('main',{layout:'index',loggedin:req.session.loggedin,prompt:'You are not logged in.',result:'prompt-fail'});
     }
 });
 
@@ -275,7 +260,6 @@ app.post('/registered',function(req,res){
             req.session.prompt = 'Email not valid.';
             req.session.result = 'prompt-fail';
             res.redirect('/register');
-            // res.render('main',{layout:'register',prompt:'Email not valid.',result:'prompt-fail'})
         }
     }
     else {
