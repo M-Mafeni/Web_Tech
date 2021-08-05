@@ -6,8 +6,13 @@ import Components.NavBar (mkNavBarComponent)
 import Components.Prompt (mkPromptComponent)
 import Context as Context
 import Control.Monad.Reader (ask)
+import Data.Destination (Destination, getDestinations)
+import Data.Either (Either(..))
 import Data.Maybe (Maybe(..), fromMaybe, isJust)
 import Data.Monoid (guard)
+import Data.Tuple.Nested ((/\))
+import Effect.Aff (runAff_)
+import Effect.Exception (throw)
 import Foreign (unsafeToForeign)
 import React.Basic.DOM as DOM
 import React.Basic.DOM.Events (preventDefault)
@@ -35,8 +40,7 @@ makeDestinationFormItem name placeholder className = DOM.div {
       name: name,
       placeholder: placeholder,
       className: fromMaybe "" className,
-      required: true,
-      value: ""
+      required: true
     }
   ]
 }
@@ -54,8 +58,8 @@ makeDateFormItem name id = DOM.div {
   ]
 }
 
-bookingBar :: R.JSX
-bookingBar = DOM.div {
+bookingBar :: Array Destination -> R.JSX
+bookingBar destinations = DOM.div {
   className: "booking_bar",
   children: [
     DOM.form {
@@ -67,8 +71,11 @@ bookingBar = DOM.div {
           className: "booking_left",
           children: [
             makeDestinationFormItem "origin" "Enter Origin Base" Nothing,
-            makeDestinationFormItem "destination" "Enter Destination Base" (Just "dest")
-            -- TODO Add data list component
+            makeDestinationFormItem "destination" "Enter Destination Base" (Just "dest"),
+            DOM.datalist {
+              id: "places",
+              children: map (\destination -> DOM.option {value: destination.name}) destinations
+            }
           ]
         },
         DOM.span {
@@ -171,6 +178,14 @@ mkHomePageComponent = do
   Context.component "HomePage" $ \_ -> R.do
     {nav} <- Router.useRouterContext routerContext
     session <- Session.useSessionContext sessionContext
+    destinations /\ setDestinations <- R.useState' []
+    R.useEffectOnce do
+      flip runAff_ getDestinations $ \destinationsValue -> case destinationsValue of
+        Left err -> throw $ show err
+        Right possDestinationJson -> case possDestinationJson of
+          Left err -> throw err
+          Right destinationsJson -> setDestinations destinationsJson
+      pure mempty
     pure $ R.fragment 
       [
         navbar {isMainPage: true},
@@ -179,7 +194,7 @@ mkHomePageComponent = do
           children: [
             prompt {prompt: Nothing, result: Nothing},
             advertText,
-            bookingBar,
+            bookingBar destinations,
             DOM.a {
               name: "about_us",
               id: "about_link",
