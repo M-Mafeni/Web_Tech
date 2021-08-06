@@ -50,7 +50,7 @@ input:-webkit-autofill, input:-webkit-autofill:hover,  input:-webkit-autofill:fo
 
 .form_item input[type="text"] {
     font-size: 80%;
-    width: 8em;
+    width: 10em;
 }
 
 [list]::-webkit-calendar-picker-indicator {
@@ -58,7 +58,7 @@ input:-webkit-autofill, input:-webkit-autofill:hover,  input:-webkit-autofill:fo
 }
 
 input[type="text"].dest {
-    width: 10.7em;
+    width: 12em;
 }
 
 .form_item {
