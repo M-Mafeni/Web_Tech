@@ -93,7 +93,7 @@ input[type="date"] {
         center
         no-repeat;
     cursor:pointer;
-    width: 8.3em !important;
+    width: 9.5em !important;
 }
 
 input[type="date"]:focus {
