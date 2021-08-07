@@ -15,6 +15,8 @@ to generate this file without the comments in this block.
   [ "aff"
   , "affjax"
   , "argonaut"
+  , "argonaut-codecs"
+  , "arrays"
   , "bifunctors"
   , "console"
   , "control"
@@ -26,6 +28,7 @@ to generate this file without the comments in this block.
   , "foreign"
   , "maybe"
   , "nonempty"
+  , "ordered-collections"
   , "partial"
   , "prelude"
   , "psci-support"
@@ -38,7 +41,6 @@ to generate this file without the comments in this block.
   , "tuples"
   , "web-dom"
   , "web-html"
-  , "web-xhr"
   ]
 , packages = ./packages.dhall
 , sources = [ "src/**/*.purs", "test/**/*.purs" ]
