@@ -5,9 +5,14 @@ import Prelude
 import Components.NavBar (mkNavBarComponent)
 import Context as Context
 import Data.Array (fold, null)
-import Data.BookingsSearch (BookingsSearch)
+import Data.BookingsSearch (BookingsSearch, getBookingTickets)
+import Data.Either (Either(..))
 import Data.Monoid (guard)
+import Data.Ticket (Ticket)
 import Data.Tuple.Nested ((/\))
+import Effect.Aff (runAff_, throwError)
+import Effect.Exception (throw)
+import Prim.TypeError (class Warn, Text)
 import React.Basic.DOM as DOM
 import React.Basic.Hooks (JSX)
 import React.Basic.Hooks as React
@@ -51,7 +56,7 @@ mobileSummaryBlock =
   summaryDetails isOutbound = mkSummaryDetails true <> mkSummaryDetails false
     where
     mkSummaryDetails isSource =
-      DOM.p
+      DOM.div
         { className: "summary_details_mobile_" <> classNameSuffix
         , children:
             [ DOM.div
@@ -134,17 +139,57 @@ summaryBlock =
       , DOM.span { className: "location " <> prefix <> "Location" }
       ]
 
-mkTickets :: forall a. String -> Array a -> Array JSX
-mkTickets _ = mempty
+mkTickets :: (Warn (Text "Add onclick handler + fix styling")) =>String -> Array Ticket -> Array JSX
+mkTickets title tickets = [ DOM.h1 { className: "Journey_Text", children: [ DOM.text title ] } ] <> map mkTicket tickets
+  where
+  mkTicket :: Ticket -> JSX
+  mkTicket ticket =
+    DOM.div
+      { className: "ticket-card"
+      , children:
+          [ DOM.div { className: "ticket_id", children: [ DOM.text $ show ticket.id ] }
+          , DOM.div
+              { className: "ticket-content price"
+              , children: [ DOM.text $ "£" <> show ticket.price ]
+              }
+          , mkDate ticket.o_date ticket.o_time ticket.origin_place true
+          , DOM.div
+              { className: "ticket-content sideways_rocket"
+              , children: [ DOM.img { src: "assets/sideways_rocket.svg" } ]
+              }
+          , mkDate ticket.o_date ticket.o_time ticket.origin_place false
+          ]
+      }
+    where
+    mkDate date time place isSource =
+      DOM.div
+        { className: "ticket-content " <> if isSource then "source" else "destination"
+        , children:
+            [ DOM.p { className: "date", children: [ DOM.text date ] }
+            , DOM.i { className: "fa fa-clock-o" }
+            , DOM.p { className: "time", children: [ DOM.text time ] }
+            , DOM.i { className: "fa fa-map-marker" }
+            , DOM.p { className: "location", children: [ DOM.text place ] }
+            ]
+        }
 
 mkBookingsPageComponent :: Context.Component BookingsSearch
 mkBookingsPageComponent = do
   navbar <- mkNavBarComponent
-  Context.component "Bookings" \_ -> React.do
+  Context.component "Bookings" \bookingsSearch -> React.do
     let
       noTickets = DOM.p_ [ DOM.text "No tickets available for this journey" ]
-    outboundTickets /\ setOutboundTickets <- React.useState []
-    inboundTickets /\ setInboundTickets <- React.useState []
+    outboundTickets /\ setOutboundTickets <- React.useState' []
+    inboundTickets /\ setInboundTickets <- React.useState' [] 
+    React.useEffectOnce do
+      flip runAff_ (getBookingTickets bookingsSearch) \res -> case res of
+        Left err -> throwError err
+        Right possTickets -> case possTickets of
+          Left err -> throw err
+          Right { outboundTickets: oTickets, inboundTickets: iTickets } -> do
+            setOutboundTickets oTickets
+            setInboundTickets iTickets
+      pure mempty
     let
       columnTickets =
         DOM.div

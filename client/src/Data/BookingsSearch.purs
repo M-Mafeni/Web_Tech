@@ -1,15 +1,18 @@
-module Data.BookingsSearch (BookingsSearch, BookingsSearchImpl, toBookingsSearch, mapToBookingsSearch) where
+module Data.BookingsSearch (BookingsSearch, BookingsSearchImpl, toBookingsSearch, mapToBookingsSearch, getBookingTickets) where
 
 import Prelude
-
+import Async.Request as Request
+import Data.Argonaut (decodeJson)
+import Data.Either (Either)
 import Data.Map (Map)
 import Data.Map as Map
 import Data.Maybe (Maybe)
-import Data.String (joinWith, length)
+import Data.String (length)
 import Data.String.Gen (genAlphaString)
+import Data.Ticket (Tickets)
+import Effect.Aff (Aff)
 import Test.QuickCheck (class Arbitrary, arbitrary)
 import Test.QuickCheck.Gen as Gen
-
 
 type Origin
   = String
@@ -26,16 +29,23 @@ type Inbound
 data BookingsSearchImpl
   = BookingsSearchImpl Origin Destination Outbound Inbound
 
-newtype Date = Date String
+newtype Date
+  = Date String
+
 date :: Date -> String
 date (Date s) = s
 
 instance arbDate :: Arbitrary Date where
-  arbitrary =  Date <$> (combineWithDashes <$> year <*> month <*> day) where
+  arbitrary = Date <$> (combineWithDashes <$> year <*> month <*> day)
+    where
     year = show <$> Gen.chooseInt 1000 9999
+
     month = (padWithZero <<< show) <$> Gen.chooseInt 1 12
+
     day = (padWithZero <<< show) <$> Gen.chooseInt 1 12
+
     padWithZero x = if length x == 1 then "0" <> x else x
+
     combineWithDashes x y z = x <> "-" <> y <> "-" <> z
 
 instance arbBookingSearchImpl :: Arbitrary BookingsSearchImpl where
@@ -47,6 +57,23 @@ type BookingsSearch
     , outbound_date :: String
     , inbound_date :: String
     }
+
+type BookingsTickets
+  = { outboundTickets :: Tickets
+    , inboundTickets :: Tickets
+    }
+
+getBookingTickets :: BookingsSearch -> Aff (Either String BookingsTickets)
+getBookingTickets { origin, destination, outbound_date, inbound_date } = Request.get url decodeJson
+  where
+  url =
+    "/api/bookings" <> "?origin=" <> origin
+      <> "&destination="
+      <> destination
+      <> "&outbound_date="
+      <> outbound_date
+      <> "&inbound_date="
+      <> inbound_date
 
 toBookingsSearchImpl :: Map String String -> Maybe BookingsSearchImpl
 toBookingsSearchImpl params =
