@@ -2,6 +2,7 @@ module Main where
 
 import Prelude
 
+import Components.BookingsPage (mkBookingsPageComponent)
 import Components.HomePage (mkHomePageComponent)
 import Components.HomePage.Style (homePageStyleSheet)
 import Components.LoginForm.Style (loginFormStyleSheet)
@@ -36,11 +37,16 @@ mkApp = do
   {routerContext} <- ask
   registerpage <- mkRegisterPageComponent 
   homepage <- mkHomePageComponent
+  bookingsPage <- mkBookingsPageComponent
   Context.component "App" $ \_ -> R.do
     { route } <- Router.useRouterContext routerContext
     pure $ case route of
       Just HomePage -> homepage unit
       Just RegisterPage -> registerpage unit
+      Just (BookingsPage maybeSearch) -> case maybeSearch of
+        --If search query doesn't exist reidrect to the home page
+        Nothing -> homepage unit
+        Just search -> bookingsPage search
       Nothing -> ReactDom.text "404 not Found"
 
 main :: Effect Unit

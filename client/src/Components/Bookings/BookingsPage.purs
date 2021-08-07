@@ -1,9 +1,11 @@
 module Components.BookingsPage (mkBookingsPageComponent) where
 
 import Prelude
+
 import Components.NavBar (mkNavBarComponent)
 import Context as Context
 import Data.Array (fold, null)
+import Data.BookingsSearch (BookingsSearch)
 import Data.Monoid (guard)
 import Data.Tuple.Nested ((/\))
 import React.Basic.DOM as DOM
@@ -135,7 +137,7 @@ summaryBlock =
 mkTickets :: forall a. String -> Array a -> Array JSX
 mkTickets _ = mempty
 
-mkBookingsPageComponent :: Context.Component Unit
+mkBookingsPageComponent :: Context.Component BookingsSearch
 mkBookingsPageComponent = do
   navbar <- mkNavBarComponent
   Context.component "Bookings" \_ -> React.do
