@@ -4,7 +4,7 @@ import Prelude
 
 import Components.HomePage.BookingBar (mkBookingBarComponent)
 import Components.NavBar (mkNavBarComponent)
-import Components.Prompt (mkPromptComponent)
+import Components.Prompt (PromptResult(..), mkPromptComponent)
 import Context as Context
 import Control.Monad.Reader (ask)
 import Data.Destination (getDestinations)
@@ -120,6 +120,7 @@ mkHomePageComponent = do
         { nav } <- Router.useRouterContext routerContext
         session <- Session.useSessionContext sessionContext
         destinations /\ setDestinations <- R.useState' []
+        errMessage /\ setErrMessage <- R.useState' Nothing
         R.useEffectOnce do
           flip runAff_ getDestinations
             $ \destinationsValue -> case destinationsValue of
@@ -134,9 +135,9 @@ mkHomePageComponent = do
               , DOM.div
                   { className: "star_bg"
                   , children:
-                      [ prompt { prompt: Nothing, result: Nothing }
+                      [ prompt { prompt: errMessage, result: Just Failure }
                       , advertText
-                      , bookingBar destinations
+                      , bookingBar {destinations, setErrMessage}
                       , DOM.a
                           { name: "about_us"
                           , id: "about_link"

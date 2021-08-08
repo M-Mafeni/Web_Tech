@@ -3,18 +3,22 @@ module Components.HomePage.BookingBar (mkBookingBarComponent) where
 import Prelude
 import Context as Context
 import Control.Monad.Reader (ask)
+import Data.BookingsSearch (makeBookingQueryString)
 import Data.Destination (Destination)
 import Data.Maybe (Maybe(..), fromMaybe)
-import Prim.TypeError (class Warn, Text)
+import Data.Tuple.Nested ((/\))
+import Effect (Effect)
+import Foreign (unsafeToForeign)
 import React.Basic (JSX)
 import React.Basic.DOM as DOM
-import React.Basic.DOM.Events (preventDefault)
+import React.Basic.DOM.Events (preventDefault, targetValue)
 import React.Basic.Events (handler)
 import React.Basic.Hooks as React
+import Router as Router
 import Session as Session
 
-makeDestinationFormItem :: String -> String -> Maybe String -> JSX
-makeDestinationFormItem name placeholder className =
+makeDestinationFormItem :: String -> String -> Maybe String -> (String -> Effect Unit) -> JSX
+makeDestinationFormItem name placeholder className setValue =
   DOM.div
     { className: "form_item"
     , children:
@@ -25,12 +29,13 @@ makeDestinationFormItem name placeholder className =
             , placeholder: placeholder
             , className: fromMaybe "" className
             , required: true
+            , onChange: handler (preventDefault >>> targetValue) (fromMaybe "" >>> setValue)
             }
         ]
     }
 
-makeDateFormItem :: String -> String -> JSX
-makeDateFormItem name id =
+makeDateFormItem :: String -> String -> (String -> Effect Unit) -> JSX
+makeDateFormItem name id setValue =
   DOM.div
     { className: "form_item"
     , children:
@@ -39,15 +44,26 @@ makeDateFormItem name id =
             , type: "date"
             , name: name
             , required: true
+            , onChange: handler (preventDefault >>> targetValue) (fromMaybe "" >>> setValue)
             }
         ]
     }
 
-mkBookingBarComponent :: Warn (Text "Implement onSubmit handler in Booking Bar") => Context.Component (Array Destination)
+type BookingBarProps
+  = { destinations :: Array Destination
+    , setErrMessage :: Maybe String -> Effect Unit
+    }
+
+mkBookingBarComponent :: Context.Component BookingBarProps
 mkBookingBarComponent = do
-  { sessionContext } <- ask
-  Context.component "BookingBar" \destinations -> React.do
+  { sessionContext, routerContext } <- ask
+  Context.component "BookingBar" \{ destinations, setErrMessage } -> React.do
     session <- Session.useSessionContext sessionContext
+    { nav } <- Router.useRouterContext routerContext
+    origin /\ setOrigin <- React.useState' ""
+    destination /\ setDestination <- React.useState' ""
+    outboundDate /\ setOutboundDate <- React.useState' ""
+    inboundDate /\ setInboundDate <- React.useState' ""
     pure
       $ DOM.div
           { className: "booking_bar"
@@ -60,19 +76,19 @@ mkBookingBarComponent = do
                       [ DOM.span
                           { className: "booking_left"
                           , children:
-                              [ makeDestinationFormItem "origin" "Enter Origin Base" Nothing
-                              , makeDestinationFormItem "destination" "Enter Destination Base" (Just "dest")
+                              [ makeDestinationFormItem "origin" "Enter Origin Base" Nothing setOrigin
+                              , makeDestinationFormItem "destination" "Enter Destination Base" (Just "dest") setDestination
                               , DOM.datalist
                                   { id: "places"
-                                  , children: map (\destination -> DOM.option { value: destination.name }) destinations
+                                  , children: map (\dest -> DOM.option { value: dest.name }) destinations
                                   }
                               ]
                           }
                       , DOM.span
                           { className: "booking_right"
                           , children:
-                              [ makeDateFormItem "outbound_date" "outbound_date"
-                              , makeDateFormItem "inbound_date" ""
+                              [ makeDateFormItem "outbound_date" "outbound_date" setOutboundDate
+                              , makeDateFormItem "inbound_date" "" setInboundDate
                               ]
                           }
                       , DOM.div
@@ -85,9 +101,9 @@ mkBookingBarComponent = do
                                   , onClick:
                                       handler preventDefault \_ -> do
                                         if session.isLoggedIn then do
-                                          pure unit
+                                          nav.pushState (unsafeToForeign {}) ("/bookings" <> makeBookingQueryString { origin, destination, outbound_date: outboundDate, inbound_date: inboundDate })
                                         else
-                                          pure unit
+                                          setErrMessage (Just "You are not logged in")
                                   }
                               ]
                           }
