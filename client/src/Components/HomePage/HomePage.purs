@@ -1,11 +1,13 @@
 module Components.HomePage (mkHomePageComponent, HomePageProps) where
 
 import Prelude
+
+import Components.HomePage.BookingBar (mkBookingBarComponent)
 import Components.NavBar (mkNavBarComponent)
 import Components.Prompt (mkPromptComponent)
 import Context as Context
 import Control.Monad.Reader (ask)
-import Data.Destination (Destination, getDestinations)
+import Data.Destination (getDestinations)
 import Data.Either (Either(..))
 import Data.Maybe (Maybe(..), fromMaybe, isJust)
 import Data.Monoid (guard)
@@ -29,79 +31,6 @@ advertText =
   DOM.div
     { className: "t-minus-text"
     , children: [ DOM.text "In T-minus 9,8,7,...." ]
-    }
-
-makeDestinationFormItem :: String -> String -> Maybe String -> R.JSX
-makeDestinationFormItem name placeholder className =
-  DOM.div
-    { className: "form_item"
-    , children:
-        [ DOM.input
-            { list: "places"
-            , type: "text"
-            , name: name
-            , placeholder: placeholder
-            , className: fromMaybe "" className
-            , required: true
-            }
-        ]
-    }
-
-makeDateFormItem :: String -> String -> R.JSX
-makeDateFormItem name id =
-  DOM.div
-    { className: "form_item"
-    , children:
-        [ DOM.input
-            { id: id
-            , type: "date"
-            , name: name
-            , required: true
-            }
-        ]
-    }
-
-bookingBar :: Array Destination -> R.JSX
-bookingBar destinations =
-  DOM.div
-    { className: "booking_bar"
-    , children:
-        [ DOM.form
-            { className: "booking_form"
-            , action: "/bookings"
-            , method: "/GET"
-            , children:
-                [ DOM.span
-                    { className: "booking_left"
-                    , children:
-                        [ makeDestinationFormItem "origin" "Enter Origin Base" Nothing
-                        , makeDestinationFormItem "destination" "Enter Destination Base" (Just "dest")
-                        , DOM.datalist
-                            { id: "places"
-                            , children: map (\destination -> DOM.option { value: destination.name }) destinations
-                            }
-                        ]
-                    }
-                , DOM.span
-                    { className: "booking_right"
-                    , children:
-                        [ makeDateFormItem "outbound_date" "outbound_date"
-                        , makeDateFormItem "inbound_date" ""
-                        ]
-                    }
-                , DOM.div
-                    { className: "booking_button"
-                    , children:
-                        [ DOM.input
-                            { className: "btn"
-                            , type: "submit"
-                            , value: "Find my journey"
-                            }
-                        ]
-                    }
-                ]
-            }
-        ]
     }
 
 makeAboutSubSection :: String -> String -> String -> Maybe String -> R.JSX
@@ -184,6 +113,7 @@ mkHomePageComponent :: Context.Component HomePageProps
 mkHomePageComponent = do
   navbar <- mkNavBarComponent
   prompt <- mkPromptComponent
+  bookingBar <- mkBookingBarComponent
   { routerContext, sessionContext } <- ask
   Context.component "HomePage"
     $ \_ -> R.do
