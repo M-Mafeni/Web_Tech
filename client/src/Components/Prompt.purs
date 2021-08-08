@@ -20,8 +20,8 @@ instance showPromptResult :: Show PromptResult where
   show (Failure) = "prompt-fail"
 
 type PromptProps = {
-  prompt:: Maybe String,
-  result:: Maybe PromptResult
+  prompt :: Maybe String,
+  result :: Maybe PromptResult
 }
 
 mkPromptComponent :: Context.Component PromptProps
