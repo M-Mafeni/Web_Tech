@@ -1,4 +1,4 @@
-module Data.BookingsSearch (BookingsSearch, BookingsSearchImpl, toBookingsSearch, mapToBookingsSearch, getBookingTickets) where
+module Data.BookingsSearch (BookingsSearch, BookingsSearchImpl, toBookingsSearch, mapToBookingsSearch, getBookingTickets, makeBookingQueryString) where
 
 import Prelude
 import Async.Request as Request
@@ -64,16 +64,19 @@ type BookingsTickets
     }
 
 getBookingTickets :: BookingsSearch -> Aff (Either String BookingsTickets)
-getBookingTickets { origin, destination, outbound_date, inbound_date } = Request.get url decodeJson
+getBookingTickets bookingsSearch = Request.get url decodeJson
   where
-  url =
-    "/api/bookings" <> "?origin=" <> origin
-      <> "&destination="
-      <> destination
-      <> "&outbound_date="
-      <> outbound_date
-      <> "&inbound_date="
-      <> inbound_date
+  url = "/api/bookings" <> makeBookingQueryString bookingsSearch
+
+makeBookingQueryString :: BookingsSearch -> String
+makeBookingQueryString { origin, destination, outbound_date, inbound_date } =
+  "?origin=" <> origin
+    <> "&destination="
+    <> destination
+    <> "&outbound_date="
+    <> outbound_date
+    <> "&inbound_date="
+    <> inbound_date
 
 toBookingsSearchImpl :: Map String String -> Maybe BookingsSearchImpl
 toBookingsSearchImpl params =
