@@ -3,13 +3,10 @@
     --summary-colour: #1f877d;
 }
 
-body {
-    box-sizing: border-box;
+.bookings-container {
     margin: 2%;
-    /* margin-top: 7%; */
     min-height: 800px;
     margin-top: 80px;
-    margin-bottom: 100px;
 }
 
 .column{

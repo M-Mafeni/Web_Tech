@@ -4,7 +4,7 @@ import Prelude
 
 import Components.NavBar (mkNavBarComponent)
 import Context as Context
-import Data.Array (fold, null)
+import Data.Array (null)
 import Data.BookingsSearch (BookingsSearch, getBookingTickets)
 import Data.Either (Either(..))
 import Data.Monoid (guard)
@@ -139,7 +139,7 @@ summaryBlock =
       , DOM.span { className: "location " <> prefix <> "Location" }
       ]
 
-mkTickets :: (Warn (Text "Add onclick handler + fix styling")) =>String -> Array Ticket -> Array JSX
+mkTickets :: (Warn (Text "Add onclick handler in mkTickets")) =>String -> Array Ticket -> Array JSX
 mkTickets title tickets = [ DOM.h1 { className: "Journey_Text", children: [ DOM.text title ] } ] <> map mkTicket tickets
   where
   mkTicket :: Ticket -> JSX
@@ -209,7 +209,9 @@ mkBookingsPageComponent = do
               ]
           }
     pure
-      $ fold
+      $ DOM.div 
+        { className: "bookings-container"
+        , children: 
           [ navbar { isMainPage: false }
           , mobileSummaryBlock
           , DOM.div
@@ -224,3 +226,5 @@ mkBookingsPageComponent = do
                     ]
               }
           ]
+        }
+
