@@ -12,8 +12,8 @@ import Data.Either (Either(..))
 import Data.Maybe (Maybe(..), fromMaybe, isJust)
 import Data.Monoid (guard)
 import Data.Tuple.Nested ((/\))
-import Effect.Aff (runAff_)
-import Effect.Exception (throw)
+import Effect.Aff (killFiber, launchAff_, runAff)
+import Effect.Exception (error, throw) as Exception
 import Foreign (unsafeToForeign)
 import React.Basic.DOM as DOM
 import React.Basic.DOM.Events (preventDefault)
@@ -122,13 +122,13 @@ mkHomePageComponent = do
         destinations /\ setDestinations <- R.useState' []
         errMessage /\ setErrMessage <- R.useState' Nothing
         R.useEffectOnce do
-          flip runAff_ getDestinations
+          fiber <- flip runAff getDestinations
             $ \destinationsValue -> case destinationsValue of
-                Left err -> throw $ show err
+                Left err -> Exception.throw $ show err
                 Right possDestinationJson -> case possDestinationJson of
-                  Left err -> throw err
+                  Left err -> Exception.throw err
                   Right destinationsJson -> setDestinations destinationsJson
-          pure mempty
+          pure $ launchAff_ $ killFiber (Exception.error "Canceled") fiber
         pure
           $ R.fragment
               [ navbar { isMainPage: true }
