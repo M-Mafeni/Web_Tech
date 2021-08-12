@@ -139,7 +139,7 @@ summaryBlock =
       , DOM.span { className: "location " <> prefix <> "Location" }
       ]
 
-mkTickets :: (Warn (Text "Add onclick handler in mkTickets")) =>String -> Array Ticket -> Array JSX
+mkTickets :: (Warn (Text "Add onclick handler in mkTickets")) => String -> Array Ticket -> Array JSX
 mkTickets title tickets = [ DOM.h1 { className: "Journey_Text", children: [ DOM.text title ] } ] <> map mkTicket tickets
   where
   mkTicket :: Ticket -> JSX
@@ -157,7 +157,7 @@ mkTickets title tickets = [ DOM.h1 { className: "Journey_Text", children: [ DOM.
               { className: "ticket-content sideways_rocket"
               , children: [ DOM.img { src: "assets/sideways_rocket.svg" } ]
               }
-          , mkDate ticket.o_date ticket.o_time ticket.origin_place false
+          , mkDate ticket.d_date ticket.d_time ticket.destination_place false
           ]
       }
     where
