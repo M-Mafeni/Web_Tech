@@ -1,7 +1,6 @@
 module Components.BookingsPage (mkBookingsPageComponent) where
 
 import Prelude
-
 import Components.NavBar (mkNavBarComponent)
 import Components.Spinner (mkSpinner)
 import Context as Context
@@ -36,7 +35,7 @@ mobileSummaryBlock finalOutboundTicket finalInboundTicket showMobileDetail setSh
             { id: "summary-title-mobile"
             , children: [ DOM.text $ if (isNothing finalOutboundTicket && isNothing finalInboundTicket) then "No ticket selected" else "Summary" ]
             }
-        , DOM.i
+        , guard (isJust finalOutboundTicket || isJust finalInboundTicket) DOM.i
             { className: if (showMobileDetail) then "fa fa-angle-double-down" else "fa fa-angle-double-up"
             , onClick: Event.handler_ (setShowMobileDetail not)
             }
@@ -141,8 +140,9 @@ hiddenForm finalOutboundTicket finalInboundTicket =
     }
   where
   mkInput (name /\ value) = DOM.input { type: "text", name, value, readOnly: true }
+
   f isOutbound ticket =
-    map (mkInput <<< \(name /\ x) -> (((if isOutbound then "out_" else "in_") <> name) /\ x ))
+    map (mkInput <<< \(name /\ x) -> (((if isOutbound then "out_" else "in_") <> name) /\ x))
       [ "id" /\ (show ticket.id)
       , "price" /\ (show ticket.price)
       , "o_date" /\ ticket.o_date
@@ -172,11 +172,10 @@ summaryBlock finalOutboundTicket finalInboundTicket =
     (Just t1 /\ Just t2) -> "£" <> (show $ t1.price + t2.price)
     (Just t1 /\ Nothing) -> "£" <> show t1.price
     (Nothing /\ Just t2) -> "£" <> show t2.price
-  
+
   hiddenFormVal = case (finalOutboundTicket /\ finalInboundTicket) of
     (Just t1 /\ Just t2) -> hiddenForm t1 t2
     _ -> mempty
-
 
   mkInboundTicketDetails = case finalInboundTicket of
     Nothing ->
