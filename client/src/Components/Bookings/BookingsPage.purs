@@ -120,8 +120,8 @@ mobileSummaryBlock finalOutboundTicket finalInboundTicket showMobileDetail setSh
           <> " "
           <> (if isOutbound then "summary_outbound" else "summary_inbound")
 
-hiddenForm :: Boolean -> JSX
-hiddenForm canSubmit =
+hiddenForm :: Ticket -> Ticket -> JSX
+hiddenForm finalOutboundTicket finalInboundTicket =
   DOM.form
     { id: "hidden-form"
     , action: "/confirmation"
@@ -129,9 +129,9 @@ hiddenForm canSubmit =
     , children:
         [ DOM.div
             { className: "hidden-form"
-            , children: f true <> f false
+            , children: (f true finalOutboundTicket) <> (f false finalInboundTicket)
             }
-        , guard canSubmit DOM.button
+        , DOM.button
             { type: "submit"
             , name: "continue"
             , className: "btn"
@@ -140,18 +140,17 @@ hiddenForm canSubmit =
         ]
     }
   where
-  mkInput name = DOM.input { type: "text", name }
-
-  f isOutbound =
-    map (mkInput <<< \name -> (if isOutbound then "out_" else "in_") <> name)
-      [ "id"
-      , "price"
-      , "o_date"
-      , "o_time"
-      , "o_loc"
-      , "d_date"
-      , "d_time"
-      , "d_loc"
+  mkInput (name /\ value) = DOM.input { type: "text", name, value, readOnly: true }
+  f isOutbound ticket =
+    map (mkInput <<< \(name /\ x) -> (((if isOutbound then "out_" else "in_") <> name) /\ x ))
+      [ "id" /\ (show ticket.id)
+      , "price" /\ (show ticket.price)
+      , "o_date" /\ ticket.o_date
+      , "o_time" /\ ticket.o_time
+      , "o_loc" /\ ticket.origin_place
+      , "d_date" /\ ticket.d_date
+      , "d_time" /\ ticket.d_time
+      , "d_loc" /\ ticket.destination_place
       ]
 
 summaryBlock :: (Maybe Ticket) -> (Maybe Ticket) -> JSX
@@ -164,7 +163,7 @@ summaryBlock finalOutboundTicket finalInboundTicket =
         , DOM.div { id: "summary_price_final", children: [ DOM.text finalPriceText ] }
         , mkOutboundTicketDetails
         , mkInboundTicketDetails
-        , hiddenForm (isJust finalOutboundTicket && isJust finalInboundTicket)
+        , hiddenFormVal
         ]
     }
   where
@@ -173,6 +172,11 @@ summaryBlock finalOutboundTicket finalInboundTicket =
     (Just t1 /\ Just t2) -> "£" <> (show $ t1.price + t2.price)
     (Just t1 /\ Nothing) -> "£" <> show t1.price
     (Nothing /\ Just t2) -> "£" <> show t2.price
+  
+  hiddenFormVal = case (finalOutboundTicket /\ finalInboundTicket) of
+    (Just t1 /\ Just t2) -> hiddenForm t1 t2
+    _ -> mempty
+
 
   mkInboundTicketDetails = case finalInboundTicket of
     Nothing ->
