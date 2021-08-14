@@ -190,10 +190,6 @@ h1 {
     margin-top: 1%;
 }
 
-.disable-fa {
-    display: none;
-}
-
 .summary-mobile {
     margin: 2% 5%;
     margin-bottom: 0;
@@ -227,7 +223,6 @@ h1 {
 .summary_details_mobile_source {
     font-size: 60%;
     width: 40%;
-    display: none;
     float: left;
     margin-right: 15%;
     margin-top: 1%;
@@ -236,7 +231,6 @@ h1 {
 .summary_details_mobile_destination {
     font-size: 60%;
     width: 40%;
-    display: none;
     float: right;
     margin-top: 1%;
 }

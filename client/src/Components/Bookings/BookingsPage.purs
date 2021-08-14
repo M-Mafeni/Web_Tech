@@ -6,46 +6,41 @@ import Context as Context
 import Data.Array (null)
 import Data.BookingsSearch (BookingsSearch, getBookingTickets)
 import Data.Either (Either(..))
-import Data.Maybe (Maybe(..), isJust)
+import Data.Maybe (Maybe(..), isJust, isNothing)
 import Data.Monoid (guard)
 import Data.Ticket (Ticket)
 import Data.Tuple.Nested ((/\))
 import Effect (Effect)
 import Effect.Aff (runAff_, throwError)
 import Effect.Exception (throw)
-import Prim.TypeError (class Warn, Text)
 import React.Basic.DOM as DOM
 import React.Basic.Events as Event
 import React.Basic.Hooks (JSX)
 import React.Basic.Hooks as React
 
-mobileSummaryBlock :: (Warn (Text "Add setTicket functionality in Mobile Summary Block")) => JSX
-mobileSummaryBlock =
+mobileSummaryBlock :: (Maybe Ticket) -> (Maybe Ticket) -> Boolean -> ((Boolean -> Boolean) -> Effect Unit) -> JSX
+mobileSummaryBlock finalOutboundTicket finalInboundTicket showMobileDetail setShowMobileDetail =
   DOM.div
     { className: "summary-icon"
     , children:
         [ DOM.span
             { id: "summary-title-mobile"
-            , children: [ DOM.text "No ticket selected" ]
+            , children: [ DOM.text $ if (isNothing finalOutboundTicket && isNothing finalInboundTicket) then "No ticket selected" else "Summary" ]
             }
-        , DOM.i { className: "fa fa-angle-double-down disable-fa" }
-        , DOM.i { className: "fa fa-angle-double-up disable-fa" }
-        , DOM.div { id: "summary_price_mobile_final" }
+        , DOM.i
+            { className: if (showMobileDetail) then "fa fa-angle-double-down" else "fa fa-angle-double-up"
+            , onClick: Event.handler_ (setShowMobileDetail not)
+            }
+        , DOM.div { id: "summary_price_mobile_final", children: [ DOM.text finalPriceText ] }
         , DOM.div
             { className: "sumary-mobile"
             , id: "mobile_summary"
-            , children:
-                [ DOM.div { id: "summary_price_mobile", className: "summary_price_mobile", children: [ DOM.text "No outbound ticket selected" ] }
-                , summaryDetails true
-                ]
+            , children: mkOutboundTicketDetails
             }
         , DOM.div
             { className: "sumary-mobile"
             , id: "d_mobile_summary"
-            , children:
-                [ DOM.div { id: "d_summary_price_mobile", className: "summary_price_mobile", children: [ DOM.text "No inbound ticket selected" ] }
-                , summaryDetails false
-                ]
+            , children: mkInboundTicketDetails
             }
         , DOM.button
             { type: "submit"
@@ -55,7 +50,33 @@ mobileSummaryBlock =
         ]
     }
   where
-  summaryDetails isOutbound = mkSummaryDetails true <> mkSummaryDetails false
+  finalPriceText = case (finalOutboundTicket /\ finalInboundTicket) of
+    (Nothing /\ Nothing) -> ""
+    (Just t1 /\ Just t2) -> "£" <> (show $ t1.price + t2.price)
+    (Just t1 /\ Nothing) -> "£" <> show t1.price
+    (Nothing /\ Just t2) -> "£" <> show t2.price
+
+  mkInboundTicketDetails = case finalInboundTicket of
+    Nothing -> [ DOM.div { id: "d_summary_price_mobile", className: "summary_price_mobile", children: [ DOM.text "No inbound ticket selected" ] } ]
+    Just ticket ->
+      [ DOM.div { id: "d_summary_price_mobile", className: "summary_price_mobile", children: [ DOM.text $ "£" <> (show ticket.price) ] }
+      , guard showMobileDetail $ summaryDetails false ticket
+      ]
+
+  mkOutboundTicketDetails = case finalOutboundTicket of
+    Nothing ->
+      [ DOM.div
+          { id: "summary_price_mobile"
+          , className: "summary_price_mobile"
+          , children: [ DOM.text "No outbound ticket selected" ]
+          }
+      ]
+    Just ticket ->
+      [ DOM.div { id: "d_summary_price_mobile", className: "summary_price_mobile", children: [ DOM.text $ "£" <> (show ticket.price) ] }
+      , guard showMobileDetail $ summaryDetails true ticket
+      ]
+
+  summaryDetails isOutbound ticket = mkSummaryDetails true <> mkSummaryDetails false
     where
     mkSummaryDetails isSource =
       DOM.div
@@ -63,12 +84,15 @@ mobileSummaryBlock =
         , children:
             [ DOM.div
                 { className: "date " <> prefix <> "Date"
+                , children: [ DOM.text (if isSource then ticket.o_date else ticket.d_date) ]
                 }
             , DOM.span
                 { className: "time " <> prefix <> "Time"
+                , children: [ DOM.text (if isSource then ticket.o_time else ticket.d_time) ]
                 }
             , DOM.div
                 { className: "location " <> prefix <> "Location"
+                , children: [ DOM.text (if isSource then ticket.origin_place else ticket.destination_place) ]
                 }
             ]
         }
@@ -224,6 +248,7 @@ mkBookingsPageComponent = do
     inboundTickets /\ setInboundTickets <- React.useState' []
     finalOutboundTicket /\ setFinalOutboundTicket <- React.useState' Nothing
     finalInboundTicket /\ setFinalInboundTicket <- React.useState' Nothing
+    showMobileDetail /\ setShowMobileDetail <- React.useState false
     React.useEffectOnce do
       flip runAff_ (getBookingTickets bookingsSearch) \res -> case res of
         Left err -> throwError err
@@ -256,7 +281,7 @@ mkBookingsPageComponent = do
           { className: "bookings-container"
           , children:
               [ navbar { isMainPage: false }
-              , mobileSummaryBlock
+              , mobileSummaryBlock finalOutboundTicket finalInboundTicket showMobileDetail setShowMobileDetail
               , DOM.div
                   { className: "row"
                   , children:
