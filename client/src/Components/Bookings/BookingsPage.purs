@@ -1,6 +1,7 @@
 module Components.BookingsPage (mkBookingsPageComponent) where
 
 import Prelude
+
 import Components.NavBar (mkNavBarComponent)
 import Context as Context
 import Data.Array (null)
@@ -17,6 +18,13 @@ import React.Basic.DOM as DOM
 import React.Basic.Events as Event
 import React.Basic.Hooks (JSX)
 import React.Basic.Hooks as React
+import Web.DOM.Document (toNonElementParentNode)
+import Web.DOM.NonElementParentNode (getElementById)
+import Web.HTML (window)
+import Web.HTML.HTMLDocument (toDocument)
+import Web.HTML.HTMLFormElement as Form
+import Web.HTML.Window (document)
+
 
 mobileSummaryBlock :: (Maybe Ticket) -> (Maybe Ticket) -> Boolean -> ((Boolean -> Boolean) -> Effect Unit) -> JSX
 mobileSummaryBlock finalOutboundTicket finalInboundTicket showMobileDetail setShowMobileDetail =
@@ -42,10 +50,16 @@ mobileSummaryBlock finalOutboundTicket finalInboundTicket showMobileDetail setSh
             , id: "d_mobile_summary"
             , children: mkInboundTicketDetails
             }
-        , DOM.button
+        , guard (isJust finalOutboundTicket && isJust finalInboundTicket) DOM.button
             { type: "submit"
-            , className: "btn continue-mobile no-continue"
+            , className: "btn continue-mobile"
             , children: [ DOM.text "Continue" ]
+            , onClick: Event.handler_ do
+                doc <- document =<< window
+                val <- (join <<< map Form.fromElement) <$> (getElementById "hidden-form" $ toNonElementParentNode $ toDocument doc)
+                case val of
+                  Nothing -> throw "Unable to locate hidden form"
+                  Just hiddenFormElem ->  Form.submit hiddenFormElem
             }
         ]
     }
