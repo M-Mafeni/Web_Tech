@@ -124,8 +124,9 @@ h1 {
 .summary {
     width: 23%;
     margin: 0;
-    position: absolute;
+    position: sticky;
     right: 2.2%;
+    top: 1%;
     background: var(--summary-colour);
     border-radius: 15px;
     padding: 2%;
@@ -137,7 +138,6 @@ h1 {
 }
 
 .summary_details {
-    font-size: 115%;
     -webkit-transition: max-height 0.3s ease-out;
     -moz-transition: max-height 0.3s ease-out;
     -ms-transition: max-height 0.3s ease-out;
