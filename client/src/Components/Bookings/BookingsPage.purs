@@ -6,7 +6,7 @@ import Context as Context
 import Data.Array (null)
 import Data.BookingsSearch (BookingsSearch, getBookingTickets)
 import Data.Either (Either(..))
-import Data.Maybe (Maybe(..))
+import Data.Maybe (Maybe(..), isJust)
 import Data.Monoid (guard)
 import Data.Ticket (Ticket)
 import Data.Tuple.Nested ((/\))
@@ -80,11 +80,24 @@ mobileSummaryBlock =
           <> " "
           <> (if isOutbound then "summary_outbound" else "summary_inbound")
 
-hiddenForm :: JSX
-hiddenForm =
-  DOM.div
-    { className: "hidden-form"
-    , children: f true <> f false
+hiddenForm :: Boolean -> JSX
+hiddenForm canSubmit =
+  DOM.form
+    { id: "hidden-form"
+    , action: "/confirmation"
+    , method: "POST"
+    , children:
+        [ DOM.div
+            { className: "hidden-form"
+            , children: f true <> f false
+            }
+        , guard canSubmit DOM.button
+            { type: "submit"
+            , name: "continue"
+            , className: "btn"
+            , children: [ DOM.text "Continue" ]
+            }
+        ]
     }
   where
   mkInput name = DOM.input { type: "text", name }
@@ -111,13 +124,13 @@ summaryBlock finalOutboundTicket finalInboundTicket =
         , DOM.div { id: "summary_price_final", children: [ DOM.text finalPriceText ] }
         , mkOutboundTicketDetails
         , mkInboundTicketDetails
-        , hiddenForm
+        , hiddenForm (isJust finalOutboundTicket && isJust finalInboundTicket)
         ]
     }
   where
   finalPriceText = case (finalOutboundTicket /\ finalInboundTicket) of
     (Nothing /\ Nothing) -> ""
-    (Just t1 /\ Just t2) ->  "£" <> (show $ t1.price + t2.price)
+    (Just t1 /\ Just t2) -> "£" <> (show $ t1.price + t2.price)
     (Just t1 /\ Nothing) -> "£" <> show t1.price
     (Nothing /\ Just t2) -> "£" <> show t2.price
 
