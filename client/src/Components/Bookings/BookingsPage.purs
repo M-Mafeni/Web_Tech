@@ -3,6 +3,7 @@ module Components.BookingsPage (mkBookingsPageComponent) where
 import Prelude
 
 import Components.NavBar (mkNavBarComponent)
+import Components.Spinner (mkSpinner)
 import Context as Context
 import Data.Array (null)
 import Data.BookingsSearch (BookingsSearch, getBookingTickets)
@@ -13,6 +14,7 @@ import Data.Ticket (Ticket)
 import Data.Tuple.Nested ((/\))
 import Effect (Effect)
 import Effect.Aff (runAff_, throwError)
+import Effect.Class (liftEffect)
 import Effect.Exception (throw)
 import React.Basic.DOM as DOM
 import React.Basic.Events as Event
@@ -24,7 +26,6 @@ import Web.HTML (window)
 import Web.HTML.HTMLDocument (toDocument)
 import Web.HTML.HTMLFormElement as Form
 import Web.HTML.Window (document)
-
 
 mobileSummaryBlock :: (Maybe Ticket) -> (Maybe Ticket) -> Boolean -> ((Boolean -> Boolean) -> Effect Unit) -> JSX
 mobileSummaryBlock finalOutboundTicket finalInboundTicket showMobileDetail setShowMobileDetail =
@@ -54,12 +55,13 @@ mobileSummaryBlock finalOutboundTicket finalInboundTicket showMobileDetail setSh
             { type: "submit"
             , className: "btn continue-mobile"
             , children: [ DOM.text "Continue" ]
-            , onClick: Event.handler_ do
-                doc <- document =<< window
-                val <- (join <<< map Form.fromElement) <$> (getElementById "hidden-form" $ toNonElementParentNode $ toDocument doc)
-                case val of
-                  Nothing -> throw "Unable to locate hidden form"
-                  Just hiddenFormElem ->  Form.submit hiddenFormElem
+            , onClick:
+                Event.handler_ do
+                  doc <- document =<< window
+                  val <- (join <<< map Form.fromElement) <$> (getElementById "hidden-form" $ toNonElementParentNode $ toDocument doc)
+                  case val of
+                    Nothing -> throw "Unable to locate hidden form"
+                    Just hiddenFormElem -> Form.submit hiddenFormElem
             }
         ]
     }
@@ -255,6 +257,7 @@ mkTickets title tickets setFinalTicket = [ DOM.h1 { className: "Journey_Text", c
 mkBookingsPageComponent :: Context.Component BookingsSearch
 mkBookingsPageComponent = do
   navbar <- mkNavBarComponent
+  spinner <- liftEffect mkSpinner
   Context.component "Bookings" \bookingsSearch -> React.do
     let
       noTickets = DOM.p_ [ DOM.text "No tickets available for this journey" ]
@@ -263,6 +266,7 @@ mkBookingsPageComponent = do
     finalOutboundTicket /\ setFinalOutboundTicket <- React.useState' Nothing
     finalInboundTicket /\ setFinalInboundTicket <- React.useState' Nothing
     showMobileDetail /\ setShowMobileDetail <- React.useState false
+    isLoading /\ setIsLoading <- React.useState' true
     React.useEffectOnce do
       flip runAff_ (getBookingTickets bookingsSearch) \res -> case res of
         Left err -> throwError err
@@ -271,6 +275,7 @@ mkBookingsPageComponent = do
           Right { outboundTickets: oTickets, inboundTickets: iTickets } -> do
             setOutboundTickets oTickets
             setInboundTickets iTickets
+            setIsLoading false
       pure mempty
     let
       columnTickets =
@@ -295,17 +300,22 @@ mkBookingsPageComponent = do
           { className: "bookings-container"
           , children:
               [ navbar { isMainPage: false }
-              , mobileSummaryBlock finalOutboundTicket finalInboundTicket showMobileDetail setShowMobileDetail
-              , DOM.div
-                  { className: "row"
-                  , children:
-                      if null outboundTickets then
-                        [ noTickets ]
-                      else
-                        [ columnTickets
-                        , DOM.span { id: "summaryTop" }
-                        , summaryBlock finalOutboundTicket finalInboundTicket
-                        ]
-                  }
+              , if isLoading then
+                  spinner
+                else
+                  React.fragment
+                    [ mobileSummaryBlock finalOutboundTicket finalInboundTicket showMobileDetail setShowMobileDetail
+                    , DOM.div
+                        { className: "row"
+                        , children:
+                            if null outboundTickets then
+                              [ noTickets ]
+                            else
+                              [ columnTickets
+                              , DOM.span { id: "summaryTop" }
+                              , summaryBlock finalOutboundTicket finalInboundTicket
+                              ]
+                        }
+                    ]
               ]
           }
