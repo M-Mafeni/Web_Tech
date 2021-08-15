@@ -11,6 +11,6 @@ margin-top: -50px;
 margin-left: -100px;
 `;
 
-exports.mkSpinner = () => {
+export function mkSpinner() {
   return <ClipLoader color={"#ffffff"} css={override} size={150} />
 }

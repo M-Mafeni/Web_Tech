@@ -1,5 +1,10 @@
 "use strict";
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.mkSpinner = mkSpinner;
+
 var _react = require("@emotion/react");
 
 var _ClipLoader = _interopRequireDefault(require("react-spinners/ClipLoader"));
@@ -17,14 +22,14 @@ var override = process.env.NODE_ENV === "production" ? {
 } : {
   name: "1hqc3mb-override",
   styles: "position:fixed;top:50%;left:50%;margin-top:-50px;margin-left:-100px;label:override;",
-  map: "/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIlNwaW5uZXIuanN4Il0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUtvQiIsImZpbGUiOiJTcGlubmVyLmpzeCIsInNvdXJjZXNDb250ZW50IjpbImltcG9ydCB7IGNzcyB9IGZyb20gXCJAZW1vdGlvbi9yZWFjdFwiO1xyXG5pbXBvcnQgQ2xpcExvYWRlciBmcm9tIFwicmVhY3Qtc3Bpbm5lcnMvQ2xpcExvYWRlclwiO1xyXG5pbXBvcnQgUmVhY3QgZnJvbSBcInJlYWN0XCI7XHJcblxyXG4vLyBDYW4gYmUgYSBzdHJpbmcgYXMgd2VsbC4gTmVlZCB0byBlbnN1cmUgZWFjaCBrZXktdmFsdWUgcGFpciBlbmRzIHdpdGggO1xyXG5jb25zdCBvdmVycmlkZSA9IGNzc2BcclxucG9zaXRpb246IGZpeGVkO1xyXG50b3A6IDUwJTtcclxubGVmdDogNTAlO1xyXG5tYXJnaW4tdG9wOiAtNTBweDtcclxubWFyZ2luLWxlZnQ6IC0xMDBweDtcclxuYDtcclxuXHJcbmV4cG9ydHMubWtTcGlubmVyID0gKCkgPT4ge1xyXG4gIHJldHVybiA8Q2xpcExvYWRlciBjb2xvcj17XCIjZmZmZmZmXCJ9IGNzcz17b3ZlcnJpZGV9IHNpemU9ezE1MH0gLz5cclxufSJdfQ== */",
+  map: "/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIlNwaW5uZXIuanN4Il0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUtvQiIsImZpbGUiOiJTcGlubmVyLmpzeCIsInNvdXJjZXNDb250ZW50IjpbImltcG9ydCB7IGNzcyB9IGZyb20gXCJAZW1vdGlvbi9yZWFjdFwiO1xyXG5pbXBvcnQgQ2xpcExvYWRlciBmcm9tIFwicmVhY3Qtc3Bpbm5lcnMvQ2xpcExvYWRlclwiO1xyXG5pbXBvcnQgUmVhY3QgZnJvbSBcInJlYWN0XCI7XHJcblxyXG4vLyBDYW4gYmUgYSBzdHJpbmcgYXMgd2VsbC4gTmVlZCB0byBlbnN1cmUgZWFjaCBrZXktdmFsdWUgcGFpciBlbmRzIHdpdGggO1xyXG5jb25zdCBvdmVycmlkZSA9IGNzc2BcclxucG9zaXRpb246IGZpeGVkO1xyXG50b3A6IDUwJTtcclxubGVmdDogNTAlO1xyXG5tYXJnaW4tdG9wOiAtNTBweDtcclxubWFyZ2luLWxlZnQ6IC0xMDBweDtcclxuYDtcclxuXHJcbmV4cG9ydCBmdW5jdGlvbiBta1NwaW5uZXIoKSB7XHJcbiAgcmV0dXJuIDxDbGlwTG9hZGVyIGNvbG9yPXtcIiNmZmZmZmZcIn0gY3NzPXtvdmVycmlkZX0gc2l6ZT17MTUwfSAvPlxyXG59Il19 */",
   toString: _EMOTION_STRINGIFIED_CSS_ERROR__
 };
 
-exports.mkSpinner = function () {
+function mkSpinner() {
   return /*#__PURE__*/_react2["default"].createElement(_ClipLoader["default"], {
     color: "#ffffff",
     css: override,
     size: 150
   });
-};
+}
