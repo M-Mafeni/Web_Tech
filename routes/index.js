@@ -63,16 +63,7 @@ router.post('/confirmation',function (req,res) {
   res = df.setResponseHeader(req, res);
 
   if (req.session.loggedin) {
-      let outbound = {id:req.body.out_id, price:req.body.out_price.substring(1), o_date:req.body.out_o_date, d_date:req.body.out_d_date,
-                      origin_place:req.body.out_o_loc, destination_place:req.body.out_d_loc,
-                      o_time:req.body.out_o_time, d_time:req.body.out_d_time};
-      let inbound = {id:req.body.in_id, price:req.body.in_price.substring(1), o_date:req.body.in_o_date, d_date:req.body.in_d_date,
-                      origin_place:req.body.in_o_loc, destination_place:req.body.in_d_loc,
-                      o_time:req.body.in_o_time, d_time:req.body.in_d_time};
-      let finalTickets = {outbound, inbound};
-      let total = Number(req.body.out_price.substring(1)) + Number(req.body.in_price.substring(1));
-      console.log(total);
-      res.render('main',{layout:'confirmation',loggedin:req.session.loggedin, final_tickets:finalTickets,isAdmin:req.session.isAdmin,total:total});
+      res.render('main',{layout: 'index', title: 'Astra | Booking Confirmation'});
   }
   else {
       req.session.prompt= 'You are not logged in.';

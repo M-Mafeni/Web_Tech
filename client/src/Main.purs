@@ -3,6 +3,7 @@ module Main where
 import Prelude
 
 import Components.BookingsPage (mkBookingsPageComponent)
+import Components.ConfirmationPage (mkConfirmationPageComponent)
 import Components.HomePage (mkHomePageComponent)
 import Components.HomePage.Style (homePageStyleSheet)
 import Components.LoginForm.Style (loginFormStyleSheet)
@@ -38,6 +39,7 @@ mkApp = do
   registerpage <- mkRegisterPageComponent 
   homepage <- mkHomePageComponent
   bookingsPage <- mkBookingsPageComponent
+  confirmationPage <- mkConfirmationPageComponent
   Context.component "App" $ \_ -> R.do
     { route } <- Router.useRouterContext routerContext
     pure $ case route of
@@ -47,6 +49,7 @@ mkApp = do
         --If search query doesn't exist reidrect to the home page
         Nothing -> homepage unit
         Just search -> bookingsPage search
+      Just ConfirmationPage -> confirmationPage unit
       Nothing -> ReactDom.text "404 not Found"
 
 main :: Effect Unit

@@ -12,12 +12,13 @@ import Test.QuickCheck (class Arbitrary, arbitrary)
 import Test.QuickCheck.Gen (Gen)
 import Test.QuickCheck.Gen as Gen
 
-data SpaceRoutes = HomePage | RegisterPage | BookingsPage (Maybe BookingsSearch) 
+data SpaceRoutes = HomePage | RegisterPage | BookingsPage (Maybe BookingsSearch) | ConfirmationPage
 
 instance showSpaceRoutes :: Show SpaceRoutes where
   show (HomePage) = "HomePage"
   show (RegisterPage) = "RegisterPage"
   show (BookingsPage v) = "BookingsPage " <> show v
+  show (ConfirmationPage) = "ConfirmationPage"
 
 derive instance eqSpaceRoutes :: Eq SpaceRoutes
 prettyPrint :: SpaceRoutes -> String
@@ -29,6 +30,7 @@ prettyPrint (BookingsPage (Just {origin, destination, outbound_date, inbound_dat
   "&destination=" <> destination <>
   "&outbound_date=" <> outbound_date <>
   "&inbound_date=" <> inbound_date
+prettyPrint ConfirmationPage = "/confirmation"
 
 instance arbSpaceRoutes :: Arbitrary SpaceRoutes where
   arbitrary = Gen.oneOf $ NonEmptyArray 
@@ -46,5 +48,6 @@ spaceRoutes :: Match (Maybe SpaceRoutes)
 spaceRoutes = Just <$> (root *> oneOf [
   (RegisterPage <$ lit "register"),
   BookingsPage <$> (lit "bookings" *> (join <$> optionalMatch (mapToBookingsSearch <$> params))),
+  ConfirmationPage <$ lit "confirmation",
   HomePage <$ optionalMatch (lit "#about_us")
 ] <* end) <|> pure Nothing
