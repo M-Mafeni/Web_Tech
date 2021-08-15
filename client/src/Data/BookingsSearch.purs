@@ -1,8 +1,10 @@
 module Data.BookingsSearch (BookingsSearch, BookingsSearchImpl, toBookingsSearch, mapToBookingsSearch, getBookingTickets, makeBookingQueryString) where
 
 import Prelude
+
 import Async.Request as Request
 import Data.Argonaut (decodeJson)
+import Data.FormattedDate (date)
 import Data.Either (Either)
 import Data.Map (Map)
 import Data.Map as Map
@@ -28,25 +30,6 @@ type Inbound
 
 data BookingsSearchImpl
   = BookingsSearchImpl Origin Destination Outbound Inbound
-
-newtype Date
-  = Date String
-
-date :: Date -> String
-date (Date s) = s
-
-instance arbDate :: Arbitrary Date where
-  arbitrary = Date <$> (combineWithDashes <$> year <*> month <*> day)
-    where
-    year = show <$> Gen.chooseInt 1000 9999
-
-    month = (padWithZero <<< show) <$> Gen.chooseInt 1 12
-
-    day = (padWithZero <<< show) <$> Gen.chooseInt 1 12
-
-    padWithZero x = if length x == 1 then "0" <> x else x
-
-    combineWithDashes x y z = x <> "-" <> y <> "-" <> z
 
 instance arbBookingSearchImpl :: Arbitrary BookingsSearchImpl where
   arbitrary = BookingsSearchImpl <$> genAlphaString <*> genAlphaString <*> (date <$> arbitrary) <*> (date <$> arbitrary)
