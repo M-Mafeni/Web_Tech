@@ -9,8 +9,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack build --progress --color",
-    "build:ffi": "npx babel src/ -x \".jsx\" --out-dir src/",
-    "watch:ffi": "npx babel --watch src/ -x \".jsx\" --out-dir src/",
+    "build:ffi": "npx babel src/ --out-dir src/",
+    "watch:ffi": "npx babel --watch src/ --out-dir src/",
     "serve": "webpack serve --progress --inline --hot",
     "watch": "webpack build --watch --progress --color"
   },
