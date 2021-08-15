@@ -14,6 +14,7 @@ import Context as Context
 import Control.Monad.Reader (ask, runReaderT)
 import Data.Foldable (traverse_)
 import Data.Maybe (Maybe(..))
+import Data.Tuple.Nested ((/\))
 import Effect (Effect)
 import Effect.Exception (throw)
 import React.Basic.DOM as ReactDom
@@ -21,6 +22,7 @@ import React.Basic.Hooks as R
 import Router as Router
 import Router.Parser (SpaceRoutes(..))
 import Session as Session
+import Simple.JSON (read_)
 import Style (addStyletoHead)
 import Web.DOM.Document (toNonElementParentNode)
 import Web.DOM.NonElementParentNode (getElementById)
@@ -41,7 +43,12 @@ mkApp = do
   bookingsPage <- mkBookingsPageComponent
   confirmationPage <- mkConfirmationPageComponent
   Context.component "App" $ \_ -> R.do
-    { route } <- Router.useRouterContext routerContext
+    { route, nav } <- Router.useRouterContext routerContext
+    confirmationPageProps /\ setConfirmationPageProps <- R.useState' Nothing
+    R.useEffect route do
+      {state} <- nav.locationState
+      setConfirmationPageProps (if (route == Just ConfirmationPage) then (read_ state) else Nothing)
+      pure mempty
     pure $ case route of
       Just HomePage -> homepage unit
       Just RegisterPage -> registerpage unit
@@ -49,8 +56,10 @@ mkApp = do
         --If search query doesn't exist reidrect to the home page
         Nothing -> homepage unit
         Just search -> bookingsPage search
-      Just ConfirmationPage -> confirmationPage unit
-      Nothing -> ReactDom.text "404 not Found"
+      Just ConfirmationPage -> case confirmationPageProps of 
+        Nothing -> ReactDom.text "Could not Parse Confirmation Page Data"
+        Just props -> confirmationPage props
+      _ -> ReactDom.text "404 not Found"
 
 main :: Effect Unit
 main = do

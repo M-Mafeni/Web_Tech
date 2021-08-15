@@ -59,19 +59,6 @@ router.get('/bookings',function (req,res) {
 
 });
 
-router.post('/confirmation',function (req,res) {
-  res = df.setResponseHeader(req, res);
-
-  if (req.session.loggedin) {
-      res.render('main',{layout: 'index', title: 'Astra | Booking Confirmation'});
-  }
-  else {
-      req.session.prompt= 'You are not logged in.';
-      req.session.result = 'prompt-fail';
-      res.redirect('/');
-  }
-});
-
 router.post('/confirmed', function(req,res) {
   if (req.session.loggedin) {
       let idSQL = "SELECT id FROM USER WHERE email = ?";

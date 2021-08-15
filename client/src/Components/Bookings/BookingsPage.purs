@@ -4,6 +4,7 @@ import Prelude
 import Components.NavBar (mkNavBarComponent)
 import Components.Spinner (mkSpinner)
 import Context as Context
+import Control.Monad.Reader (ask)
 import Data.Array (null)
 import Data.BookingsSearch (BookingsSearch, getBookingTickets)
 import Data.Either (Either(..))
@@ -16,18 +17,16 @@ import Effect.Aff (runAff_, throwError)
 import Effect.Class (liftEffect)
 import Effect.Exception (throw)
 import React.Basic.DOM as DOM
+import React.Basic.DOM.Events (preventDefault)
 import React.Basic.Events as Event
 import React.Basic.Hooks (JSX)
 import React.Basic.Hooks as React
-import Web.DOM.Document (toNonElementParentNode)
-import Web.DOM.NonElementParentNode (getElementById)
-import Web.HTML (window)
-import Web.HTML.HTMLDocument (toDocument)
-import Web.HTML.HTMLFormElement as Form
-import Web.HTML.Window (document)
+import Router as Router
+import Routing.PushState (PushStateInterface)
+import Simple.JSON (write)
 
-mobileSummaryBlock :: (Maybe Ticket) -> (Maybe Ticket) -> Boolean -> ((Boolean -> Boolean) -> Effect Unit) -> JSX
-mobileSummaryBlock finalOutboundTicket finalInboundTicket showMobileDetail setShowMobileDetail =
+mobileSummaryBlock :: (Maybe Ticket) -> (Maybe Ticket) -> Boolean -> ((Boolean -> Boolean) -> Effect Unit) -> PushStateInterface -> JSX
+mobileSummaryBlock finalOutboundTicket finalInboundTicket showMobileDetail setShowMobileDetail nav =
   DOM.div
     { className: "summary-icon"
     , children:
@@ -51,16 +50,13 @@ mobileSummaryBlock finalOutboundTicket finalInboundTicket showMobileDetail setSh
             , children: mkInboundTicketDetails
             }
         , guard (isJust finalOutboundTicket && isJust finalInboundTicket) DOM.button
-            { type: "submit"
-            , className: "btn continue-mobile"
+            { className: "btn continue-mobile"
             , children: [ DOM.text "Continue" ]
             , onClick:
                 Event.handler_ do
-                  doc <- document =<< window
-                  val <- (join <<< map Form.fromElement) <$> (getElementById "hidden-form" $ toNonElementParentNode $ toDocument doc)
-                  case val of
-                    Nothing -> throw "Unable to locate hidden form"
-                    Just hiddenFormElem -> Form.submit hiddenFormElem
+                  case (finalOutboundTicket /\ finalInboundTicket) of
+                    Just t1 /\ Just t2 -> submitTickets t1 t2 nav
+                    _ -> pure unit
             }
         ]
     }
@@ -119,8 +115,12 @@ mobileSummaryBlock finalOutboundTicket finalInboundTicket showMobileDetail setSh
           <> " "
           <> (if isOutbound then "summary_outbound" else "summary_inbound")
 
-hiddenForm :: Ticket -> Ticket -> JSX
-hiddenForm finalOutboundTicket finalInboundTicket =
+submitTickets :: Ticket -> Ticket -> PushStateInterface -> Effect Unit
+submitTickets outboundTicket inboundTicket nav = do
+  nav.pushState (write { outboundTicket, inboundTicket }) "/confirmation"
+
+hiddenForm :: Ticket -> Ticket -> PushStateInterface -> JSX
+hiddenForm finalOutboundTicket finalInboundTicket nav =
   DOM.form
     { id: "hidden-form"
     , action: "/confirmation"
@@ -137,6 +137,7 @@ hiddenForm finalOutboundTicket finalInboundTicket =
             , children: [ DOM.text "Continue" ]
             }
         ]
+    , onSubmit: Event.handler preventDefault \_ -> submitTickets finalOutboundTicket finalInboundTicket nav
     }
   where
   mkInput (name /\ value) = DOM.input { type: "text", name, value, readOnly: true }
@@ -153,8 +154,8 @@ hiddenForm finalOutboundTicket finalInboundTicket =
       , "d_loc" /\ ticket.destination_place
       ]
 
-summaryBlock :: (Maybe Ticket) -> (Maybe Ticket) -> JSX
-summaryBlock finalOutboundTicket finalInboundTicket =
+summaryBlock :: (Maybe Ticket) -> (Maybe Ticket) -> PushStateInterface -> JSX
+summaryBlock finalOutboundTicket finalInboundTicket nav =
   DOM.div
     { className: "column summary"
     , id: "summary"
@@ -174,7 +175,7 @@ summaryBlock finalOutboundTicket finalInboundTicket =
     (Nothing /\ Just t2) -> "£" <> show t2.price
 
   hiddenFormVal = case (finalOutboundTicket /\ finalInboundTicket) of
-    (Just t1 /\ Just t2) -> hiddenForm t1 t2
+    (Just t1 /\ Just t2) -> hiddenForm t1 t2 nav
     _ -> mempty
 
   mkInboundTicketDetails = case finalInboundTicket of
@@ -261,6 +262,7 @@ mkBookingsPageComponent :: Context.Component BookingsSearch
 mkBookingsPageComponent = do
   navbar <- mkNavBarComponent
   spinner <- liftEffect mkSpinner
+  { routerContext } <- ask
   Context.component "Bookings" \bookingsSearch -> React.do
     let
       noTickets = DOM.p_ [ DOM.text "No tickets available for this journey" ]
@@ -270,6 +272,7 @@ mkBookingsPageComponent = do
     finalInboundTicket /\ setFinalInboundTicket <- React.useState' Nothing
     showMobileDetail /\ setShowMobileDetail <- React.useState false
     isLoading /\ setIsLoading <- React.useState' true
+    { nav } <- Router.useRouterContext routerContext
     React.useEffectOnce do
       flip runAff_ (getBookingTickets bookingsSearch) \res -> case res of
         Left err -> throwError err
@@ -307,7 +310,7 @@ mkBookingsPageComponent = do
                   spinner
                 else
                   React.fragment
-                    [ mobileSummaryBlock finalOutboundTicket finalInboundTicket showMobileDetail setShowMobileDetail
+                    [ mobileSummaryBlock finalOutboundTicket finalInboundTicket showMobileDetail setShowMobileDetail nav
                     , DOM.div
                         { className: "row"
                         , children:
@@ -316,7 +319,7 @@ mkBookingsPageComponent = do
                             else
                               [ columnTickets
                               , DOM.span { id: "summaryTop" }
-                              , summaryBlock finalOutboundTicket finalInboundTicket
+                              , summaryBlock finalOutboundTicket finalInboundTicket nav
                               ]
                         }
                     ]
