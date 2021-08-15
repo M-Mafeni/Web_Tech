@@ -9,7 +9,6 @@ import Router.Parser (prettyPrint, spaceRoutes)
 import Routing (match)
 import Test.QuickCheck (quickCheck, (<?>))
 
--- 630609493
 runRouterTests :: Effect Unit
 runRouterTests = do
   quickCheck \route ->
