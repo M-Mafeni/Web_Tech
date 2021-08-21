@@ -37,6 +37,7 @@ instance arbSpaceRoutes :: Arbitrary SpaceRoutes where
     [ pure HomePage
     , pure RegisterPage
     , BookingsPage <$> arbBookingsSearch
+    , pure ConfirmationPage
     ] where
       arbBookingsSearch :: Gen (Maybe BookingsSearch)
       arbBookingsSearch =  Gen.oneOf $ NonEmptyArray
