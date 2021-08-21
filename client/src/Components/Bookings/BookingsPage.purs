@@ -1,6 +1,7 @@
 module Components.BookingsPage (mkBookingsPageComponent) where
 
 import Prelude
+import Component.Tickets (mkTicketsComponent)
 import Components.NavBar (mkNavBarComponent)
 import Components.Spinner (mkSpinner)
 import Context as Context
@@ -223,45 +224,11 @@ summaryBlock finalOutboundTicket finalInboundTicket nav =
             }
         ]
 
-mkTickets :: String -> Array Ticket -> (Maybe Ticket -> Effect Unit) -> Array JSX
-mkTickets title tickets setFinalTicket = [ DOM.h1 { className: "Journey_Text", children: [ DOM.text title ] } ] <> map mkTicket tickets
-  where
-  mkTicket :: Ticket -> JSX
-  mkTicket ticket =
-    DOM.div
-      { className: "ticket-card"
-      , children:
-          [ DOM.div { className: "ticket_id", children: [ DOM.text $ show ticket.id ] }
-          , DOM.div
-              { className: "ticket-content price"
-              , children: [ DOM.text $ "£" <> show ticket.price ]
-              }
-          , mkDate ticket.o_date ticket.o_time ticket.origin_place true
-          , DOM.div
-              { className: "ticket-content sideways_rocket"
-              , children: [ DOM.img { src: "assets/sideways_rocket.svg" } ]
-              }
-          , mkDate ticket.d_date ticket.d_time ticket.destination_place false
-          ]
-      , onClick: Event.handler_ (setFinalTicket (Just ticket))
-      }
-    where
-    mkDate date time place isSource =
-      DOM.div
-        { className: "ticket-content " <> if isSource then "source" else "destination"
-        , children:
-            [ DOM.p { className: "date", children: [ DOM.text date ] }
-            , DOM.i { className: "fa fa-clock-o" }
-            , DOM.p { className: "time", children: [ DOM.text time ] }
-            , DOM.i { className: "fa fa-map-marker" }
-            , DOM.p { className: "location", children: [ DOM.text place ] }
-            ]
-        }
-
 mkBookingsPageComponent :: Context.Component BookingsSearch
 mkBookingsPageComponent = do
   navbar <- mkNavBarComponent
   spinner <- liftEffect mkSpinner
+  tickets <- mkTicketsComponent
   { routerContext } <- ask
   Context.component "Bookings" \bookingsSearch -> React.do
     let
@@ -290,14 +257,14 @@ mkBookingsPageComponent = do
           , children:
               [ DOM.div
                   { id: "outbound"
-                  , children: mkTickets "Outbound Journeys" outboundTickets setFinalOutboundTicket
+                  , children: [ tickets { title: "Outbound Journeys", tickets: outboundTickets, ticketHandler: Just >>> setFinalOutboundTicket } ]
                   }
               , if null inboundTickets then
                   noTickets
                 else
                   DOM.div
                     { id: "inbound"
-                    , children: mkTickets "Inbound Journeys" inboundTickets setFinalInboundTicket
+                    , children: [ tickets { title: "Inbound Journeys", tickets: inboundTickets, ticketHandler: Just >>> setFinalInboundTicket } ]
                     }
               ]
           }
