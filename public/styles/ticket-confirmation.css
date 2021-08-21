@@ -1,6 +1,6 @@
 /* for pages displaying a ticket at the top, for confirmation */
 
-body {
+.confirmation-container {
     margin-left: 4%;
     margin-right: 4%;
     margin-top: 100px;
@@ -50,7 +50,7 @@ select {
 }
 
 #payButton {
-    visibility: hidden;
+    /* TODO Add styling for pay button */
 }
 
 @media only screen and (max-width: 700px) {
@@ -60,7 +60,7 @@ select {
 }
 
 @media only screen and (max-width: 550px) {
-    body {
+    .confirmation-container {
         margin-top: 60px;
     }
 
