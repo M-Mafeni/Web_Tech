@@ -168,6 +168,18 @@ router.post('/registered',function(req,res){
   }
 });
 
+router.get('/confirmation',function (req,res) {
+
+    res = df.setResponseHeader(req, res);
+    if (req.session.loggedin) {
+          res.render('main', {layout: 'index', title: 'Astra | Booking Confirmation'});
+      }
+    else {
+        req.session.prompt= 'You are not logged in.';
+        req.session.result = 'prompt-fail';
+        res.redirect('/');
+    }
+});
 
 router.get('/logout',function (req,res) {
   if (req.session.loggedin) {
