@@ -1,7 +1,9 @@
 module Components.BookingsPage (mkBookingsPageComponent) where
 
 import Prelude
+
 import Component.Tickets (mkTicketsComponent)
+import Components.ConfirmationPage (mkConfirmationPageComponent)
 import Components.NavBar (mkNavBarComponent)
 import Components.Spinner (mkSpinner)
 import Context as Context
@@ -22,12 +24,9 @@ import React.Basic.DOM.Events (preventDefault)
 import React.Basic.Events as Event
 import React.Basic.Hooks (JSX)
 import React.Basic.Hooks as React
-import Router as Router
-import Routing.PushState (PushStateInterface)
-import Simple.JSON (write)
 
-mobileSummaryBlock :: (Maybe Ticket) -> (Maybe Ticket) -> Boolean -> ((Boolean -> Boolean) -> Effect Unit) -> PushStateInterface -> JSX
-mobileSummaryBlock finalOutboundTicket finalInboundTicket showMobileDetail setShowMobileDetail nav =
+mobileSummaryBlock :: (Maybe Ticket) -> (Maybe Ticket) -> Boolean -> ((Boolean -> Boolean) -> Effect Unit) -> (Boolean -> Effect Unit) -> JSX
+mobileSummaryBlock finalOutboundTicket finalInboundTicket showMobileDetail setShowMobileDetail setIsConfirmationPage =
   DOM.div
     { className: "summary-icon"
     , children:
@@ -56,7 +55,7 @@ mobileSummaryBlock finalOutboundTicket finalInboundTicket showMobileDetail setSh
             , onClick:
                 Event.handler_ do
                   case (finalOutboundTicket /\ finalInboundTicket) of
-                    Just t1 /\ Just t2 -> submitTickets t1 t2 nav
+                    Just _ /\ Just _ -> setIsConfirmationPage true
                     _ -> pure unit
             }
         ]
@@ -116,12 +115,8 @@ mobileSummaryBlock finalOutboundTicket finalInboundTicket showMobileDetail setSh
           <> " "
           <> (if isOutbound then "summary_outbound" else "summary_inbound")
 
-submitTickets :: Ticket -> Ticket -> PushStateInterface -> Effect Unit
-submitTickets outboundTicket inboundTicket nav = do
-  nav.pushState (write { outboundTicket, inboundTicket }) "/confirmation"
-
-hiddenForm :: Ticket -> Ticket -> PushStateInterface -> JSX
-hiddenForm finalOutboundTicket finalInboundTicket nav =
+hiddenForm :: Ticket -> Ticket -> (Boolean -> Effect Unit) -> JSX
+hiddenForm finalOutboundTicket finalInboundTicket setIsConfirmationPage =
   DOM.form
     { id: "hidden-form"
     , action: "/confirmation"
@@ -138,7 +133,7 @@ hiddenForm finalOutboundTicket finalInboundTicket nav =
             , children: [ DOM.text "Continue" ]
             }
         ]
-    , onSubmit: Event.handler preventDefault \_ -> submitTickets finalOutboundTicket finalInboundTicket nav
+    , onSubmit: Event.handler preventDefault \_ -> setIsConfirmationPage true
     }
   where
   mkInput (name /\ value) = DOM.input { type: "text", name, value, readOnly: true }
@@ -155,8 +150,8 @@ hiddenForm finalOutboundTicket finalInboundTicket nav =
       , "d_loc" /\ ticket.destination_place
       ]
 
-summaryBlock :: (Maybe Ticket) -> (Maybe Ticket) -> PushStateInterface -> JSX
-summaryBlock finalOutboundTicket finalInboundTicket nav =
+summaryBlock :: (Maybe Ticket) -> (Maybe Ticket) -> (Boolean -> Effect Unit) -> JSX
+summaryBlock finalOutboundTicket finalInboundTicket setIsConfirmationPage =
   DOM.div
     { className: "column summary"
     , id: "summary"
@@ -176,7 +171,7 @@ summaryBlock finalOutboundTicket finalInboundTicket nav =
     (Nothing /\ Just t2) -> "£" <> show t2.price
 
   hiddenFormVal = case (finalOutboundTicket /\ finalInboundTicket) of
-    (Just t1 /\ Just t2) -> hiddenForm t1 t2 nav
+    (Just t1 /\ Just t2) -> hiddenForm t1 t2 setIsConfirmationPage
     _ -> mempty
 
   mkInboundTicketDetails = case finalInboundTicket of
@@ -229,7 +224,7 @@ mkBookingsPageComponent = do
   navbar <- mkNavBarComponent
   spinner <- liftEffect mkSpinner
   tickets <- mkTicketsComponent
-  { routerContext } <- ask
+  confirmationPage <- mkConfirmationPageComponent
   Context.component "Bookings" \bookingsSearch -> React.do
     let
       noTickets = DOM.p_ [ DOM.text "No tickets available for this journey" ]
@@ -239,7 +234,7 @@ mkBookingsPageComponent = do
     finalInboundTicket /\ setFinalInboundTicket <- React.useState' Nothing
     showMobileDetail /\ setShowMobileDetail <- React.useState false
     isLoading /\ setIsLoading <- React.useState' true
-    { nav } <- Router.useRouterContext routerContext
+    isConfirmationPage /\ setIsConfirmationPage <- React.useState' false
     React.useEffectOnce do
       flip runAff_ (getBookingTickets bookingsSearch) \res -> case res of
         Left err -> throwError err
@@ -269,26 +264,31 @@ mkBookingsPageComponent = do
               ]
           }
     pure
-      $ DOM.div
-          { className: "bookings-container"
-          , children:
-              [ navbar { isMainPage: false }
-              , if isLoading then
-                  spinner
-                else
-                  React.fragment
-                    [ mobileSummaryBlock finalOutboundTicket finalInboundTicket showMobileDetail setShowMobileDetail nav
-                    , DOM.div
-                        { className: "row"
-                        , children:
-                            if null outboundTickets then
-                              [ noTickets ]
-                            else
-                              [ columnTickets
-                              , DOM.span { id: "summaryTop" }
-                              , summaryBlock finalOutboundTicket finalInboundTicket nav
-                              ]
-                        }
-                    ]
-              ]
-          }
+      if isConfirmationPage then
+        case finalInboundTicket /\ finalOutboundTicket of
+          Just inboundTicket /\ Just outboundTicket -> confirmationPage {inboundTicket, outboundTicket}
+          _  -> DOM.text "Error: 1 ticket wasnt't set before confirmation"
+      else
+        DOM.div
+            { className: "bookings-container"
+            , children:
+                [ navbar { isMainPage: false }
+                , if isLoading then
+                    spinner
+                  else
+                    React.fragment
+                      [ mobileSummaryBlock finalOutboundTicket finalInboundTicket showMobileDetail setShowMobileDetail setIsConfirmationPage
+                      , DOM.div
+                          { className: "row"
+                          , children:
+                              if null outboundTickets then
+                                [ noTickets ]
+                              else
+                                [ columnTickets
+                                , DOM.span { id: "summaryTop" }
+                                , summaryBlock finalOutboundTicket finalInboundTicket setIsConfirmationPage
+                                ]
+                          }
+                      ]
+                ]
+            }

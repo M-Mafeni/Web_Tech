@@ -47,7 +47,6 @@ mkApp = do
     confirmationPageProps /\ setConfirmationPageProps <- R.useState' Nothing
     R.useEffect route do
       {state} <- nav.locationState
-      setConfirmationPageProps (if (route == Just ConfirmationPage) then (read_ state) else Nothing)
       pure mempty
     pure $ case route of
       Just HomePage -> homepage unit
@@ -56,9 +55,6 @@ mkApp = do
         --If search query doesn't exist reidrect to the home page
         Nothing -> homepage unit
         Just search -> bookingsPage search
-      Just ConfirmationPage -> case confirmationPageProps of 
-        Nothing -> ReactDom.text "Could not Parse Confirmation Page Data"
-        Just props -> confirmationPage props
       _ -> ReactDom.text "404 not Found"
 
 main :: Effect Unit
