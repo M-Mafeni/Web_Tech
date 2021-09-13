@@ -3,7 +3,6 @@ module Main where
 import Prelude
 
 import Components.BookingsPage (mkBookingsPageComponent)
-import Components.ConfirmationPage (mkConfirmationPageComponent)
 import Components.HomePage (mkHomePageComponent)
 import Components.HomePage.Style (homePageStyleSheet)
 import Components.LoginForm.Style (loginFormStyleSheet)
@@ -14,7 +13,6 @@ import Context as Context
 import Control.Monad.Reader (ask, runReaderT)
 import Data.Foldable (traverse_)
 import Data.Maybe (Maybe(..))
-import Data.Tuple.Nested ((/\))
 import Effect (Effect)
 import Effect.Exception (throw)
 import React.Basic.DOM as ReactDom
@@ -22,7 +20,6 @@ import React.Basic.Hooks as R
 import Router as Router
 import Router.Parser (SpaceRoutes(..))
 import Session as Session
-import Simple.JSON (read_)
 import Style (addStyletoHead)
 import Web.DOM.Document (toNonElementParentNode)
 import Web.DOM.NonElementParentNode (getElementById)
@@ -41,13 +38,8 @@ mkApp = do
   registerpage <- mkRegisterPageComponent 
   homepage <- mkHomePageComponent
   bookingsPage <- mkBookingsPageComponent
-  confirmationPage <- mkConfirmationPageComponent
   Context.component "App" $ \_ -> R.do
-    { route, nav } <- Router.useRouterContext routerContext
-    confirmationPageProps /\ setConfirmationPageProps <- R.useState' Nothing
-    R.useEffect route do
-      {state} <- nav.locationState
-      pure mempty
+    { route } <- Router.useRouterContext routerContext
     pure $ case route of
       Just HomePage -> homepage unit
       Just RegisterPage -> registerpage unit

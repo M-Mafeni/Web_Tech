@@ -7,7 +7,6 @@ import Components.ConfirmationPage (mkConfirmationPageComponent)
 import Components.NavBar (mkNavBarComponent)
 import Components.Spinner (mkSpinner)
 import Context as Context
-import Control.Monad.Reader (ask)
 import Data.Array (null)
 import Data.BookingsSearch (BookingsSearch, getBookingTickets)
 import Data.Either (Either(..))
