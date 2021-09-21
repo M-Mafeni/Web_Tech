@@ -37,7 +37,6 @@ to generate this file without the comments in this block.
   , "react-basic-dom"
   , "react-basic-hooks"
   , "routing"
-  , "simple-json"
   , "strings"
   , "these"
   , "transformers"
