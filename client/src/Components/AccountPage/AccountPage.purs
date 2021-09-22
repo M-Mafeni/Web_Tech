@@ -1,13 +1,18 @@
 module Components.AccountPage (mkAccountPageComponent) where
 
 import Prelude
+
 import Component.Tickets (mkTicketsComponent)
 import Components.NavBar (mkNavBarComponent)
 import Context as Context
 import Data.Array (null)
+import Data.Either (Either(..))
 import Data.Maybe (Maybe(..), fromMaybe)
 import Data.Ticket (Ticket)
 import Data.Tuple.Nested ((/\))
+import Data.User (getCurrentUser)
+import Effect.Aff (killFiber, launchAff_, runAff)
+import Effect.Exception (error, throw) as Exception
 import React.Basic.DOM as DOM
 import React.Basic.Hooks as React
 
@@ -17,6 +22,13 @@ mkAccountPageComponent = do
   tickets <- mkTicketsComponent
   Context.component "AccountPage" \_ -> React.do
     person /\ setPerson <- React.useState' Nothing
+    React.useEffectOnce do
+      fiber <- flip runAff getCurrentUser \val -> case val of 
+        Left err -> Exception.throw $ show err 
+        Right possJson -> case possJson of
+          Left err -> Exception.throw err
+          Right userJson -> setPerson $ Just userJson
+      pure $ launchAff_ $ killFiber (Exception.error "Canceled") fiber
     let
       mkAccountDetail isLeft name value =
         DOM.div
@@ -33,7 +45,7 @@ mkAccountPageComponent = do
           [ mkAccountDetail true "First Name" val.first_name
           , mkAccountDetail false "Last Name" val.last_name
           , mkAccountDetail true "Email" val.email
-          , mkAccountDetail false "Address" val.adress
+          , mkAccountDetail false "Address" val.address
           ]
 
       personalDetails =

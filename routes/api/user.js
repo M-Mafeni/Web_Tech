@@ -31,6 +31,7 @@ router.get("/currentUser", (req, res) => {
 
           user.isAdmin = user.isAdmin === 1;
           user.tickets = purchased_tickets;
+          user.address = user.Address;
           return res.send(user);
         });
     });
