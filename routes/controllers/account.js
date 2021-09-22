@@ -12,33 +12,7 @@ router.get('/',function (req,res) {
     res = df.setResponseHeader(req, res);
 
     if (req.session.loggedin) {
-        let userSQL = "SELECT * FROM User WHERE email = ?";
-        let ticketSQL = "SELECT id, date(origin_date) AS o_date,time(origin_date) AS o_time,(SELECT name FROM Destination Where Destination.id = Ticket.origin_id) AS origin_place,"
-         + "date(destination_date) AS d_date,time(destination_date) AS d_time,(SELECT name FROM Destination Where Destination.id = Ticket.destination_id) AS destination_place,price "
-         + "FROM (SELECT ticket_id FROM User_Ticket WHERE user_id = ?) INNER JOIN Ticket ON ticket_id = Ticket.id "
-         + "ORDER BY o_date DESC, o_time DESC, d_date DESC, d_time DESC";
-
-        db.get(userSQL, [req.session.username], (err, user) => {
-            db.all(ticketSQL,[user.id],(err2,purchased_tickets) => {
-                purchased_tickets.forEach((ticket, i) => {
-                    ticket.o_date = df.formatDate(ticket.o_date);
-                    ticket.d_date = df.formatDate(ticket.d_date);
-                    ticket.o_time = df.formatTime(ticket.o_time);
-                    ticket.d_time = df.formatTime(ticket.d_time);
-                });
-
-                let prompt = req.session.prompt;
-                let result = req.session.result;
-                req.session.prompt = null;
-                req.session.result = null;
-                // let isAccount = true;
-                res.render('main',{layout:'account/account',email:req.session.username,
-                            first_name: user.first_name, last_name: user.last_name,
-                            address: user.Address, purchased_tickets:purchased_tickets,
-                            loggedin:req.session.loggedin, prompt:prompt,result:result,
-                            isAccount:true, isAdmin:req.session.isAdmin});
-            });
-        });
+        res.render('main', {layout: 'index', title: 'Astra | My Account'});
     }
     else {
         req.session.prompt = 'You are not logged in.';
