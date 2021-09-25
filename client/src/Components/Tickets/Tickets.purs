@@ -29,17 +29,17 @@ mkTickets title tickets ticketHandler = [ DOM.h1 { className: "Journey_Text", ch
               { className: "ticket-content price"
               , children: [ DOM.text $ "£" <> show ticket.price ]
               }
-          , mkDate ticket.o_date ticket.o_time ticket.origin_place true
+          , mkTicketContent ticket.o_date ticket.o_time ticket.origin_place true
           , DOM.div
               { className: "ticket-content sideways_rocket"
               , children: [ DOM.img { src: "assets/sideways_rocket.svg" } ]
               }
-          , mkDate ticket.d_date ticket.d_time ticket.destination_place false
+          , mkTicketContent ticket.d_date ticket.d_time ticket.destination_place false
           ]
       , onClick: Event.handler_ (ticketHandler ticket)
       }
     where
-    mkDate date time place isSource =
+    mkTicketContent date time place isSource =
       DOM.div
         { className: "ticket-content " <> if isSource then "source" else "destination"
         , children:
