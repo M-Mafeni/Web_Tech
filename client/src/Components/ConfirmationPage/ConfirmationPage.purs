@@ -62,7 +62,7 @@ mkConfirmationPageComponent = do
               , children:
                   [ DOM.div
                       { className: "confirmed_tickets"
-                      , children: [ tickets { title: "Confirm your booking", tickets: [ props.outboundTicket, props.inboundTicket ], ticketHandler: (const (pure unit)) } ]
+                      , children: [ tickets { title: "Confirm your booking", tickets: [ props.outboundTicket, props.inboundTicket ], ticketHandler: (const (pure unit)), isAccount: false } ]
                       }
                   , DOM.p
                       { id: "total-price"

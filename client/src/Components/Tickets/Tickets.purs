@@ -3,6 +3,7 @@ module Component.Tickets (mkTicketsComponent, TicketProps) where
 import Prelude
 
 import Context as Context
+import Data.Monoid (guard)
 import Data.Ticket (Ticket)
 import Effect (Effect)
 import React.Basic.DOM as DOM
@@ -14,10 +15,11 @@ type TicketProps
   = { title :: String
     , tickets :: Array Ticket
     , ticketHandler :: Ticket -> Effect Unit
+    , isAccount :: Boolean
     }
 
-mkTickets :: String -> Array Ticket -> (Ticket -> Effect Unit) -> Array JSX
-mkTickets title tickets ticketHandler = [ DOM.h1 { className: "Journey_Text", children: [ DOM.text title ] } ] <> map mkTicket tickets
+mkTickets :: String -> Array Ticket -> (Ticket -> Effect Unit) -> Boolean -> Array JSX
+mkTickets title tickets ticketHandler isAccount = [ DOM.h1 { className: "Journey_Text", children: [ DOM.text title ] } ] <> map mkTicket tickets
   where
   mkTicket :: Ticket -> JSX
   mkTicket ticket =
@@ -35,6 +37,10 @@ mkTickets title tickets ticketHandler = [ DOM.h1 { className: "Journey_Text", ch
               , children: [ DOM.img { src: "assets/sideways_rocket.svg" } ]
               }
           , mkTicketContent ticket.d_date ticket.d_time ticket.destination_place false
+          , guard isAccount $ 
+              DOM.a 
+                { href: "/account/refund/" <> show ticket.id
+                , children: [DOM.button {type: "submit", name: "refund", className: "btn warning", children: [DOM.text "Refund Ticket"]}]}
           ]
       , onClick: Event.handler_ (ticketHandler ticket)
       }
@@ -55,5 +61,5 @@ mkTicketsComponent :: Context.Component TicketProps
 mkTicketsComponent = do
   Context.component "Tickets" \props -> React.do
     let
-      { title, tickets, ticketHandler } = props
-    pure $ React.fragment (mkTickets title tickets ticketHandler)
+      { title, tickets, ticketHandler, isAccount } = props
+    pure $ React.fragment (mkTickets title tickets ticketHandler isAccount)

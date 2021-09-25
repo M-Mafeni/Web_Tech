@@ -73,7 +73,7 @@ mkAccountPageComponent = do
             , DOM.a { className: "account-link", href: "/", children: [ DOM.text "Book your first flight today." ] }
             ]
         else
-          tickets { title: "Purchased Tickets", tickets: purchasedTickets, ticketHandler: \_ -> pure unit }
+          tickets { title: "Purchased Tickets", tickets: purchasedTickets, ticketHandler: \_ -> pure unit, isAccount: true }
     pure
       $ DOM.div
           { className: "account-container"

@@ -251,14 +251,14 @@ mkBookingsPageComponent = do
           , children:
               [ DOM.div
                   { id: "outbound"
-                  , children: [ tickets { title: "Outbound Journeys", tickets: outboundTickets, ticketHandler: Just >>> setFinalOutboundTicket } ]
+                  , children: [ tickets { title: "Outbound Journeys", tickets: outboundTickets, ticketHandler: Just >>> setFinalOutboundTicket, isAccount: false } ]
                   }
               , if null inboundTickets then
                   noTickets
                 else
                   DOM.div
                     { id: "inbound"
-                    , children: [ tickets { title: "Inbound Journeys", tickets: inboundTickets, ticketHandler: Just >>> setFinalInboundTicket } ]
+                    , children: [ tickets { title: "Inbound Journeys", tickets: inboundTickets, ticketHandler: Just >>> setFinalInboundTicket, isAccount: false } ]
                     }
               ]
           }
