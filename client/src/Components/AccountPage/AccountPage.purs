@@ -36,6 +36,7 @@ mkAccountPageComponent = do
             setIsLoading false
       pure $ launchAff_ $ killFiber (Exception.error "Canceled") fiber
     let
+      accountSpinner = DOM.div {className: "account-spinner", children: [spinner]}
       mkAccountDetail isLeft name value =
         DOM.div
           { className: "account-details account-" <> (if isLeft then "left" else "right")
@@ -62,7 +63,7 @@ mkAccountPageComponent = do
                   { className: "subheader"
                   , children: [ DOM.text "Personal Details" ]
                   }
-              , DOM.div
+              , if isLoading then accountSpinner else DOM.div
                   { className: "details-wrapper"
                   , children: accountDetails
                   }
@@ -76,7 +77,7 @@ mkAccountPageComponent = do
         if (null purchasedTickets) then
           React.fragment
             [ DOM.h1 { className: "Journey_Text", children: [ DOM.text "Purchased tickets" ] }
-            , if isLoading then DOM.div {className: "account-spinner", children: [spinner]} else DOM.a { className: "account-link", href: "/", children: [ DOM.text "Book your first flight today." ] }
+            , if isLoading then accountSpinner else DOM.a { className: "account-link", href: "/", children: [ DOM.text "Book your first flight today." ] }
             ]
         else
           tickets { title: "Purchased Tickets", tickets: purchasedTickets, ticketHandler: \_ -> pure unit, isAccount: true }
