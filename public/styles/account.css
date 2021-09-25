@@ -84,6 +84,11 @@ strong {
     margin-top: 3%;
 }
 
+.account-spinner {
+    display: flex;
+    justify-content: space-around;
+}
+
 @media only screen and (max-width: 750px) {
     body {
         /* margin-top: 12%; */

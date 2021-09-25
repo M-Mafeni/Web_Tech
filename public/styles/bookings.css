@@ -9,6 +9,14 @@
     margin-top: 80px;
 }
 
+.bookings-spinner {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    margin-top: -50px;
+    margin-left: -100px;
+}
+
 .column{
     float: left;
     padding: 1%;

@@ -4,6 +4,7 @@ import Prelude
 
 import Component.Tickets (mkTicketsComponent)
 import Components.NavBar (mkNavBarComponent)
+import Components.Spinner (mkSpinner)
 import Context as Context
 import Data.Array (null)
 import Data.Either (Either(..))
@@ -12,6 +13,7 @@ import Data.Ticket (Ticket)
 import Data.Tuple.Nested ((/\))
 import Data.User (getCurrentUser)
 import Effect.Aff (killFiber, launchAff_, runAff)
+import Effect.Class (liftEffect)
 import Effect.Exception (error, throw) as Exception
 import React.Basic.DOM as DOM
 import React.Basic.Hooks as React
@@ -20,14 +22,18 @@ mkAccountPageComponent :: Context.Component Unit
 mkAccountPageComponent = do
   navbar <- mkNavBarComponent
   tickets <- mkTicketsComponent
+  spinner <- liftEffect mkSpinner
   Context.component "AccountPage" \_ -> React.do
     person /\ setPerson <- React.useState' Nothing
+    isLoading /\ setIsLoading <- React.useState' true
     React.useEffectOnce do
       fiber <- flip runAff getCurrentUser \val -> case val of 
         Left err -> Exception.throw $ show err 
         Right possJson -> case possJson of
           Left err -> Exception.throw err
-          Right userJson -> setPerson $ Just userJson
+          Right userJson -> do 
+            setPerson $ Just userJson
+            setIsLoading false
       pure $ launchAff_ $ killFiber (Exception.error "Canceled") fiber
     let
       mkAccountDetail isLeft name value =
@@ -69,8 +75,8 @@ mkAccountPageComponent = do
       purchasedTicketsDiv =
         if (null purchasedTickets) then
           React.fragment
-            [ DOM.h1 { className: "Journey_Text", children: [ DOM.text "Previously purchased tickets" ] }
-            , DOM.a { className: "account-link", href: "/", children: [ DOM.text "Book your first flight today." ] }
+            [ DOM.h1 { className: "Journey_Text", children: [ DOM.text "Purchased tickets" ] }
+            , if isLoading then DOM.div {className: "account-spinner", children: [spinner]} else DOM.a { className: "account-link", href: "/", children: [ DOM.text "Book your first flight today." ] }
             ]
         else
           tickets { title: "Purchased Tickets", tickets: purchasedTickets, ticketHandler: \_ -> pure unit, isAccount: true }

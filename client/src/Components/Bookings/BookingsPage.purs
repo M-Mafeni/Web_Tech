@@ -273,7 +273,7 @@ mkBookingsPageComponent = do
             , children:
                 [ navbar { isMainPage: false }
                 , if isLoading then
-                    spinner
+                    DOM.div {className: "bookings-spinner", children: [spinner]}
                   else
                     React.fragment
                       [ mobileSummaryBlock finalOutboundTicket finalInboundTicket showMobileDetail setShowMobileDetail setIsConfirmationPage
